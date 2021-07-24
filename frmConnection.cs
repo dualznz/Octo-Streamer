@@ -20,36 +20,76 @@ namespace Octo_Streamer
             InitializeComponent();
         }
 
+        #region Form Load
         private void frmConnection_Load(object sender, EventArgs e)
         {
-            
+            // reset copnnection text
+            lblConnectionStatus.Text = null;
+
+            // Check to see if there is any data in the application settings, if so populate fields
+            string host = Properties.Settings.Default.Host;
+            string port = Properties.Settings.Default.Port;
+            string apiKey = Properties.Settings.Default.ApiKey;
+
+            if (host != null)
+            {
+                txtHost.Text = host;
+            }
+
+            if (port != null)
+            {
+                txtPort.Text = port;
+            }
+
+            if (apiKey != null)
+            {
+                txtApiKey.Text = apiKey;
+            }
         }
 
+        #endregion
+
+        #region Octoprint Website documentation
         private void linkApiKey_Click(object sender, EventArgs e)
         {
             // Open octoprint documentation site & access api authentication procedures
             System.Diagnostics.Process.Start("https://docs.octoprint.org/en/master/api/general.html#authorization");
         }
 
+        #endregion
+
+        #region Connection Submit
+
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            // check to see if txtPort is filled
+            // Disable submit button
+            btnConnect.Enabled = false;
+
+            // Check to see if txtPort is filled
             if (txtPort.Text != null || txtPort.Text == "")
             {
-                // push string output to class
+                // Push string output to class
                 csSettings.ConnectionPort = ":" + txtPort.Text.ToString();
-            } else
+            }
+            else
             {
                 csSettings.ConnectionPort = "";
             }
 
+            // Apply addtional data to class
             csSettings.connectionAddress = txtHost.Text;
             csSettings.connectionAuthToken = txtApiKey.Text;
 
-            // start the connection test transaction
-            beginConnectionTransaction();
+            // Update connection label with begin connection
+            lblConnectionStatus.Appearance.ForeColor = Color.Orange;
+            lblConnectionStatus.Text = "Establishing connection...";
+
+            // Start the connection test transaction
+            tmrConnect.Enabled = true;
+            tmrConnect.Start();
         }
 
+        #endregion
 
         #region Connection Listener
 
@@ -58,7 +98,6 @@ namespace Octo_Streamer
             try
             {
                 // Transmission Data (POST / GET)
-                string postData = "";
                 string authServer = csSettings.connectionAddress + csSettings.ConnectionPort + "/api/files";
 
                 // Create request
@@ -69,25 +108,54 @@ namespace Octo_Streamer
                 request.Method = "GET";
                 request.Accept = "application/json";
 
-                // await response from remote server
+                // Await response from remote server
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 var test = new StreamReader(response.GetResponseStream()).ReadToEnd();
 
-                // test response
-                MessageBox.Show(test);
 
-
-                // close connections
+                // Close remote connection
                 response.Close();
+
+                // Update connection label with confirmation
+                lblConnectionStatus.Appearance.ForeColor = Color.DarkGreen;
+                lblConnectionStatus.Text = "Connection established";
+
+                // Re-enable submit button
+                btnConnect.Enabled = true;
+
+                // Replace : tag within the port range for storage
+                string removeTag = csSettings.ConnectionPort;
+                removeTag.Replace(":", "");
+                csSettings.ConnectionPort = removeTag;
+
+                // Save connection information into application settings
+                Properties.Settings.Default.Host = csSettings.connectionAddress;
+                Properties.Settings.Default.Port = csSettings.ConnectionPort;
+                Properties.Settings.Default.ApiKey = csSettings.connectionAuthToken;
+                Properties.Settings.Default.Save();
             }
             catch (Exception)
             {
-                MessageBox.Show("Unable to connect to server");
+                // Update connection label with failure
+                lblConnectionStatus.Appearance.ForeColor = Color.Red;
+                lblConnectionStatus.Text = "Connection failure";
+
+                // Re-enable submit button
+                btnConnect.Enabled = true;
             }
         }
 
+
         #endregion
 
-        
+        private void tmrConnect_Tick(object sender, EventArgs e)
+        {
+            // stop timer and disable it
+            tmrConnect.Stop();
+            tmrConnect.Enabled = false;
+
+            // connect to server
+            beginConnectionTransaction();
+        }
     }
 }

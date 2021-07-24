@@ -29,6 +29,7 @@ namespace Octo_Streamer
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lblHost = new DevExpress.XtraEditors.LabelControl();
             this.txtHost = new DevExpress.XtraEditors.TextEdit();
             this.txtPort = new DevExpress.XtraEditors.TextEdit();
@@ -40,6 +41,7 @@ namespace Octo_Streamer
             this.btnConnect = new DevExpress.XtraEditors.SimpleButton();
             this.lblConnectionStatus = new DevExpress.XtraEditors.LabelControl();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
+            this.tmrConnect = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.txtHost.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPort.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtApiKey.Properties)).BeginInit();
@@ -57,7 +59,7 @@ namespace Octo_Streamer
             // 
             // txtHost
             // 
-            this.txtHost.EditValue = "http://localhost";
+            this.txtHost.EditValue = "";
             this.txtHost.Location = new System.Drawing.Point(145, 48);
             this.txtHost.Name = "txtHost";
             this.txtHost.Size = new System.Drawing.Size(190, 20);
@@ -65,7 +67,7 @@ namespace Octo_Streamer
             // 
             // txtPort
             // 
-            this.txtPort.EditValue = "8010";
+            this.txtPort.EditValue = "";
             this.txtPort.Location = new System.Drawing.Point(145, 79);
             this.txtPort.Name = "txtPort";
             this.txtPort.Size = new System.Drawing.Size(190, 20);
@@ -91,7 +93,7 @@ namespace Octo_Streamer
             // 
             // txtApiKey
             // 
-            this.txtApiKey.EditValue = "8BC12566FE614CEC87DECA278267022F";
+            this.txtApiKey.EditValue = "";
             this.txtApiKey.Location = new System.Drawing.Point(145, 110);
             this.txtApiKey.Name = "txtApiKey";
             this.txtApiKey.Size = new System.Drawing.Size(190, 20);
@@ -120,7 +122,7 @@ namespace Octo_Streamer
             // 
             this.btnConnect.AllowHtmlDraw = DevExpress.Utils.DefaultBoolean.True;
             this.btnConnect.Appearance.Options.UseBorderColor = true;
-            this.btnConnect.Location = new System.Drawing.Point(172, 166);
+            this.btnConnect.Location = new System.Drawing.Point(166, 164);
             this.btnConnect.LookAndFeel.SkinName = "The Bezier";
             this.btnConnect.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.UltraFlat;
             this.btnConnect.Name = "btnConnect";
@@ -134,9 +136,9 @@ namespace Octo_Streamer
             this.lblConnectionStatus.Appearance.Options.UseTextOptions = true;
             this.lblConnectionStatus.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.lblConnectionStatus.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            this.lblConnectionStatus.Location = new System.Drawing.Point(137, 197);
+            this.lblConnectionStatus.Location = new System.Drawing.Point(3, 197);
             this.lblConnectionStatus.Name = "lblConnectionStatus";
-            this.lblConnectionStatus.Size = new System.Drawing.Size(150, 13);
+            this.lblConnectionStatus.Size = new System.Drawing.Size(403, 13);
             this.lblConnectionStatus.TabIndex = 9;
             this.lblConnectionStatus.Text = "lblConnectionStatus";
             // 
@@ -149,6 +151,11 @@ namespace Octo_Streamer
             this.labelControl2.Size = new System.Drawing.Size(280, 25);
             this.labelControl2.TabIndex = 10;
             this.labelControl2.Text = "OctoPrint Connection Settings";
+            // 
+            // tmrConnect
+            // 
+            this.tmrConnect.Interval = 2000;
+            this.tmrConnect.Tick += new System.EventHandler(this.tmrConnect_Tick);
             // 
             // frmConnection
             // 
@@ -194,5 +201,6 @@ namespace Octo_Streamer
         private DevExpress.XtraEditors.SimpleButton btnConnect;
         private DevExpress.XtraEditors.LabelControl lblConnectionStatus;
         private DevExpress.XtraEditors.LabelControl labelControl2;
+        private System.Windows.Forms.Timer tmrConnect;
     }
 }
