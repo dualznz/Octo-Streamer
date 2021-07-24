@@ -16,7 +16,7 @@ namespace Octo_Streamer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmConnection());
+            Application.Run(new Form1());
         }
     }
 }

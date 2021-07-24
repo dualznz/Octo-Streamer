@@ -179,6 +179,7 @@ namespace Octo_Streamer
             this.Name = "frmConnection";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmConnection";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.frmConnection_Load);
             ((System.ComponentModel.ISupportInitialize)(this.txtHost.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPort.Properties)).EndInit();

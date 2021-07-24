@@ -69,7 +69,7 @@ namespace Octo_Streamer
             if (txtPort.Text != null || txtPort.Text == "")
             {
                 // Push string output to class
-                csSettings.ConnectionPort = ":" + txtPort.Text.ToString();
+                csSettings.ConnectionPort = txtPort.Text.ToString();
             }
             else
             {
@@ -97,8 +97,18 @@ namespace Octo_Streamer
         {
             try
             {
+                string portCheck = null;
+                if (csSettings.ConnectionPort != null)
+                {
+                    portCheck = ":" + csSettings.ConnectionPort;
+                }
+                else
+                {
+                    portCheck = null;
+                }
+
                 // Transmission Data (POST / GET)
-                string authServer = csSettings.connectionAddress + csSettings.ConnectionPort + "/api/files";
+                string authServer = csSettings.connectionAddress + portCheck + "/api/files";
 
                 // Create request
                 HttpWebRequest request = (HttpWebRequest)
@@ -122,11 +132,6 @@ namespace Octo_Streamer
 
                 // Re-enable submit button
                 btnConnect.Enabled = true;
-
-                // Replace : tag within the port range for storage
-                string removeTag = csSettings.ConnectionPort;
-                removeTag.Replace(":", "");
-                csSettings.ConnectionPort = removeTag;
 
                 // Save connection information into application settings
                 Properties.Settings.Default.Host = csSettings.connectionAddress;
