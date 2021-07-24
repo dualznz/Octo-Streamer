@@ -31,43 +31,45 @@ namespace Octo_Streamer
         {
             this.lblHost = new DevExpress.XtraEditors.LabelControl();
             this.txtHost = new DevExpress.XtraEditors.TextEdit();
-            this.textEdit1 = new DevExpress.XtraEditors.TextEdit();
+            this.txtPort = new DevExpress.XtraEditors.TextEdit();
             this.lblPort = new DevExpress.XtraEditors.LabelControl();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
-            this.textEdit2 = new DevExpress.XtraEditors.TextEdit();
+            this.txtApiKey = new DevExpress.XtraEditors.TextEdit();
             this.lblApiKey = new DevExpress.XtraEditors.LabelControl();
             this.linkApiKey = new DevExpress.XtraEditors.HyperlinkLabelControl();
             this.btnConnect = new DevExpress.XtraEditors.SimpleButton();
             this.lblConnectionStatus = new DevExpress.XtraEditors.LabelControl();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.txtHost.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit2.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPort.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtApiKey.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // lblHost
             // 
             this.lblHost.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.lblHost.Appearance.Options.UseFont = true;
-            this.lblHost.Location = new System.Drawing.Point(33, 51);
+            this.lblHost.Location = new System.Drawing.Point(106, 51);
             this.lblHost.Name = "lblHost";
-            this.lblHost.Size = new System.Drawing.Size(102, 13);
+            this.lblHost.Size = new System.Drawing.Size(29, 13);
             this.lblHost.TabIndex = 0;
-            this.lblHost.Text = "IP Address / Host:";
+            this.lblHost.Text = "Host:";
             // 
             // txtHost
             // 
+            this.txtHost.EditValue = "http://localhost";
             this.txtHost.Location = new System.Drawing.Point(145, 48);
             this.txtHost.Name = "txtHost";
             this.txtHost.Size = new System.Drawing.Size(190, 20);
             this.txtHost.TabIndex = 1;
             // 
-            // textEdit1
+            // txtPort
             // 
-            this.textEdit1.Location = new System.Drawing.Point(145, 79);
-            this.textEdit1.Name = "textEdit1";
-            this.textEdit1.Size = new System.Drawing.Size(190, 20);
-            this.textEdit1.TabIndex = 3;
+            this.txtPort.EditValue = "8010";
+            this.txtPort.Location = new System.Drawing.Point(145, 79);
+            this.txtPort.Name = "txtPort";
+            this.txtPort.Size = new System.Drawing.Size(190, 20);
+            this.txtPort.TabIndex = 3;
             // 
             // lblPort
             // 
@@ -87,12 +89,13 @@ namespace Octo_Streamer
             this.labelControl1.TabIndex = 4;
             this.labelControl1.Text = "* = Optional Field";
             // 
-            // textEdit2
+            // txtApiKey
             // 
-            this.textEdit2.Location = new System.Drawing.Point(145, 110);
-            this.textEdit2.Name = "textEdit2";
-            this.textEdit2.Size = new System.Drawing.Size(190, 20);
-            this.textEdit2.TabIndex = 6;
+            this.txtApiKey.EditValue = "8BC12566FE614CEC87DECA278267022F";
+            this.txtApiKey.Location = new System.Drawing.Point(145, 110);
+            this.txtApiKey.Name = "txtApiKey";
+            this.txtApiKey.Size = new System.Drawing.Size(190, 20);
+            this.txtApiKey.TabIndex = 6;
             // 
             // lblApiKey
             // 
@@ -156,10 +159,10 @@ namespace Octo_Streamer
             this.Controls.Add(this.lblConnectionStatus);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.linkApiKey);
-            this.Controls.Add(this.textEdit2);
+            this.Controls.Add(this.txtApiKey);
             this.Controls.Add(this.lblApiKey);
             this.Controls.Add(this.labelControl1);
-            this.Controls.Add(this.textEdit1);
+            this.Controls.Add(this.txtPort);
             this.Controls.Add(this.lblPort);
             this.Controls.Add(this.txtHost);
             this.Controls.Add(this.lblHost);
@@ -171,8 +174,8 @@ namespace Octo_Streamer
             this.Text = "frmConnection";
             this.Load += new System.EventHandler(this.frmConnection_Load);
             ((System.ComponentModel.ISupportInitialize)(this.txtHost.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit2.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPort.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtApiKey.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -182,10 +185,10 @@ namespace Octo_Streamer
 
         private DevExpress.XtraEditors.LabelControl lblHost;
         private DevExpress.XtraEditors.TextEdit txtHost;
-        private DevExpress.XtraEditors.TextEdit textEdit1;
+        private DevExpress.XtraEditors.TextEdit txtPort;
         private DevExpress.XtraEditors.LabelControl lblPort;
         private DevExpress.XtraEditors.LabelControl labelControl1;
-        private DevExpress.XtraEditors.TextEdit textEdit2;
+        private DevExpress.XtraEditors.TextEdit txtApiKey;
         private DevExpress.XtraEditors.LabelControl lblApiKey;
         private DevExpress.XtraEditors.HyperlinkLabelControl linkApiKey;
         private DevExpress.XtraEditors.SimpleButton btnConnect;
