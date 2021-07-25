@@ -51,6 +51,7 @@ namespace Octo_Streamer
 
         #endregion
 
+        #region Connnection Update Worker
         private void tmrUpdateConnectionData_Tick(object sender, EventArgs e)
         {
             if (csSettings.connectionAddress != null)
@@ -70,6 +71,8 @@ namespace Octo_Streamer
             }
         }
 
+        #endregion
+
         #region Remote Connection Establish
         private void tmrHandshake_Tick(object sender, EventArgs e)
         {
@@ -80,6 +83,12 @@ namespace Octo_Streamer
             // Access remote host process
             remoteServerHandshake(Properties.Settings.Default.Host, Properties.Settings.Default.Port, Properties.Settings.Default.ApiKey);
 
+        }
+
+        private void tmrLifeline_Tick(object sender, EventArgs e)
+        {
+            // Access remote host process
+            remoteServerHandshake(Properties.Settings.Default.Host, Properties.Settings.Default.Port, Properties.Settings.Default.ApiKey);
         }
 
         private void remoteServerHandshake(string host, string port, string apiKey)
@@ -145,6 +154,7 @@ namespace Octo_Streamer
 
         #endregion
 
+        #region DEV
         private void btnFlash_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.Host = "";
@@ -155,6 +165,12 @@ namespace Octo_Streamer
             Application.ExitThread();
         }
 
-        
+        #endregion
+
+        private void tsExitApplication_Click(object sender, EventArgs e)
+        {
+            // Exit Application
+            Application.ExitThread();
+        }
     }
 }
