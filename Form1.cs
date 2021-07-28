@@ -138,6 +138,10 @@ namespace Octo_Streamer
                     tmrLifeline.Start();
                 }
 
+                // start api handle
+                tmrApi.Enabled = true;
+                tmrApi.Start();
+
             }
             catch (Exception)
             {
@@ -167,10 +171,66 @@ namespace Octo_Streamer
 
         #endregion
 
+        #region Application Exit
         private void tsExitApplication_Click(object sender, EventArgs e)
         {
             // Exit Application
             Application.ExitThread();
         }
+        #endregion
+
+        private void linkDualznzGithub_Click(object sender, EventArgs e)
+        {
+            // Open dualznz github profile
+            System.Diagnostics.Process.Start("https://github.com/dualznz");
+        }
+
+        #region Main API Interaction
+
+
+        private void tmrApi_Tick(object sender, EventArgs e)
+        {
+            // Create connection to the api request declaration
+            apiRequest(Properties.Settings.Default.Host, Properties.Settings.Default.Port, Properties.Settings.Default.ApiKey);
+        }
+
+        private void apiRequest(string host, string port, string apiKey)
+        {
+            try
+            {
+                string portCheck = null;
+                if (port != null)
+                {
+                    portCheck = ":" + port;
+                }
+                else
+                {
+                    portCheck = null;
+                }
+
+                // Transmission Data (POST / GET)
+                string authServer = host + portCheck + "/api/job";
+
+                // Create request
+                HttpWebRequest request = (HttpWebRequest)
+                WebRequest.Create(authServer); request.KeepAlive = false;
+                request.Headers.Add("Authorization", "Bearer " + apiKey);
+                request.ProtocolVersion = HttpVersion.Version10;
+                request.Method = "GET";
+                request.Accept = "application/json";
+
+                // Await response from remote server
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                rtbPrinterStatus.Text = new StreamReader(response.GetResponseStream()).ReadToEnd();
+
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        #endregion
+
     }
 }

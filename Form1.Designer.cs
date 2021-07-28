@@ -50,9 +50,15 @@ namespace Octo_Streamer
             this.githubHomepageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.githubIssuesRequestsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
-            this.hyperlinkLabelControl1 = new DevExpress.XtraEditors.HyperlinkLabelControl();
+            this.linkDualznzGithub = new DevExpress.XtraEditors.HyperlinkLabelControl();
+            this.lblPrinterStatusTitle = new DevExpress.XtraEditors.LabelControl();
+            this.lblPrinterStatusValue = new DevExpress.XtraEditors.LabelControl();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.rtbPrinterStatus = new System.Windows.Forms.RichTextBox();
+            this.tmrApi = new System.Windows.Forms.Timer(this.components);
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tmrHandshake
@@ -97,15 +103,15 @@ namespace Octo_Streamer
             this.toolStripLblConnectionStatus,
             this.toolStripStatusLabel2,
             this.toolServerStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 237);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 343);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(507, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1044, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // btnFlash
             // 
-            this.btnFlash.Location = new System.Drawing.Point(566, 281);
+            this.btnFlash.Location = new System.Drawing.Point(494, 28);
             this.btnFlash.Name = "btnFlash";
             this.btnFlash.Size = new System.Drawing.Size(18, 21);
             this.btnFlash.TabIndex = 1;
@@ -127,7 +133,7 @@ namespace Octo_Streamer
             this.tsHelp});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(507, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1044, 25);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -145,7 +151,7 @@ namespace Octo_Streamer
             // tsExitApplication
             // 
             this.tsExitApplication.Name = "tsExitApplication";
-            this.tsExitApplication.Size = new System.Drawing.Size(180, 22);
+            this.tsExitApplication.Size = new System.Drawing.Size(93, 22);
             this.tsExitApplication.Text = "Exit";
             this.tsExitApplication.Click += new System.EventHandler(this.tsExitApplication_Click);
             // 
@@ -205,20 +211,63 @@ namespace Octo_Streamer
             this.labelControl1.TabIndex = 3;
             this.labelControl1.Text = "Developed By:";
             // 
-            // hyperlinkLabelControl1
+            // linkDualznzGithub
             // 
-            this.hyperlinkLabelControl1.Location = new System.Drawing.Point(452, 221);
-            this.hyperlinkLabelControl1.Name = "hyperlinkLabelControl1";
-            this.hyperlinkLabelControl1.Size = new System.Drawing.Size(37, 13);
-            this.hyperlinkLabelControl1.TabIndex = 4;
-            this.hyperlinkLabelControl1.Text = "Dualznz";
+            this.linkDualznzGithub.Location = new System.Drawing.Point(452, 221);
+            this.linkDualznzGithub.Name = "linkDualznzGithub";
+            this.linkDualznzGithub.Size = new System.Drawing.Size(37, 13);
+            this.linkDualznzGithub.TabIndex = 4;
+            this.linkDualznzGithub.Text = "Dualznz";
+            this.linkDualznzGithub.Click += new System.EventHandler(this.linkDualznzGithub_Click);
+            // 
+            // lblPrinterStatusTitle
+            // 
+            this.lblPrinterStatusTitle.Location = new System.Drawing.Point(9, 15);
+            this.lblPrinterStatusTitle.Name = "lblPrinterStatusTitle";
+            this.lblPrinterStatusTitle.Size = new System.Drawing.Size(70, 13);
+            this.lblPrinterStatusTitle.TabIndex = 5;
+            this.lblPrinterStatusTitle.Text = "Printer Status:";
+            // 
+            // lblPrinterStatusValue
+            // 
+            this.lblPrinterStatusValue.Location = new System.Drawing.Point(85, 15);
+            this.lblPrinterStatusValue.Name = "lblPrinterStatusValue";
+            this.lblPrinterStatusValue.Size = new System.Drawing.Size(99, 13);
+            this.lblPrinterStatusValue.TabIndex = 6;
+            this.lblPrinterStatusValue.Text = "lblPrinterStatusValue";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.lblPrinterStatusTitle);
+            this.panel1.Controls.Add(this.lblPrinterStatusValue);
+            this.panel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.panel1.Location = new System.Drawing.Point(12, 66);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(477, 149);
+            this.panel1.TabIndex = 10;
+            // 
+            // rtbPrinterStatus
+            // 
+            this.rtbPrinterStatus.Location = new System.Drawing.Point(518, 28);
+            this.rtbPrinterStatus.Name = "rtbPrinterStatus";
+            this.rtbPrinterStatus.Size = new System.Drawing.Size(514, 299);
+            this.rtbPrinterStatus.TabIndex = 12;
+            this.rtbPrinterStatus.TabStop = false;
+            this.rtbPrinterStatus.Text = "";
+            // 
+            // tmrApi
+            // 
+            this.tmrApi.Interval = 1000;
+            this.tmrApi.Tick += new System.EventHandler(this.tmrApi_Tick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(507, 259);
-            this.Controls.Add(this.hyperlinkLabelControl1);
+            this.ClientSize = new System.Drawing.Size(1044, 365);
+            this.Controls.Add(this.rtbPrinterStatus);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.linkDualznzGithub);
             this.Controls.Add(this.labelControl1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.btnFlash);
@@ -232,6 +281,8 @@ namespace Octo_Streamer
             this.statusStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -257,7 +308,12 @@ namespace Octo_Streamer
         private System.Windows.Forms.ToolStripMenuItem githubHomepageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem githubIssuesRequestsToolStripMenuItem;
         private DevExpress.XtraEditors.LabelControl labelControl1;
-        private DevExpress.XtraEditors.HyperlinkLabelControl hyperlinkLabelControl1;
+        private DevExpress.XtraEditors.HyperlinkLabelControl linkDualznzGithub;
+        private DevExpress.XtraEditors.LabelControl lblPrinterStatusTitle;
+        private DevExpress.XtraEditors.LabelControl lblPrinterStatusValue;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RichTextBox rtbPrinterStatus;
+        private System.Windows.Forms.Timer tmrApi;
     }
 }
 
