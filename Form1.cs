@@ -221,12 +221,46 @@ namespace Octo_Streamer
 
                 // Await response from remote server
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                rtbPrinterStatus.Text = new StreamReader(response.GetResponseStream()).ReadToEnd();
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    rtbPrinterStatus.Text = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                    csSettings.recievedData = rtbPrinterStatus.Text;
+                    processApiData(csSettings.recievedData);
+                }
 
             }
             catch (Exception)
             {
 
+            }
+        }
+
+        private void processApiData(string inputApiData)
+        {
+            try
+            {
+                // Decode api data into json variables
+                Newtonsoft.Json.Linq.JObject jObject = Newtonsoft.Json.Linq.JObject.Parse(inputApiData);
+
+                csSettings.state = jObject["state"].ToString();
+                lblPrinterStatusValue.Text = csSettings.state;
+
+                if (csSettings.state == "Printing")
+                {
+                    pnlActivePrint.Visible = true;
+
+                    csSettings.name = jObject["job"]["file"]["display"].ToString();
+                    lblCurrentFileName.Text = csSettings.name;
+                } else
+                {
+                    pnlActivePrint.Visible = false;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 

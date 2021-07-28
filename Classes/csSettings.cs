@@ -11,6 +11,7 @@ namespace Octo_Streamer
         public static string connectionAddress { get; set; }
         public static string ConnectionPort { get; set; }
         public static string connectionAuthToken { get; set; }
+        public static string recievedData { get; set; }
 
 
 

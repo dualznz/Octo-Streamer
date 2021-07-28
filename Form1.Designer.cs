@@ -56,9 +56,13 @@ namespace Octo_Streamer
             this.panel1 = new System.Windows.Forms.Panel();
             this.rtbPrinterStatus = new System.Windows.Forms.RichTextBox();
             this.tmrApi = new System.Windows.Forms.Timer(this.components);
+            this.pnlActivePrint = new System.Windows.Forms.Panel();
+            this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
+            this.lblCurrentFileName = new DevExpress.XtraEditors.LabelControl();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.pnlActivePrint.SuspendLayout();
             this.SuspendLayout();
             // 
             // tmrHandshake
@@ -238,6 +242,7 @@ namespace Octo_Streamer
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.pnlActivePrint);
             this.panel1.Controls.Add(this.lblPrinterStatusTitle);
             this.panel1.Controls.Add(this.lblPrinterStatusValue);
             this.panel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -259,6 +264,32 @@ namespace Octo_Streamer
             // 
             this.tmrApi.Interval = 1000;
             this.tmrApi.Tick += new System.EventHandler(this.tmrApi_Tick);
+            // 
+            // pnlActivePrint
+            // 
+            this.pnlActivePrint.Controls.Add(this.labelControl2);
+            this.pnlActivePrint.Controls.Add(this.lblCurrentFileName);
+            this.pnlActivePrint.Location = new System.Drawing.Point(3, 34);
+            this.pnlActivePrint.Name = "pnlActivePrint";
+            this.pnlActivePrint.Size = new System.Drawing.Size(471, 112);
+            this.pnlActivePrint.TabIndex = 13;
+            this.pnlActivePrint.Visible = false;
+            // 
+            // labelControl2
+            // 
+            this.labelControl2.Location = new System.Drawing.Point(6, 6);
+            this.labelControl2.Name = "labelControl2";
+            this.labelControl2.Size = new System.Drawing.Size(20, 13);
+            this.labelControl2.TabIndex = 7;
+            this.labelControl2.Text = "File:";
+            // 
+            // lblCurrentFileName
+            // 
+            this.lblCurrentFileName.Location = new System.Drawing.Point(32, 6);
+            this.lblCurrentFileName.Name = "lblCurrentFileName";
+            this.lblCurrentFileName.Size = new System.Drawing.Size(90, 13);
+            this.lblCurrentFileName.TabIndex = 8;
+            this.lblCurrentFileName.Text = "lblCurrentFileName";
             // 
             // Form1
             // 
@@ -283,6 +314,8 @@ namespace Octo_Streamer
             this.toolStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.pnlActivePrint.ResumeLayout(false);
+            this.pnlActivePrint.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -314,6 +347,9 @@ namespace Octo_Streamer
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.RichTextBox rtbPrinterStatus;
         private System.Windows.Forms.Timer tmrApi;
+        private System.Windows.Forms.Panel pnlActivePrint;
+        private DevExpress.XtraEditors.LabelControl labelControl2;
+        private DevExpress.XtraEditors.LabelControl lblCurrentFileName;
     }
 }
 
