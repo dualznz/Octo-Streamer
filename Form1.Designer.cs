@@ -53,15 +53,16 @@ namespace Octo_Streamer
             this.linkDualznzGithub = new DevExpress.XtraEditors.HyperlinkLabelControl();
             this.lblPrinterStatusTitle = new DevExpress.XtraEditors.LabelControl();
             this.lblPrinterStatusValue = new DevExpress.XtraEditors.LabelControl();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.rtbPrinterStatus = new System.Windows.Forms.RichTextBox();
-            this.tmrApi = new System.Windows.Forms.Timer(this.components);
+            this.pnlMainDisplay = new System.Windows.Forms.Panel();
             this.pnlActivePrint = new System.Windows.Forms.Panel();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.lblCurrentFileName = new DevExpress.XtraEditors.LabelControl();
+            this.rtbPrinterStatus = new System.Windows.Forms.RichTextBox();
+            this.tmrApi = new System.Windows.Forms.Timer(this.components);
+            this.btnConnect = new DevExpress.XtraEditors.SimpleButton();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.pnlMainDisplay.SuspendLayout();
             this.pnlActivePrint.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -155,7 +156,7 @@ namespace Octo_Streamer
             // tsExitApplication
             // 
             this.tsExitApplication.Name = "tsExitApplication";
-            this.tsExitApplication.Size = new System.Drawing.Size(93, 22);
+            this.tsExitApplication.Size = new System.Drawing.Size(180, 22);
             this.tsExitApplication.Text = "Exit";
             this.tsExitApplication.Click += new System.EventHandler(this.tsExitApplication_Click);
             // 
@@ -209,7 +210,7 @@ namespace Octo_Streamer
             // 
             // labelControl1
             // 
-            this.labelControl1.Location = new System.Drawing.Point(376, 221);
+            this.labelControl1.Location = new System.Drawing.Point(376, 253);
             this.labelControl1.Name = "labelControl1";
             this.labelControl1.Size = new System.Drawing.Size(70, 13);
             this.labelControl1.TabIndex = 3;
@@ -217,7 +218,7 @@ namespace Octo_Streamer
             // 
             // linkDualznzGithub
             // 
-            this.linkDualznzGithub.Location = new System.Drawing.Point(452, 221);
+            this.linkDualznzGithub.Location = new System.Drawing.Point(452, 253);
             this.linkDualznzGithub.Name = "linkDualznzGithub";
             this.linkDualznzGithub.Size = new System.Drawing.Size(37, 13);
             this.linkDualznzGithub.TabIndex = 4;
@@ -234,36 +235,25 @@ namespace Octo_Streamer
             // 
             // lblPrinterStatusValue
             // 
+            this.lblPrinterStatusValue.Appearance.FontStyleDelta = System.Drawing.FontStyle.Bold;
+            this.lblPrinterStatusValue.Appearance.Options.UseFont = true;
             this.lblPrinterStatusValue.Location = new System.Drawing.Point(85, 15);
             this.lblPrinterStatusValue.Name = "lblPrinterStatusValue";
-            this.lblPrinterStatusValue.Size = new System.Drawing.Size(99, 13);
+            this.lblPrinterStatusValue.Size = new System.Drawing.Size(120, 13);
             this.lblPrinterStatusValue.TabIndex = 6;
             this.lblPrinterStatusValue.Text = "lblPrinterStatusValue";
             // 
-            // panel1
+            // pnlMainDisplay
             // 
-            this.panel1.Controls.Add(this.pnlActivePrint);
-            this.panel1.Controls.Add(this.lblPrinterStatusTitle);
-            this.panel1.Controls.Add(this.lblPrinterStatusValue);
-            this.panel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel1.Location = new System.Drawing.Point(12, 66);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(477, 149);
-            this.panel1.TabIndex = 10;
-            // 
-            // rtbPrinterStatus
-            // 
-            this.rtbPrinterStatus.Location = new System.Drawing.Point(518, 28);
-            this.rtbPrinterStatus.Name = "rtbPrinterStatus";
-            this.rtbPrinterStatus.Size = new System.Drawing.Size(514, 299);
-            this.rtbPrinterStatus.TabIndex = 12;
-            this.rtbPrinterStatus.TabStop = false;
-            this.rtbPrinterStatus.Text = "";
-            // 
-            // tmrApi
-            // 
-            this.tmrApi.Interval = 1000;
-            this.tmrApi.Tick += new System.EventHandler(this.tmrApi_Tick);
+            this.pnlMainDisplay.Controls.Add(this.pnlActivePrint);
+            this.pnlMainDisplay.Controls.Add(this.lblPrinterStatusTitle);
+            this.pnlMainDisplay.Controls.Add(this.lblPrinterStatusValue);
+            this.pnlMainDisplay.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pnlMainDisplay.Location = new System.Drawing.Point(12, 98);
+            this.pnlMainDisplay.Name = "pnlMainDisplay";
+            this.pnlMainDisplay.Size = new System.Drawing.Size(477, 149);
+            this.pnlMainDisplay.TabIndex = 10;
+            this.pnlMainDisplay.Visible = false;
             // 
             // pnlActivePrint
             // 
@@ -291,18 +281,43 @@ namespace Octo_Streamer
             this.lblCurrentFileName.TabIndex = 8;
             this.lblCurrentFileName.Text = "lblCurrentFileName";
             // 
+            // rtbPrinterStatus
+            // 
+            this.rtbPrinterStatus.Location = new System.Drawing.Point(518, 28);
+            this.rtbPrinterStatus.Name = "rtbPrinterStatus";
+            this.rtbPrinterStatus.Size = new System.Drawing.Size(514, 299);
+            this.rtbPrinterStatus.TabIndex = 12;
+            this.rtbPrinterStatus.TabStop = false;
+            this.rtbPrinterStatus.Text = "";
+            // 
+            // tmrApi
+            // 
+            this.tmrApi.Interval = 1000;
+            this.tmrApi.Tick += new System.EventHandler(this.tmrApi_Tick);
+            // 
+            // btnConnect
+            // 
+            this.btnConnect.Location = new System.Drawing.Point(12, 69);
+            this.btnConnect.Name = "btnConnect";
+            this.btnConnect.Size = new System.Drawing.Size(127, 23);
+            this.btnConnect.TabIndex = 13;
+            this.btnConnect.Text = "Connect To Server";
+            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1044, 365);
+            this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.rtbPrinterStatus);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pnlMainDisplay);
             this.Controls.Add(this.linkDualznzGithub);
             this.Controls.Add(this.labelControl1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.btnFlash);
             this.Controls.Add(this.statusStrip1);
+            this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -312,8 +327,8 @@ namespace Octo_Streamer
             this.statusStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.pnlMainDisplay.ResumeLayout(false);
+            this.pnlMainDisplay.PerformLayout();
             this.pnlActivePrint.ResumeLayout(false);
             this.pnlActivePrint.PerformLayout();
             this.ResumeLayout(false);
@@ -344,12 +359,13 @@ namespace Octo_Streamer
         private DevExpress.XtraEditors.HyperlinkLabelControl linkDualznzGithub;
         private DevExpress.XtraEditors.LabelControl lblPrinterStatusTitle;
         private DevExpress.XtraEditors.LabelControl lblPrinterStatusValue;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnlMainDisplay;
         private System.Windows.Forms.RichTextBox rtbPrinterStatus;
         private System.Windows.Forms.Timer tmrApi;
         private System.Windows.Forms.Panel pnlActivePrint;
         private DevExpress.XtraEditors.LabelControl labelControl2;
         private DevExpress.XtraEditors.LabelControl lblCurrentFileName;
+        private DevExpress.XtraEditors.SimpleButton btnConnect;
     }
 }
 
