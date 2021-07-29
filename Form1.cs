@@ -56,6 +56,7 @@ namespace Octo_Streamer
 
         #endregion
 
+        #region Connect Button
         private void btnConnect_Click(object sender, EventArgs e)
         {
             switch (connectionState)
@@ -88,6 +89,9 @@ namespace Octo_Streamer
                     // Change connection state
                     connectionState = 0;
 
+                    // Disable job panel
+                    pnlActivePrint.Visible = false;
+
                     // Update tool stop label
                     toolServerStatus.ForeColor = Color.Black;
                     toolServerStatus.Text = "Waiting for connection...";
@@ -114,6 +118,8 @@ namespace Octo_Streamer
                     break;
             }
         }
+
+        #endregion
 
         #region Connnection Update Worker
         private void tmrUpdateConnectionData_Tick(object sender, EventArgs e)
@@ -246,11 +252,13 @@ namespace Octo_Streamer
         }
         #endregion
 
+        #region Github URL
         private void linkDualznzGithub_Click(object sender, EventArgs e)
         {
             // Open dualznz github profile
             System.Diagnostics.Process.Start("https://github.com/dualznz");
         }
+        #endregion
 
         #region Main API Interaction
 
@@ -258,10 +266,11 @@ namespace Octo_Streamer
         private void tmrApi_Tick(object sender, EventArgs e)
         {
             // Create connection to the api request declaration
-            apiRequest(Properties.Settings.Default.Host, Properties.Settings.Default.Port, Properties.Settings.Default.ApiKey);
+            apiJobRequest(Properties.Settings.Default.Host, Properties.Settings.Default.Port, Properties.Settings.Default.ApiKey);
         }
 
-        private void apiRequest(string host, string port, string apiKey)
+        #region Job Data
+        private void apiJobRequest(string host, string port, string apiKey)
         {
             try
             {
@@ -293,7 +302,7 @@ namespace Octo_Streamer
                 {
                     rtbPrinterStatus.Text = new StreamReader(response.GetResponseStream()).ReadToEnd();
                     csSettings.recievedData = rtbPrinterStatus.Text;
-                    processApiData(csSettings.recievedData);
+                    processApiJobData(csSettings.recievedData);
                 }
 
             }
@@ -303,7 +312,7 @@ namespace Octo_Streamer
             }
         }
 
-        private void processApiData(string inputApiData)
+        private void processApiJobData(string inputApiData)
         {
             try
             {
@@ -319,7 +328,22 @@ namespace Octo_Streamer
 
                     csSettings.name = jObject["job"]["file"]["display"].ToString();
                     lblCurrentFileName.Text = csSettings.name;
-                } else
+
+                    csSettings.completion = jObject["progress"]["completion"].ToString();
+                    double inputCompletion = Convert.ToDouble(csSettings.completion);
+                    lblCompletedValue.Text = inputCompletion.ToString("N2") + " %";
+
+                    csSettings.date = Convert.ToInt32(jObject["job"]["file"]["date"].ToString());
+                    lblDateStartedValue.Text = TimeSpanConverterDate(csSettings.date);
+
+                    csSettings.printTime = Convert.ToInt32(jObject["progress"]["printTime"].ToString());
+                    lblTimeElapsed.Text = TimeSpanConverter(csSettings.printTime);
+
+                    csSettings.printTimeLeft = Convert.ToInt32(jObject["progress"]["printTimeLeft"].ToString());
+                    lblTimeLeft.Text = TimeSpanConverter(csSettings.printTimeLeft);
+
+                }
+                else
                 {
                     pnlActivePrint.Visible = false;
                 }
@@ -333,6 +357,85 @@ namespace Octo_Streamer
 
         #endregion
 
-        
+        #region Printer Data
+        private void apiPrinterRequest(string host, string port, string apiKey)
+        {
+            try
+            {
+                string portCheck = null;
+                if (port != null)
+                {
+                    portCheck = ":" + port;
+                }
+                else
+                {
+                    portCheck = null;
+                }
+
+                // Transmission Data (POST / GET)
+                string authServer = host + portCheck + "/api/printer?history=false";
+
+                // Create request
+                HttpWebRequest request = (HttpWebRequest)
+                WebRequest.Create(authServer); request.KeepAlive = false;
+                request.Headers.Add("Authorization", "Bearer " + apiKey);
+                request.ProtocolVersion = HttpVersion.Version10;
+                request.Method = "GET";
+                request.Accept = "application/json";
+
+                // Await response from remote server
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    csSettings.recievedData = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                    processApiJobData(csSettings.recievedData);
+                }
+
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void processApiPrinterData(string inputApiData)
+        {
+            try
+            {
+                // Decode api data into json variables
+                Newtonsoft.Json.Linq.JObject jObject = Newtonsoft.Json.Linq.JObject.Parse(inputApiData);
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        #endregion
+
+
+
+        #endregion
+
+
+        public string TimeSpanConverter(int time)
+        {
+            var timeSpan = TimeSpan.FromSeconds(time);
+            int hr = timeSpan.Hours;
+            int mn = timeSpan.Minutes;
+
+            return " " + hr + ":" + mn + " h";
+        }
+
+        public string TimeSpanConverterDate(int time)
+        {
+            var localDateTime = DateTimeOffset.FromUnixTimeSeconds(time).DateTime.ToLocalTime();
+            return Convert.ToString(localDateTime);
+        }
+
+
     }
 }

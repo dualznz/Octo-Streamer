@@ -12,6 +12,7 @@ namespace Octo_Streamer
         public static string ConnectionPort { get; set; }
         public static string connectionAuthToken { get; set; }
         public static string recievedData { get; set; }
+        public static string recievedPrinterData { get; set; }
 
 
 
@@ -31,9 +32,15 @@ namespace Octo_Streamer
         public static string user { get; set; }
 
         // progress
-        public static decimal completion { get; set; }
+        public static string completion { get; set; }
         public static int filepos { get; set; }
         public static int printTime { get; set; }
         public static int printTimeLeft { get; set; }
+
+        // printer
+        public static decimal bedActual { get; set; }
+        public static decimal bedTarget { get; set; }
+        public static decimal toolActual { get; set; }
+        public static decimal toolTarget { get; set; }
     }
 }
