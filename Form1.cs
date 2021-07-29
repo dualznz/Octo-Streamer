@@ -267,6 +267,8 @@ namespace Octo_Streamer
         {
             // Create connection to the api request declaration
             apiJobRequest(Properties.Settings.Default.Host, Properties.Settings.Default.Port, Properties.Settings.Default.ApiKey);
+
+            apiPrinterRequest(Properties.Settings.Default.Host, Properties.Settings.Default.Port, Properties.Settings.Default.ApiKey);
         }
 
         #region Job Data
@@ -303,6 +305,7 @@ namespace Octo_Streamer
                     rtbPrinterStatus.Text = new StreamReader(response.GetResponseStream()).ReadToEnd();
                     csSettings.recievedData = rtbPrinterStatus.Text;
                     processApiJobData(csSettings.recievedData);
+                    processApiPrinterData(csSettings.recievedPrinterData);
                 }
 
             }
@@ -322,36 +325,29 @@ namespace Octo_Streamer
                 csSettings.state = jObject["state"].ToString();
                 lblPrinterStatusValue.Text = csSettings.state;
 
-                if (csSettings.state == "Printing")
-                {
-                    pnlActivePrint.Visible = true;
+                pnlActivePrint.Visible = true;
 
-                    csSettings.name = jObject["job"]["file"]["display"].ToString();
-                    lblCurrentFileName.Text = csSettings.name;
+                csSettings.name = jObject["job"]["file"]["display"].ToString();
+                lblCurrentFileName.Text = csSettings.name;
 
-                    csSettings.completion = jObject["progress"]["completion"].ToString();
-                    double inputCompletion = Convert.ToDouble(csSettings.completion);
-                    lblCompletedValue.Text = inputCompletion.ToString("N2") + " %";
+                csSettings.completion = jObject["progress"]["completion"].ToString();
+                double inputCompletion = Convert.ToDouble(csSettings.completion);
+                lblCompletedValue.Text = inputCompletion.ToString("N2") + " %";
 
-                    csSettings.date = Convert.ToInt32(jObject["job"]["file"]["date"].ToString());
-                    lblDateStartedValue.Text = TimeSpanConverterDate(csSettings.date);
+                csSettings.date = Convert.ToInt32(jObject["job"]["file"]["date"].ToString());
+                lblDateStartedValue.Text = TimeSpanConverterDate(csSettings.date);
 
-                    csSettings.printTime = Convert.ToInt32(jObject["progress"]["printTime"].ToString());
-                    lblTimeElapsed.Text = TimeSpanConverter(csSettings.printTime);
+                csSettings.printTime = Convert.ToInt32(jObject["progress"]["printTime"].ToString());
+                lblTimeElapsed.Text = TimeSpanConverter(csSettings.printTime);
 
-                    csSettings.printTimeLeft = Convert.ToInt32(jObject["progress"]["printTimeLeft"].ToString());
-                    lblTimeLeft.Text = TimeSpanConverter(csSettings.printTimeLeft);
+                csSettings.printTimeLeft = Convert.ToInt32(jObject["progress"]["printTimeLeft"].ToString());
+                lblTimeLeft.Text = TimeSpanConverter(csSettings.printTimeLeft);
 
-                }
-                else
-                {
-                    pnlActivePrint.Visible = false;
-                }
             }
             catch (Exception)
             {
 
-                throw;
+                //throw;
             }
         }
 
@@ -388,8 +384,8 @@ namespace Octo_Streamer
 
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    csSettings.recievedData = new StreamReader(response.GetResponseStream()).ReadToEnd();
-                    processApiJobData(csSettings.recievedData);
+                    csSettings.recievedPrinterData = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                    processApiPrinterData(csSettings.recievedPrinterData);
                 }
 
             }
@@ -406,12 +402,22 @@ namespace Octo_Streamer
                 // Decode api data into json variables
                 Newtonsoft.Json.Linq.JObject jObject = Newtonsoft.Json.Linq.JObject.Parse(inputApiData);
 
+                csSettings.toolActual = Convert.ToDecimal(jObject["temperature"]["tool0"]["actual"].ToString());
+                lblToolActual.Text = string.Format("{0} \u00B0C /", csSettings.toolActual);
 
+                csSettings.toolTarget = Convert.ToDecimal(jObject["temperature"]["tool0"]["target"].ToString());
+                lblToolTarget.Text = string.Format("{0} \u00B0C target", csSettings.toolTarget);
+
+                csSettings.bedActual = Convert.ToDecimal(jObject["temperature"]["bed"]["actual"].ToString());
+                lblBedActual.Text = string.Format("{0} \u00B0C /", csSettings.bedActual);
+
+                csSettings.bedTarget = Convert.ToDecimal(jObject["temperature"]["bed"]["target"].ToString());
+                lblBedTarget.Text = string.Format("{0} \u00B0C target", csSettings.bedTarget);
             }
             catch (Exception)
             {
 
-                throw;
+                //throw;
             }
         }
         #endregion
