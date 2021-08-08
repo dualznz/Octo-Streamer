@@ -16,7 +16,6 @@ namespace Octo_Streamer
     {
         // Form declarations
         int remoteConnection = 0;
-        int connectionState = 0;
 
         public Form1()
         {
@@ -48,12 +47,24 @@ namespace Octo_Streamer
 
             if (Properties.Settings.Default.Host == "")
             {
+                // Change state for the connection to the server button event
+                tsConnect.Enabled = false;
+                tsConnect.Text = "Connect To Server";
+                tsConnect.ForeColor = Color.DarkGreen;
+
                 // start receive connection timer
                 tmrUpdateConnectionData.Start();
 
                 // No connection settings have been found, open new connection window
                 frmConnection connectionWindow = new frmConnection();
                 connectionWindow.Show();
+            }
+            else
+            {
+                // Change state for the connection to the server button event
+                tsConnect.Enabled = true;
+                tsConnect.Text = "Connect To Server";
+                tsConnect.ForeColor = Color.DarkGreen;
             }
         }
 
@@ -75,7 +86,7 @@ namespace Octo_Streamer
         #endregion
 
         #region Connect Button
-        private void btnConnect_Click(object sender, EventArgs e)
+        private void tsConnect_Click(object sender, EventArgs e)
         {
             switch (csSettings.connectionActive)
             {
@@ -91,7 +102,8 @@ namespace Octo_Streamer
                     csSettings.connectionActive = 1;
 
                     // Update connection button to disconnect state
-                    btnConnect.Text = "Disconnect From Server";
+                    tsConnect.Text = "Disconnect From Server";
+                    tsConnect.ForeColor = Color.Red;
                     break;
                 case 1:
                     // Connection has been made to the remote server
@@ -115,7 +127,8 @@ namespace Octo_Streamer
                     lblPrinterStatusValue.Text = "Waiting for connection";
 
                     // Update connection button to disconnect state
-                    btnConnect.Text = "Connect To Server";
+                    tsConnect.Text = "Connect To Server";
+                    tsConnect.ForeColor = Color.DarkGreen;
 
                     // Reset value labels
                     resetValueLabels();
@@ -132,7 +145,73 @@ namespace Octo_Streamer
                     csSettings.connectionActive = 1;
 
                     // Update connection button to disconnect state
-                    btnConnect.Text = "Disconnect From Server";
+                    tsConnect.Text = "Disconnect From Server";
+                    tsConnect.ForeColor = Color.Red;
+                    break;
+            }
+        }
+
+        private void btnConnect_Click(object sender, EventArgs e)
+        {
+            switch (csSettings.connectionActive)
+            {
+                case 0:
+                    // No connection has been made to the remote server
+                    // Enable api connection
+
+                    // Begin host transaction timer
+                    tmrHandshake.Enabled = true;
+                    tmrHandshake.Start();
+
+                    // Change connection state
+                    csSettings.connectionActive = 1;
+
+                    // Update connection button to disconnect state
+                    tsConnect.Text = "Disconnect From Server";
+                    tsConnect.ForeColor = Color.Red;
+                    break;
+                case 1:
+                    // Connection has been made to the remote server
+                    // diable api connection
+
+                    // Stop remote api connection
+                    tmrApi.Enabled = false;
+                    tmrApi.Stop();
+
+                    tmrLifeline.Enabled = false;
+                    tmrLifeline.Stop();
+
+                    // Change connection state
+                    csSettings.connectionActive = 0;
+
+                    // Update tool stop label
+                    toolServerStatus.ForeColor = Color.Black;
+                    toolServerStatus.Text = "Waiting for connection...";
+
+                    // Reset misc labels
+                    lblPrinterStatusValue.Text = "Waiting for connection";
+
+                    // Update connection button to disconnect state
+                    tsConnect.Text = "Connect To Server";
+                    tsConnect.ForeColor = Color.DarkGreen;
+
+                    // Reset value labels
+                    resetValueLabels();
+                    break;
+                default:
+                    // No connection has been made to the remote server
+                    // Enable api connection
+
+                    // Begin host transaction timer
+                    tmrHandshake.Enabled = true;
+                    tmrHandshake.Start();
+
+                    // Change connection state
+                    csSettings.connectionActive = 1;
+
+                    // Update connection button to disconnect state
+                    tsConnect.Text = "Disconnect From Server";
+                    tsConnect.ForeColor = Color.Red;
                     break;
             }
         }
@@ -255,7 +334,8 @@ namespace Octo_Streamer
                 toolServerStatus.Text = "Connection failed...";
 
                 // Update connection button to disconnect state
-                btnConnect.Text = "Connect To Server";
+                tsConnect.Text = "Connect To Server";
+                tsConnect.ForeColor = Color.DarkGreen;
 
                 // Reset value labels
                 resetValueLabels();
@@ -377,7 +457,6 @@ namespace Octo_Streamer
 
                         double inputCompletion = Convert.ToDouble(csSettings.completion);
                         lblCompletedValue.Text = inputCompletion.ToString("N2") + " %";
-                        progressCompletion.EditValue = 10;
 
                         lblDateStartedValue.Text = TimeSpanConverterDate(csSettings.date);
 
@@ -392,7 +471,6 @@ namespace Octo_Streamer
                         lblDateStartedValue.Text = "NaN";
                         lblCurrentFileName.Text = "NaN";
                         lblCompletedValue.Text = "NaN";
-                        progressCompletion.EditValue = 10;
                         break;
                 }
                 
@@ -529,5 +607,6 @@ namespace Octo_Streamer
             frmConnection connectionWindow = new frmConnection();
             connectionWindow.Show();
         }
+
     }
 }
