@@ -34,14 +34,14 @@ namespace Octo_Streamer
             toolServerStatus.ForeColor = Color.Black;
             toolServerStatus.Text = "Waiting for connection...";
 
-            // Hide main panel
-            pnlMainDisplay.Visible = false;
-
             // Reset misc labels
             lblPrinterStatusValue.Text = "Waiting for connection";
 
-            // Hide main panel
+            // Show main panel
             pnlMainDisplay.Visible = true;
+
+            // Reset value labels
+            resetValueLabels();
 
             if (Properties.Settings.Default.Host == "")
             {
@@ -54,6 +54,21 @@ namespace Octo_Streamer
             }
         }
 
+        #endregion
+
+        #region Label Resets
+        public void resetValueLabels()
+        {
+            lblBedActual.Text = "NaN";
+            lblBedTarget.Text = "NaN";
+            lblToolActual.Text = "NaN";
+            lblToolTarget.Text = "NaN";
+            lblTimeElapsed.Text = "NaN";
+            lblTimeLeft.Text = "NaN";
+            lblDateStartedValue.Text = "NaN";
+            lblCurrentFileName.Text = "NaN";
+            lblCompletedValue.Text = "NaN";
+        }
         #endregion
 
         #region Connect Button
@@ -89,9 +104,6 @@ namespace Octo_Streamer
                     // Change connection state
                     connectionState = 0;
 
-                    // Disable job panel
-                    pnlActivePrint.Visible = false;
-
                     // Update tool stop label
                     toolServerStatus.ForeColor = Color.Black;
                     toolServerStatus.Text = "Waiting for connection...";
@@ -101,6 +113,9 @@ namespace Octo_Streamer
 
                     // Update connection button to disconnect state
                     btnConnect.Text = "Connect To Server";
+
+                    // Reset value labels
+                    resetValueLabels();
                     break;
                 default:
                     // No connection has been made to the remote server
@@ -151,7 +166,7 @@ namespace Octo_Streamer
             tmrHandshake.Enabled = false;
 
             // Enable main panel
-            pnlMainDisplay.Visible = true;
+            //pnlMainDisplay.Visible = true;
 
             // Access remote host process
             remoteServerHandshake(Properties.Settings.Default.Host, Properties.Settings.Default.Port, Properties.Settings.Default.ApiKey);
@@ -197,23 +212,26 @@ namespace Octo_Streamer
                 // Close remote connection
                 response.Close();
 
-                // Update connection label with confirmation
-                toolServerStatus.ForeColor = Color.DarkGreen;
-                toolServerStatus.Text = "Connection established...";
-
-                // Enable percistant handshake to remote server
-                remoteConnection = 1;
-
-                if (remoteConnection == 1)
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    // Set a percistant handshake to remote server (every 1 minute)
-                    tmrLifeline.Enabled = true;
-                    tmrLifeline.Start();
-                }
+                    // Update connection label with confirmation
+                    toolServerStatus.ForeColor = Color.DarkGreen;
+                    toolServerStatus.Text = "Connection established...";
 
-                // start api handle
-                tmrApi.Enabled = true;
-                tmrApi.Start();
+                    // Enable percistant handshake to remote server
+                    remoteConnection = 1;
+
+                    if (remoteConnection == 1)
+                    {
+                        // Set a percistant handshake to remote server (every 1 seconds)
+                        tmrLifeline.Enabled = true;
+                        tmrLifeline.Start();
+                    }
+
+                    // start api handle
+                    tmrApi.Enabled = true;
+                    tmrApi.Start();
+                }
 
             }
             catch (Exception)
@@ -223,9 +241,15 @@ namespace Octo_Streamer
                 tmrLifeline.Stop();
                 tmrLifeline.Enabled = false;
 
+                tmrApi.Enabled = false;
+                tmrApi.Stop();
+
                 // Update connection label with failure
                 toolServerStatus.ForeColor = Color.Red;
                 toolServerStatus.Text = "Connection failed...";
+
+                // Reset value labels
+                resetValueLabels();
             }
         }
 
@@ -267,7 +291,6 @@ namespace Octo_Streamer
         {
             // Create connection to the api request declaration
             apiJobRequest(Properties.Settings.Default.Host, Properties.Settings.Default.Port, Properties.Settings.Default.ApiKey);
-
             apiPrinterRequest(Properties.Settings.Default.Host, Properties.Settings.Default.Port, Properties.Settings.Default.ApiKey);
         }
 
@@ -311,7 +334,8 @@ namespace Octo_Streamer
             }
             catch (Exception)
             {
-
+                // Reset value labels
+                resetValueLabels();
             }
         }
 
@@ -324,8 +348,6 @@ namespace Octo_Streamer
 
                 csSettings.state = jObject["state"].ToString();
                 lblPrinterStatusValue.Text = csSettings.state;
-
-                pnlActivePrint.Visible = true;
 
                 csSettings.name = jObject["job"]["file"]["display"].ToString();
                 lblCurrentFileName.Text = csSettings.name;
@@ -346,8 +368,8 @@ namespace Octo_Streamer
             }
             catch (Exception)
             {
-
-                //throw;
+                // Reset value labels
+                resetValueLabels();
             }
         }
 
@@ -391,7 +413,8 @@ namespace Octo_Streamer
             }
             catch (Exception)
             {
-
+                // Reset value labels
+                resetValueLabels();
             }
         }
 
@@ -402,22 +425,33 @@ namespace Octo_Streamer
                 // Decode api data into json variables
                 Newtonsoft.Json.Linq.JObject jObject = Newtonsoft.Json.Linq.JObject.Parse(inputApiData);
 
-                csSettings.toolActual = Convert.ToDecimal(jObject["temperature"]["tool0"]["actual"].ToString());
-                lblToolActual.Text = string.Format("{0} \u00B0C /", csSettings.toolActual);
+                // Available declarations
+                //https://docs.octoprint.org/en/master/api/printer.html#retrieve-the-current-printer-state
 
-                csSettings.toolTarget = Convert.ToDecimal(jObject["temperature"]["tool0"]["target"].ToString());
-                lblToolTarget.Text = string.Format("{0} \u00B0C target", csSettings.toolTarget);
+                if (jObject["state"]["flags"]["printing"].ToString() == "True")
+                {
+                    // Job is printing
+                    csSettings.toolActual = Convert.ToDecimal(jObject["temperature"]["tool0"]["actual"].ToString());
+                    lblToolActual.Text = string.Format("{0} \u00B0C /", csSettings.toolActual);
 
-                csSettings.bedActual = Convert.ToDecimal(jObject["temperature"]["bed"]["actual"].ToString());
-                lblBedActual.Text = string.Format("{0} \u00B0C /", csSettings.bedActual);
+                    csSettings.toolTarget = Convert.ToDecimal(jObject["temperature"]["tool0"]["target"].ToString());
+                    lblToolTarget.Text = string.Format("{0} \u00B0C target", csSettings.toolTarget);
 
-                csSettings.bedTarget = Convert.ToDecimal(jObject["temperature"]["bed"]["target"].ToString());
-                lblBedTarget.Text = string.Format("{0} \u00B0C target", csSettings.bedTarget);
+                    csSettings.bedActual = Convert.ToDecimal(jObject["temperature"]["bed"]["actual"].ToString());
+                    lblBedActual.Text = string.Format("{0} \u00B0C /", csSettings.bedActual);
+
+                    csSettings.bedTarget = Convert.ToDecimal(jObject["temperature"]["bed"]["target"].ToString());
+                    lblBedTarget.Text = string.Format("{0} \u00B0C target", csSettings.bedTarget);
+                }
+                else if (jObject["state"]["flags"]["ready"].ToString() == "True")
+                {
+                    // Job is idle but the printer is ready to recieve data
+                    // Reset the printer data fields
+                }
             }
             catch (Exception)
             {
 
-                //throw;
             }
         }
         #endregion

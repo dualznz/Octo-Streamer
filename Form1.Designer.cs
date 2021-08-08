@@ -55,6 +55,14 @@ namespace Octo_Streamer
             this.lblPrinterStatusValue = new DevExpress.XtraEditors.LabelControl();
             this.pnlMainDisplay = new System.Windows.Forms.Panel();
             this.pnlActivePrint = new System.Windows.Forms.Panel();
+            this.lblBedTarget = new DevExpress.XtraEditors.LabelControl();
+            this.lblBedActual = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl13 = new DevExpress.XtraEditors.LabelControl();
+            this.separatorControl5 = new DevExpress.XtraEditors.SeparatorControl();
+            this.lblToolTarget = new DevExpress.XtraEditors.LabelControl();
+            this.lblToolActual = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl10 = new DevExpress.XtraEditors.LabelControl();
+            this.separatorControl4 = new DevExpress.XtraEditors.SeparatorControl();
             this.labelControl9 = new DevExpress.XtraEditors.LabelControl();
             this.separatorControl3 = new DevExpress.XtraEditors.SeparatorControl();
             this.labelControl8 = new DevExpress.XtraEditors.LabelControl();
@@ -74,23 +82,15 @@ namespace Octo_Streamer
             this.rtbPrinterStatus = new System.Windows.Forms.RichTextBox();
             this.tmrApi = new System.Windows.Forms.Timer(this.components);
             this.btnConnect = new DevExpress.XtraEditors.SimpleButton();
-            this.labelControl10 = new DevExpress.XtraEditors.LabelControl();
-            this.separatorControl4 = new DevExpress.XtraEditors.SeparatorControl();
-            this.lblToolActual = new DevExpress.XtraEditors.LabelControl();
-            this.lblToolTarget = new DevExpress.XtraEditors.LabelControl();
-            this.lblBedTarget = new DevExpress.XtraEditors.LabelControl();
-            this.lblBedActual = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl13 = new DevExpress.XtraEditors.LabelControl();
-            this.separatorControl5 = new DevExpress.XtraEditors.SeparatorControl();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.pnlMainDisplay.SuspendLayout();
             this.pnlActivePrint.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.separatorControl5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.separatorControl4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.separatorControl4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.separatorControl5)).BeginInit();
             this.SuspendLayout();
             // 
             // tmrHandshake
@@ -100,7 +100,7 @@ namespace Octo_Streamer
             // 
             // tmrLifeline
             // 
-            this.tmrLifeline.Interval = 60000;
+            this.tmrLifeline.Interval = 30000;
             this.tmrLifeline.Tick += new System.EventHandler(this.tmrLifeline_Tick);
             // 
             // toolStripStatusLabel1
@@ -135,9 +135,9 @@ namespace Octo_Streamer
             this.toolStripLblConnectionStatus,
             this.toolStripStatusLabel2,
             this.toolServerStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 426);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 478);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(413, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(635, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -154,7 +154,7 @@ namespace Octo_Streamer
             // tmrUpdateConnectionData
             // 
             this.tmrUpdateConnectionData.Enabled = true;
-            this.tmrUpdateConnectionData.Interval = 500;
+            this.tmrUpdateConnectionData.Interval = 1000;
             this.tmrUpdateConnectionData.Tick += new System.EventHandler(this.tmrUpdateConnectionData_Tick);
             // 
             // toolStrip1
@@ -165,7 +165,7 @@ namespace Octo_Streamer
             this.tsHelp});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(413, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(635, 25);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -285,40 +285,117 @@ namespace Octo_Streamer
             // pnlActivePrint
             // 
             this.pnlActivePrint.Controls.Add(this.lblBedTarget);
+            this.pnlActivePrint.Controls.Add(this.labelControl8);
+            this.pnlActivePrint.Controls.Add(this.lblTimeLeft);
             this.pnlActivePrint.Controls.Add(this.lblBedActual);
+            this.pnlActivePrint.Controls.Add(this.labelControl7);
+            this.pnlActivePrint.Controls.Add(this.lblTimeElapsed);
             this.pnlActivePrint.Controls.Add(this.labelControl13);
+            this.pnlActivePrint.Controls.Add(this.labelControl6);
+            this.pnlActivePrint.Controls.Add(this.lblDateStartedValue);
             this.pnlActivePrint.Controls.Add(this.separatorControl5);
+            this.pnlActivePrint.Controls.Add(this.labelControl3);
+            this.pnlActivePrint.Controls.Add(this.lblCompletedValue);
             this.pnlActivePrint.Controls.Add(this.lblToolTarget);
+            this.pnlActivePrint.Controls.Add(this.labelControl2);
+            this.pnlActivePrint.Controls.Add(this.lblCurrentFileName);
             this.pnlActivePrint.Controls.Add(this.lblToolActual);
+            this.pnlActivePrint.Controls.Add(this.labelControl5);
+            this.pnlActivePrint.Controls.Add(this.separatorControl2);
             this.pnlActivePrint.Controls.Add(this.labelControl10);
+            this.pnlActivePrint.Controls.Add(this.labelControl4);
+            this.pnlActivePrint.Controls.Add(this.separatorControl1);
             this.pnlActivePrint.Controls.Add(this.separatorControl4);
             this.pnlActivePrint.Controls.Add(this.labelControl9);
             this.pnlActivePrint.Controls.Add(this.separatorControl3);
-            this.pnlActivePrint.Controls.Add(this.labelControl8);
-            this.pnlActivePrint.Controls.Add(this.lblTimeLeft);
-            this.pnlActivePrint.Controls.Add(this.labelControl7);
-            this.pnlActivePrint.Controls.Add(this.lblTimeElapsed);
-            this.pnlActivePrint.Controls.Add(this.labelControl6);
-            this.pnlActivePrint.Controls.Add(this.lblDateStartedValue);
-            this.pnlActivePrint.Controls.Add(this.labelControl3);
-            this.pnlActivePrint.Controls.Add(this.lblCompletedValue);
-            this.pnlActivePrint.Controls.Add(this.labelControl2);
-            this.pnlActivePrint.Controls.Add(this.lblCurrentFileName);
-            this.pnlActivePrint.Controls.Add(this.labelControl5);
-            this.pnlActivePrint.Controls.Add(this.separatorControl2);
-            this.pnlActivePrint.Controls.Add(this.labelControl4);
-            this.pnlActivePrint.Controls.Add(this.separatorControl1);
-            this.pnlActivePrint.Location = new System.Drawing.Point(3, 34);
+            this.pnlActivePrint.Location = new System.Drawing.Point(3, 36);
             this.pnlActivePrint.Name = "pnlActivePrint";
             this.pnlActivePrint.Size = new System.Drawing.Size(386, 254);
             this.pnlActivePrint.TabIndex = 13;
-            this.pnlActivePrint.Visible = false;
+            // 
+            // lblBedTarget
+            // 
+            this.lblBedTarget.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lblBedTarget.Appearance.Options.UseFont = true;
+            this.lblBedTarget.Location = new System.Drawing.Point(215, 156);
+            this.lblBedTarget.Name = "lblBedTarget";
+            this.lblBedTarget.Size = new System.Drawing.Size(72, 13);
+            this.lblBedTarget.TabIndex = 34;
+            this.lblBedTarget.Text = "lblBedTarget";
+            // 
+            // lblBedActual
+            // 
+            this.lblBedActual.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lblBedActual.Appearance.Options.UseFont = true;
+            this.lblBedActual.Location = new System.Drawing.Point(215, 140);
+            this.lblBedActual.Name = "lblBedActual";
+            this.lblBedActual.Size = new System.Drawing.Size(70, 13);
+            this.lblBedActual.TabIndex = 33;
+            this.lblBedActual.Text = "lblBedActual";
+            // 
+            // labelControl13
+            // 
+            this.labelControl13.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl13.Appearance.Options.UseFont = true;
+            this.labelControl13.Location = new System.Drawing.Point(215, 111);
+            this.labelControl13.Name = "labelControl13";
+            this.labelControl13.Size = new System.Drawing.Size(21, 14);
+            this.labelControl13.TabIndex = 31;
+            this.labelControl13.Text = "Bed";
+            // 
+            // separatorControl5
+            // 
+            this.separatorControl5.BackColor = System.Drawing.SystemColors.Control;
+            this.separatorControl5.LineColor = System.Drawing.Color.Gold;
+            this.separatorControl5.Location = new System.Drawing.Point(205, 117);
+            this.separatorControl5.Name = "separatorControl5";
+            this.separatorControl5.Size = new System.Drawing.Size(153, 28);
+            this.separatorControl5.TabIndex = 32;
+            // 
+            // lblToolTarget
+            // 
+            this.lblToolTarget.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lblToolTarget.Appearance.Options.UseFont = true;
+            this.lblToolTarget.Location = new System.Drawing.Point(10, 156);
+            this.lblToolTarget.Name = "lblToolTarget";
+            this.lblToolTarget.Size = new System.Drawing.Size(75, 13);
+            this.lblToolTarget.TabIndex = 30;
+            this.lblToolTarget.Text = "lblToolTarget";
+            // 
+            // lblToolActual
+            // 
+            this.lblToolActual.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lblToolActual.Appearance.Options.UseFont = true;
+            this.lblToolActual.Location = new System.Drawing.Point(10, 140);
+            this.lblToolActual.Name = "lblToolActual";
+            this.lblToolActual.Size = new System.Drawing.Size(73, 13);
+            this.lblToolActual.TabIndex = 29;
+            this.lblToolActual.Text = "lblToolActual";
+            // 
+            // labelControl10
+            // 
+            this.labelControl10.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl10.Appearance.Options.UseFont = true;
+            this.labelControl10.Location = new System.Drawing.Point(10, 111);
+            this.labelControl10.Name = "labelControl10";
+            this.labelControl10.Size = new System.Drawing.Size(41, 14);
+            this.labelControl10.TabIndex = 27;
+            this.labelControl10.Text = "Hotend";
+            // 
+            // separatorControl4
+            // 
+            this.separatorControl4.BackColor = System.Drawing.SystemColors.Control;
+            this.separatorControl4.LineColor = System.Drawing.Color.Gold;
+            this.separatorControl4.Location = new System.Drawing.Point(0, 117);
+            this.separatorControl4.Name = "separatorControl4";
+            this.separatorControl4.Size = new System.Drawing.Size(153, 28);
+            this.separatorControl4.TabIndex = 28;
             // 
             // labelControl9
             // 
             this.labelControl9.Appearance.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelControl9.Appearance.Options.UseFont = true;
-            this.labelControl9.Location = new System.Drawing.Point(10, 153);
+            this.labelControl9.Location = new System.Drawing.Point(10, 80);
             this.labelControl9.Name = "labelControl9";
             this.labelControl9.Size = new System.Drawing.Size(38, 16);
             this.labelControl9.TabIndex = 25;
@@ -328,14 +405,14 @@ namespace Octo_Streamer
             // 
             this.separatorControl3.BackColor = System.Drawing.SystemColors.Control;
             this.separatorControl3.LineColor = System.Drawing.Color.Gold;
-            this.separatorControl3.Location = new System.Drawing.Point(0, 158);
+            this.separatorControl3.Location = new System.Drawing.Point(0, 85);
             this.separatorControl3.Name = "separatorControl3";
             this.separatorControl3.Size = new System.Drawing.Size(362, 28);
             this.separatorControl3.TabIndex = 26;
             // 
             // labelControl8
             // 
-            this.labelControl8.Location = new System.Drawing.Point(176, 128);
+            this.labelControl8.Location = new System.Drawing.Point(176, 229);
             this.labelControl8.Name = "labelControl8";
             this.labelControl8.Size = new System.Drawing.Size(23, 13);
             this.labelControl8.TabIndex = 23;
@@ -345,7 +422,7 @@ namespace Octo_Streamer
             // 
             this.lblTimeLeft.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.lblTimeLeft.Appearance.Options.UseFont = true;
-            this.lblTimeLeft.Location = new System.Drawing.Point(205, 128);
+            this.lblTimeLeft.Location = new System.Drawing.Point(205, 229);
             this.lblTimeLeft.Name = "lblTimeLeft";
             this.lblTimeLeft.Size = new System.Drawing.Size(63, 13);
             this.lblTimeLeft.TabIndex = 24;
@@ -353,7 +430,7 @@ namespace Octo_Streamer
             // 
             // labelControl7
             // 
-            this.labelControl7.Location = new System.Drawing.Point(10, 128);
+            this.labelControl7.Location = new System.Drawing.Point(10, 229);
             this.labelControl7.Name = "labelControl7";
             this.labelControl7.Size = new System.Drawing.Size(41, 13);
             this.labelControl7.TabIndex = 21;
@@ -363,7 +440,7 @@ namespace Octo_Streamer
             // 
             this.lblTimeElapsed.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.lblTimeElapsed.Appearance.Options.UseFont = true;
-            this.lblTimeElapsed.Location = new System.Drawing.Point(56, 128);
+            this.lblTimeElapsed.Location = new System.Drawing.Point(56, 229);
             this.lblTimeElapsed.Name = "lblTimeElapsed";
             this.lblTimeElapsed.Size = new System.Drawing.Size(84, 13);
             this.lblTimeElapsed.TabIndex = 22;
@@ -389,7 +466,7 @@ namespace Octo_Streamer
             // 
             // labelControl3
             // 
-            this.labelControl3.Location = new System.Drawing.Point(10, 109);
+            this.labelControl3.Location = new System.Drawing.Point(10, 210);
             this.labelControl3.Name = "labelControl3";
             this.labelControl3.Size = new System.Drawing.Size(55, 13);
             this.labelControl3.TabIndex = 9;
@@ -401,7 +478,7 @@ namespace Octo_Streamer
             this.lblCompletedValue.Appearance.ForeColor = System.Drawing.Color.ForestGreen;
             this.lblCompletedValue.Appearance.Options.UseFont = true;
             this.lblCompletedValue.Appearance.Options.UseForeColor = true;
-            this.lblCompletedValue.Location = new System.Drawing.Point(71, 109);
+            this.lblCompletedValue.Location = new System.Drawing.Point(71, 210);
             this.lblCompletedValue.Name = "lblCompletedValue";
             this.lblCompletedValue.Size = new System.Drawing.Size(105, 13);
             this.lblCompletedValue.TabIndex = 10;
@@ -448,7 +525,7 @@ namespace Octo_Streamer
             // 
             this.labelControl4.Appearance.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelControl4.Appearance.Options.UseFont = true;
-            this.labelControl4.Location = new System.Drawing.Point(9, 81);
+            this.labelControl4.Location = new System.Drawing.Point(9, 182);
             this.labelControl4.Name = "labelControl4";
             this.labelControl4.Size = new System.Drawing.Size(50, 16);
             this.labelControl4.TabIndex = 15;
@@ -458,7 +535,7 @@ namespace Octo_Streamer
             // 
             this.separatorControl1.BackColor = System.Drawing.SystemColors.Control;
             this.separatorControl1.LineColor = System.Drawing.Color.Gold;
-            this.separatorControl1.Location = new System.Drawing.Point(-1, 86);
+            this.separatorControl1.Location = new System.Drawing.Point(-1, 187);
             this.separatorControl1.Name = "separatorControl1";
             this.separatorControl1.Size = new System.Drawing.Size(362, 28);
             this.separatorControl1.TabIndex = 16;
@@ -486,89 +563,11 @@ namespace Octo_Streamer
             this.btnConnect.Text = "Connect To Server";
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
-            // labelControl10
-            // 
-            this.labelControl10.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelControl10.Appearance.Options.UseFont = true;
-            this.labelControl10.Location = new System.Drawing.Point(10, 184);
-            this.labelControl10.Name = "labelControl10";
-            this.labelControl10.Size = new System.Drawing.Size(41, 14);
-            this.labelControl10.TabIndex = 27;
-            this.labelControl10.Text = "Hotend";
-            // 
-            // separatorControl4
-            // 
-            this.separatorControl4.BackColor = System.Drawing.SystemColors.Control;
-            this.separatorControl4.LineColor = System.Drawing.Color.Gold;
-            this.separatorControl4.Location = new System.Drawing.Point(0, 190);
-            this.separatorControl4.Name = "separatorControl4";
-            this.separatorControl4.Size = new System.Drawing.Size(153, 28);
-            this.separatorControl4.TabIndex = 28;
-            // 
-            // lblToolActual
-            // 
-            this.lblToolActual.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.lblToolActual.Appearance.Options.UseFont = true;
-            this.lblToolActual.Location = new System.Drawing.Point(10, 213);
-            this.lblToolActual.Name = "lblToolActual";
-            this.lblToolActual.Size = new System.Drawing.Size(73, 13);
-            this.lblToolActual.TabIndex = 29;
-            this.lblToolActual.Text = "lblToolActual";
-            // 
-            // lblToolTarget
-            // 
-            this.lblToolTarget.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.lblToolTarget.Appearance.Options.UseFont = true;
-            this.lblToolTarget.Location = new System.Drawing.Point(10, 229);
-            this.lblToolTarget.Name = "lblToolTarget";
-            this.lblToolTarget.Size = new System.Drawing.Size(75, 13);
-            this.lblToolTarget.TabIndex = 30;
-            this.lblToolTarget.Text = "lblToolTarget";
-            // 
-            // lblBedTarget
-            // 
-            this.lblBedTarget.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.lblBedTarget.Appearance.Options.UseFont = true;
-            this.lblBedTarget.Location = new System.Drawing.Point(215, 229);
-            this.lblBedTarget.Name = "lblBedTarget";
-            this.lblBedTarget.Size = new System.Drawing.Size(72, 13);
-            this.lblBedTarget.TabIndex = 34;
-            this.lblBedTarget.Text = "lblBedTarget";
-            // 
-            // lblBedActual
-            // 
-            this.lblBedActual.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.lblBedActual.Appearance.Options.UseFont = true;
-            this.lblBedActual.Location = new System.Drawing.Point(215, 213);
-            this.lblBedActual.Name = "lblBedActual";
-            this.lblBedActual.Size = new System.Drawing.Size(70, 13);
-            this.lblBedActual.TabIndex = 33;
-            this.lblBedActual.Text = "lblBedActual";
-            // 
-            // labelControl13
-            // 
-            this.labelControl13.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelControl13.Appearance.Options.UseFont = true;
-            this.labelControl13.Location = new System.Drawing.Point(215, 184);
-            this.labelControl13.Name = "labelControl13";
-            this.labelControl13.Size = new System.Drawing.Size(21, 14);
-            this.labelControl13.TabIndex = 31;
-            this.labelControl13.Text = "Bed";
-            // 
-            // separatorControl5
-            // 
-            this.separatorControl5.BackColor = System.Drawing.SystemColors.Control;
-            this.separatorControl5.LineColor = System.Drawing.Color.Gold;
-            this.separatorControl5.Location = new System.Drawing.Point(205, 190);
-            this.separatorControl5.Name = "separatorControl5";
-            this.separatorControl5.Size = new System.Drawing.Size(153, 28);
-            this.separatorControl5.TabIndex = 32;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(413, 448);
+            this.ClientSize = new System.Drawing.Size(635, 500);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.rtbPrinterStatus);
             this.Controls.Add(this.pnlMainDisplay);
@@ -578,6 +577,7 @@ namespace Octo_Streamer
             this.Controls.Add(this.btnFlash);
             this.Controls.Add(this.statusStrip1);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -591,11 +591,11 @@ namespace Octo_Streamer
             this.pnlMainDisplay.PerformLayout();
             this.pnlActivePrint.ResumeLayout(false);
             this.pnlActivePrint.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.separatorControl5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.separatorControl4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.separatorControl4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.separatorControl5)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

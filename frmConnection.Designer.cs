@@ -174,6 +174,7 @@ namespace Octo_Streamer
             this.Controls.Add(this.txtHost);
             this.Controls.Add(this.lblHost);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmConnection";
