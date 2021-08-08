@@ -23,9 +23,6 @@ namespace Octo_Streamer
         #region Form Load
         private void frmConnection_Load(object sender, EventArgs e)
         {
-            // reset copnnection text
-            lblConnectionStatus.Text = null;
-
             // Check to see if there is any data in the application settings, if so populate fields
             string host = Properties.Settings.Default.Host;
             string port = Properties.Settings.Default.Port;
@@ -44,6 +41,25 @@ namespace Octo_Streamer
             if (apiKey != null)
             {
                 txtApiKey.Text = apiKey;
+            }
+
+            // check to see if there is currently a connection active to the remote server
+            if (csSettings.connectionActive == 1)
+            {
+                // there is currently an active connection to the remote server so we cannot allow a new connection to be added
+                btnConnect.Enabled = false;
+                lblConnectionStatus.Text = "Please disconnect from the remote server first!";
+                txtHost.Enabled = false;
+                txtPort.Enabled = false;
+                txtApiKey.Enabled = false;
+            } else
+            {
+                // there is currently no connection to the remote server
+                btnConnect.Enabled = true;
+                lblConnectionStatus.Text = null;
+                txtHost.Enabled = true;
+                txtPort.Enabled = true;
+                txtApiKey.Enabled = true;
             }
         }
 

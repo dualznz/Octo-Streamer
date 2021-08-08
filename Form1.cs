@@ -43,6 +43,9 @@ namespace Octo_Streamer
             // Reset value labels
             resetValueLabels();
 
+            // Server connection state
+            csSettings.connectionActive = 0;
+
             if (Properties.Settings.Default.Host == "")
             {
                 // start receive connection timer
@@ -74,7 +77,7 @@ namespace Octo_Streamer
         #region Connect Button
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            switch (connectionState)
+            switch (csSettings.connectionActive)
             {
                 case 0:
                     // No connection has been made to the remote server
@@ -85,7 +88,7 @@ namespace Octo_Streamer
                     tmrHandshake.Start();
 
                     // Change connection state
-                    connectionState = 1;
+                    csSettings.connectionActive = 1;
 
                     // Update connection button to disconnect state
                     btnConnect.Text = "Disconnect From Server";
@@ -102,7 +105,7 @@ namespace Octo_Streamer
                     tmrLifeline.Stop();
 
                     // Change connection state
-                    connectionState = 0;
+                    csSettings.connectionActive = 0;
 
                     // Update tool stop label
                     toolServerStatus.ForeColor = Color.Black;
@@ -126,7 +129,7 @@ namespace Octo_Streamer
                     tmrHandshake.Start();
 
                     // Change connection state
-                    connectionState = 1;
+                    csSettings.connectionActive = 1;
 
                     // Update connection button to disconnect state
                     btnConnect.Text = "Disconnect From Server";
@@ -231,6 +234,9 @@ namespace Octo_Streamer
                     // start api handle
                     tmrApi.Enabled = true;
                     tmrApi.Start();
+
+                    // Set server connection state
+                    csSettings.connectionActive = 1;
                 }
 
             }
@@ -248,8 +254,14 @@ namespace Octo_Streamer
                 toolServerStatus.ForeColor = Color.Red;
                 toolServerStatus.Text = "Connection failed...";
 
+                // Update connection button to disconnect state
+                btnConnect.Text = "Connect To Server";
+
                 // Reset value labels
                 resetValueLabels();
+
+                // Set server connection state
+                csSettings.connectionActive = 0;
             }
         }
 
@@ -349,21 +361,41 @@ namespace Octo_Streamer
                 csSettings.state = jObject["state"].ToString();
                 lblPrinterStatusValue.Text = csSettings.state;
 
-                csSettings.name = jObject["job"]["file"]["display"].ToString();
-                lblCurrentFileName.Text = csSettings.name;
 
+                // Add values to class
                 csSettings.completion = jObject["progress"]["completion"].ToString();
-                double inputCompletion = Convert.ToDouble(csSettings.completion);
-                lblCompletedValue.Text = inputCompletion.ToString("N2") + " %";
-
                 csSettings.date = Convert.ToInt32(jObject["job"]["file"]["date"].ToString());
-                lblDateStartedValue.Text = TimeSpanConverterDate(csSettings.date);
-
                 csSettings.printTime = Convert.ToInt32(jObject["progress"]["printTime"].ToString());
-                lblTimeElapsed.Text = TimeSpanConverter(csSettings.printTime);
-
                 csSettings.printTimeLeft = Convert.ToInt32(jObject["progress"]["printTimeLeft"].ToString());
-                lblTimeLeft.Text = TimeSpanConverter(csSettings.printTimeLeft);
+
+
+                switch (csSettings.state)
+                {
+                    case "Printing":
+                        csSettings.name = jObject["job"]["file"]["display"].ToString();
+                        lblCurrentFileName.Text = csSettings.name;
+
+                        double inputCompletion = Convert.ToDouble(csSettings.completion);
+                        lblCompletedValue.Text = inputCompletion.ToString("N2") + " %";
+                        progressCompletion.EditValue = 10;
+
+                        lblDateStartedValue.Text = TimeSpanConverterDate(csSettings.date);
+
+                        lblTimeElapsed.Text = TimeSpanConverter(csSettings.printTime);
+
+                        lblTimeLeft.Text = TimeSpanConverter(csSettings.printTimeLeft);
+                        break;
+                    case "Operational":
+                        lblCurrentFileName.Text = "NaN";
+                        lblTimeElapsed.Text = "NaN";
+                        lblTimeLeft.Text = "NaN";
+                        lblDateStartedValue.Text = "NaN";
+                        lblCurrentFileName.Text = "NaN";
+                        lblCompletedValue.Text = "NaN";
+                        progressCompletion.EditValue = 10;
+                        break;
+                }
+                
 
             }
             catch (Exception)
@@ -447,6 +479,18 @@ namespace Octo_Streamer
                 {
                     // Job is idle but the printer is ready to recieve data
                     // Reset the printer data fields
+                    //resetValueLabels();
+                    csSettings.toolActual = Convert.ToDecimal(jObject["temperature"]["tool0"]["actual"].ToString());
+                    lblToolActual.Text = string.Format("{0} \u00B0C /", csSettings.toolActual);
+
+                    csSettings.toolTarget = Convert.ToDecimal(jObject["temperature"]["tool0"]["target"].ToString());
+                    lblToolTarget.Text = string.Format("{0} \u00B0C target", csSettings.toolTarget);
+
+                    csSettings.bedActual = Convert.ToDecimal(jObject["temperature"]["bed"]["actual"].ToString());
+                    lblBedActual.Text = string.Format("{0} \u00B0C /", csSettings.bedActual);
+
+                    csSettings.bedTarget = Convert.ToDecimal(jObject["temperature"]["bed"]["target"].ToString());
+                    lblBedTarget.Text = string.Format("{0} \u00B0C target", csSettings.bedTarget);
                 }
             }
             catch (Exception)
@@ -476,6 +520,14 @@ namespace Octo_Streamer
             return Convert.ToString(localDateTime);
         }
 
+        private void connectionSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // start receive connection timer
+            tmrUpdateConnectionData.Start();
 
+            // No connection settings have been found, open new connection window
+            frmConnection connectionWindow = new frmConnection();
+            connectionWindow.Show();
+        }
     }
 }

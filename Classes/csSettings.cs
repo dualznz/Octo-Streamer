@@ -13,6 +13,7 @@ namespace Octo_Streamer
         public static string connectionAuthToken { get; set; }
         public static string recievedData { get; set; }
         public static string recievedPrinterData { get; set; }
+        public static int connectionActive { get; set; }
 
 
 

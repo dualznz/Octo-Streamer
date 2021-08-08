@@ -135,9 +135,9 @@ namespace Octo_Streamer
             this.toolStripLblConnectionStatus,
             this.toolStripStatusLabel2,
             this.toolServerStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 478);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 422);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(635, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(421, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -165,12 +165,13 @@ namespace Octo_Streamer
             this.tsHelp});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(635, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(421, 25);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // tsFile
             // 
+            this.tsFile.AutoToolTip = false;
             this.tsFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tsFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsExitApplication});
@@ -183,12 +184,13 @@ namespace Octo_Streamer
             // tsExitApplication
             // 
             this.tsExitApplication.Name = "tsExitApplication";
-            this.tsExitApplication.Size = new System.Drawing.Size(93, 22);
+            this.tsExitApplication.Size = new System.Drawing.Size(180, 22);
             this.tsExitApplication.Text = "Exit";
             this.tsExitApplication.Click += new System.EventHandler(this.tsExitApplication_Click);
             // 
             // tsTools
             // 
+            this.tsTools.AutoToolTip = false;
             this.tsTools.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tsTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.connectionSettingsToolStripMenuItem,
@@ -204,6 +206,7 @@ namespace Octo_Streamer
             this.connectionSettingsToolStripMenuItem.Name = "connectionSettingsToolStripMenuItem";
             this.connectionSettingsToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.connectionSettingsToolStripMenuItem.Text = "Connection Settings";
+            this.connectionSettingsToolStripMenuItem.Click += new System.EventHandler(this.connectionSettingsToolStripMenuItem_Click);
             // 
             // applicationSettingsToolStripMenuItem
             // 
@@ -213,6 +216,7 @@ namespace Octo_Streamer
             // 
             // tsHelp
             // 
+            this.tsHelp.AutoToolTip = false;
             this.tsHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tsHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.githubHomepageToolStripMenuItem,
@@ -567,7 +571,7 @@ namespace Octo_Streamer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(635, 500);
+            this.ClientSize = new System.Drawing.Size(421, 444);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.rtbPrinterStatus);
             this.Controls.Add(this.pnlMainDisplay);
