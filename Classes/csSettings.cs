@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Octo_Streamer
+﻿namespace Octo_Streamer
 {
     class csSettings
     {
@@ -14,7 +8,7 @@ namespace Octo_Streamer
         public static string recievedData { get; set; }
         public static string recievedPrinterData { get; set; }
         public static int connectionActive { get; set; }
-
+        public static int displayLayerProgress { get; set; }
 
 
         // Octoprint api
