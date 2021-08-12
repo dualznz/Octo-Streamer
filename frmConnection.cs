@@ -154,6 +154,9 @@ namespace Octo_Streamer
                 Properties.Settings.Default.Port = csSettings.ConnectionPort;
                 Properties.Settings.Default.ApiKey = csSettings.connectionAuthToken;
                 Properties.Settings.Default.Save();
+
+                // Update connection state
+                csSettings.updateDataSignal = 1;
             }
             catch (Exception)
             {
@@ -192,6 +195,9 @@ namespace Octo_Streamer
             txtHost.Text = null;
             txtPort.Text = null;
             txtApiKey.Text = null;
+
+            // uppdate connection state
+            csSettings.updateDataSignal = 3;
         }
     }
 }

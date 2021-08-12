@@ -34,7 +34,7 @@ namespace Octo_Streamer
             }
 
             // Check if displayLayerProgress is enabled in application settings
-            if (csSettings.displayLayerProgress == 1)
+            if (Properties.Settings.Default.DisplayLayerProgress == 1)
             {
                 chkDisplayLayerProgress.Checked = true;
             }
@@ -65,6 +65,9 @@ namespace Octo_Streamer
             }
 
             Properties.Settings.Default.Save();
+
+            // Update connection state
+            csSettings.updateDataSignal = 2;
         }
     }
 }

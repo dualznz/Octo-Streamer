@@ -8,7 +8,9 @@
         public static string recievedData { get; set; }
         public static string recievedPrinterData { get; set; }
         public static int connectionActive { get; set; }
+        public static int updateDataSignal { get; set; }
         public static int displayLayerProgress { get; set; }
+        public static string recievedDisplayLayerProgressData { get; set; }
 
 
         // Octoprint api
@@ -37,5 +39,10 @@
         public static decimal bedTarget { get; set; }
         public static decimal toolActual { get; set; }
         public static decimal toolTarget { get; set; }
+
+        // displayLayerProgress
+        public static string dlpCurrentLayer { get; set; }
+        public static string dlpTotalLayers { get; set; }
+        public static string dlpFanSpeed { get; set; }
     }
 }

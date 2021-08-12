@@ -45,15 +45,15 @@ namespace Octo_Streamer
             // Server connection state
             csSettings.connectionActive = 0;
 
+            // start receive connection timer
+            tmrUpdateConnectionData.Start();
+
             if (Properties.Settings.Default.Host == "")
             {
                 // Change state for the connection to the server button event
                 tsConnect.Enabled = false;
                 tsConnect.Text = "Connect To Server";
                 tsConnect.ForeColor = Color.DarkGreen;
-
-                // start receive connection timer
-                tmrUpdateConnectionData.Start();
 
                 // No connection settings have been found, open new connection window
                 frmConnection connectionWindow = new frmConnection();
@@ -77,15 +77,12 @@ namespace Octo_Streamer
                 case 1:
                     // Show displayLayerProgress panel
                     pnlDisplayLayerProgress.Visible = true;
+
+                    // reset labels
+                    lblLayer.Text = "NaN";
+                    lblFanSpeed.Text = "NaN";
                     break;
             }
-
-            lblLayer.Text = "<b>000</b>" + " of" + " 123";
-
-            lblLayer.AllowHtmlString = true;
-            lblLayer.Appearance.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
-            lblLayer.Appearance.Options.UseTextOptions = true;
-            lblLayer.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.Horizontal;
         }
 
         #endregion
@@ -241,15 +238,55 @@ namespace Octo_Streamer
         #region Connnection Update Worker
         private void tmrUpdateConnectionData_Tick(object sender, EventArgs e)
         {
-            if (csSettings.connectionAddress != null)
+            if (csSettings.updateDataSignal == 1)
             {
-                // Connection settings have been updated and an initial connection has been made to the remote server
+                if (Properties.Settings.Default.Host != "")
+                {
+                    // Connection settings have been updated and an initial connection has been made to the remote server
+                    // Enable connect to server button
+                    tsConnect.Enabled = true;
 
-                // Stop the timer
-                tmrUpdateConnectionData.Stop();
+                    // Reset connectionActive state
+                    csSettings.updateDataSignal = 0;
 
-                // Enable connect to server button
-                tsConnect.Enabled = true;
+                }
+                else
+                {
+                    // Disable connect to server button
+                    tsConnect.Enabled = false;
+
+                    // Reset connectionActive state
+                    csSettings.updateDataSignal = 0;
+                }
+            }
+            else if (csSettings.updateDataSignal == 2)
+            {
+                // Check to see if displayLayerProgress setting is enabled
+                switch (Properties.Settings.Default.DisplayLayerProgress)
+                {
+                    case 0:
+                        // Hide displayLayerProgress panel
+                        pnlDisplayLayerProgress.Visible = false;
+
+                        // Reset connectionActive state
+                        csSettings.connectionActive = 0;
+                        break;
+                    case 1:
+                        // Show displayLayerProgress panel
+                        pnlDisplayLayerProgress.Visible = true;
+
+                        // Reset connectionActive state
+                        csSettings.updateDataSignal = 0;
+                        break;
+                }
+            }
+            else if (csSettings.updateDataSignal == 3)
+            {
+                // Disable connect to server button
+                tsConnect.Enabled = false;
+
+                // Reset connectionActive state
+                csSettings.updateDataSignal = 0;
             }
         }
 
@@ -463,7 +500,6 @@ namespace Octo_Streamer
                 csSettings.printTime = Convert.ToInt32(jObject["progress"]["printTime"].ToString());
                 csSettings.printTimeLeft = Convert.ToInt32(jObject["progress"]["printTimeLeft"].ToString());
 
-
                 switch (csSettings.state)
                 {
                     case "Printing":
@@ -486,6 +522,8 @@ namespace Octo_Streamer
                         lblDateStartedValue.Text = "NaN";
                         lblCurrentFileName.Text = "NaN";
                         lblCompletedValue.Text = "NaN";
+                        lblLayer.Text = "NaN";
+                        lblFanSpeed.Text = "NaN";
                         break;
                 }
                 
@@ -495,6 +533,8 @@ namespace Octo_Streamer
             {
                 // Reset value labels
                 resetValueLabels();
+
+                csSettings.connectionActive = 0;
             }
         }
 
@@ -567,6 +607,9 @@ namespace Octo_Streamer
 
                     csSettings.bedTarget = Convert.ToDecimal(jObject["temperature"]["bed"]["target"].ToString());
                     lblBedTarget.Text = string.Format("{0} \u00B0C target", csSettings.bedTarget);
+
+                    // Create connection to displayLayerProgress
+                    displayLayerProgress(Properties.Settings.Default.Host, Properties.Settings.Default.Port, Properties.Settings.Default.ApiKey);
                 }
                 else if (jObject["state"]["flags"]["ready"].ToString() == "True")
                 {
@@ -593,7 +636,74 @@ namespace Octo_Streamer
         }
         #endregion
 
+        private void displayLayerProgress(string host, string port, string apiKey)
+        {
+            try
+            {
+                string portCheck = null;
+                if (port != null)
+                {
+                    portCheck = ":" + port;
+                }
+                else
+                {
+                    portCheck = null;
+                }
 
+                // Transmission Data (POST / GET)
+                string authServer = "http://192.168.1.153" + "/plugin/DisplayLayerProgress/values";
+
+                // Create request
+                HttpWebRequest request = (HttpWebRequest)
+                WebRequest.Create(authServer); request.KeepAlive = false;
+                request.Headers.Add("Authorization", "Bearer " + apiKey);
+                request.ProtocolVersion = HttpVersion.Version10;
+                request.Method = "GET";
+                //request.Accept = "application/json";
+
+                // Await response from remote server
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    csSettings.recievedDisplayLayerProgressData = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                    processDisplayLayerProgressData(csSettings.recievedDisplayLayerProgressData);
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void processDisplayLayerProgressData(string inputApiData)
+        {
+            try
+            {
+                // Decode api data into json variables
+                Newtonsoft.Json.Linq.JObject jObject = Newtonsoft.Json.Linq.JObject.Parse(inputApiData);
+
+                // Add variables to class and fields
+                csSettings.dlpCurrentLayer = jObject["layer"]["current"].ToString();
+                csSettings.dlpTotalLayers = jObject["layer"]["total"].ToString();
+                // HTML in label control
+                lblLayer.Text = "<b>" + csSettings.dlpCurrentLayer + "</b>" + " of " + csSettings.dlpTotalLayers;
+                lblLayer.AllowHtmlString = true;
+                lblLayer.Appearance.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
+                lblLayer.Appearance.Options.UseTextOptions = true;
+                lblLayer.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.Horizontal;
+
+                csSettings.dlpFanSpeed = jObject["fanSpeed"].ToString();
+                lblFanSpeed.Text = csSettings.dlpFanSpeed;
+
+
+            }
+            catch (Exception)
+            {
+
+                
+            }
+        }
 
         #endregion
 
@@ -615,9 +725,6 @@ namespace Octo_Streamer
 
         private void connectionSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // start receive connection timer
-            tmrUpdateConnectionData.Start();
-
             // No connection settings have been found, open new connection window
             frmConnection connectionWindow = new frmConnection();
             connectionWindow.Show();
