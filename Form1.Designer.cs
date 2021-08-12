@@ -51,12 +51,14 @@ namespace Octo_Streamer
             this.tsHelp = new System.Windows.Forms.ToolStripDropDownButton();
             this.githubHomepageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.githubIssuesRequestsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.version10ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.linkDualznzGithub = new DevExpress.XtraEditors.HyperlinkLabelControl();
             this.lblPrinterStatusTitle = new DevExpress.XtraEditors.LabelControl();
             this.lblPrinterStatusValue = new DevExpress.XtraEditors.LabelControl();
             this.pnlMainDisplay = new System.Windows.Forms.Panel();
             this.pnlActivePrint = new System.Windows.Forms.Panel();
+            this.pnlDisplayLayerProgress = new System.Windows.Forms.Panel();
             this.lblBedTarget = new DevExpress.XtraEditors.LabelControl();
             this.labelControl8 = new DevExpress.XtraEditors.LabelControl();
             this.lblTimeLeft = new DevExpress.XtraEditors.LabelControl();
@@ -84,11 +86,13 @@ namespace Octo_Streamer
             this.rtbPrinterStatus = new System.Windows.Forms.RichTextBox();
             this.tmrApi = new System.Windows.Forms.Timer(this.components);
             this.labelControl11 = new DevExpress.XtraEditors.LabelControl();
-            this.version10ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.labelControl12 = new DevExpress.XtraEditors.LabelControl();
+            this.lblLayer = new DevExpress.XtraEditors.LabelControl();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.pnlMainDisplay.SuspendLayout();
             this.pnlActivePrint.SuspendLayout();
+            this.pnlDisplayLayerProgress.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl1)).BeginInit();
@@ -138,7 +142,7 @@ namespace Octo_Streamer
             this.toolStripLblConnectionStatus,
             this.toolStripStatusLabel2,
             this.toolServerStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 428);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 456);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(417, 22);
             this.statusStrip1.TabIndex = 0;
@@ -190,19 +194,19 @@ namespace Octo_Streamer
             // 
             this.tsConnect.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.tsConnect.Name = "tsConnect";
-            this.tsConnect.Size = new System.Drawing.Size(180, 22);
+            this.tsConnect.Size = new System.Drawing.Size(130, 22);
             this.tsConnect.Text = "tsConnect";
             this.tsConnect.Click += new System.EventHandler(this.tsConnect_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(127, 6);
             // 
             // tsExitApplication
             // 
             this.tsExitApplication.Name = "tsExitApplication";
-            this.tsExitApplication.Size = new System.Drawing.Size(180, 22);
+            this.tsExitApplication.Size = new System.Drawing.Size(130, 22);
             this.tsExitApplication.Text = "Exit";
             this.tsExitApplication.Click += new System.EventHandler(this.tsExitApplication_Click);
             // 
@@ -231,6 +235,7 @@ namespace Octo_Streamer
             this.applicationSettingsToolStripMenuItem.Name = "applicationSettingsToolStripMenuItem";
             this.applicationSettingsToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.applicationSettingsToolStripMenuItem.Text = "Application Settings";
+            this.applicationSettingsToolStripMenuItem.Click += new System.EventHandler(this.applicationSettingsToolStripMenuItem_Click);
             // 
             // tsHelp
             // 
@@ -259,19 +264,25 @@ namespace Octo_Streamer
             this.githubIssuesRequestsToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.githubIssuesRequestsToolStripMenuItem.Text = "Github Issues / Requests";
             // 
+            // version10ToolStripMenuItem
+            // 
+            this.version10ToolStripMenuItem.Name = "version10ToolStripMenuItem";
+            this.version10ToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.version10ToolStripMenuItem.Text = "Version: 1.0";
+            // 
             // labelControl1
             // 
-            this.labelControl1.Location = new System.Drawing.Point(290, 402);
+            this.labelControl1.Location = new System.Drawing.Point(290, 432);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(70, 13);
+            this.labelControl1.Size = new System.Drawing.Size(72, 13);
             this.labelControl1.TabIndex = 3;
             this.labelControl1.Text = "Developed By:";
             // 
             // linkDualznzGithub
             // 
-            this.linkDualznzGithub.Location = new System.Drawing.Point(366, 402);
+            this.linkDualznzGithub.Location = new System.Drawing.Point(366, 432);
             this.linkDualznzGithub.Name = "linkDualznzGithub";
-            this.linkDualznzGithub.Size = new System.Drawing.Size(37, 13);
+            this.linkDualznzGithub.Size = new System.Drawing.Size(41, 13);
             this.linkDualznzGithub.TabIndex = 4;
             this.linkDualznzGithub.Text = "Dualznz";
             this.linkDualznzGithub.Click += new System.EventHandler(this.linkDualznzGithub_Click);
@@ -280,7 +291,7 @@ namespace Octo_Streamer
             // 
             this.lblPrinterStatusTitle.Location = new System.Drawing.Point(9, 15);
             this.lblPrinterStatusTitle.Name = "lblPrinterStatusTitle";
-            this.lblPrinterStatusTitle.Size = new System.Drawing.Size(70, 13);
+            this.lblPrinterStatusTitle.Size = new System.Drawing.Size(72, 13);
             this.lblPrinterStatusTitle.TabIndex = 5;
             this.lblPrinterStatusTitle.Text = "Printer Status:";
             // 
@@ -290,7 +301,7 @@ namespace Octo_Streamer
             this.lblPrinterStatusValue.Appearance.Options.UseFont = true;
             this.lblPrinterStatusValue.Location = new System.Drawing.Point(85, 15);
             this.lblPrinterStatusValue.Name = "lblPrinterStatusValue";
-            this.lblPrinterStatusValue.Size = new System.Drawing.Size(120, 13);
+            this.lblPrinterStatusValue.Size = new System.Drawing.Size(109, 13);
             this.lblPrinterStatusValue.TabIndex = 6;
             this.lblPrinterStatusValue.Text = "lblPrinterStatusValue";
             // 
@@ -302,12 +313,13 @@ namespace Octo_Streamer
             this.pnlMainDisplay.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pnlMainDisplay.Location = new System.Drawing.Point(12, 98);
             this.pnlMainDisplay.Name = "pnlMainDisplay";
-            this.pnlMainDisplay.Size = new System.Drawing.Size(392, 298);
+            this.pnlMainDisplay.Size = new System.Drawing.Size(392, 319);
             this.pnlMainDisplay.TabIndex = 10;
             this.pnlMainDisplay.Visible = false;
             // 
             // pnlActivePrint
             // 
+            this.pnlActivePrint.Controls.Add(this.pnlDisplayLayerProgress);
             this.pnlActivePrint.Controls.Add(this.lblBedTarget);
             this.pnlActivePrint.Controls.Add(this.labelControl8);
             this.pnlActivePrint.Controls.Add(this.lblTimeLeft);
@@ -334,8 +346,17 @@ namespace Octo_Streamer
             this.pnlActivePrint.Controls.Add(this.separatorControl3);
             this.pnlActivePrint.Location = new System.Drawing.Point(3, 36);
             this.pnlActivePrint.Name = "pnlActivePrint";
-            this.pnlActivePrint.Size = new System.Drawing.Size(386, 254);
+            this.pnlActivePrint.Size = new System.Drawing.Size(386, 281);
             this.pnlActivePrint.TabIndex = 13;
+            // 
+            // pnlDisplayLayerProgress
+            // 
+            this.pnlDisplayLayerProgress.Controls.Add(this.labelControl12);
+            this.pnlDisplayLayerProgress.Controls.Add(this.lblLayer);
+            this.pnlDisplayLayerProgress.Location = new System.Drawing.Point(2, 245);
+            this.pnlDisplayLayerProgress.Name = "pnlDisplayLayerProgress";
+            this.pnlDisplayLayerProgress.Size = new System.Drawing.Size(358, 32);
+            this.pnlDisplayLayerProgress.TabIndex = 35;
             // 
             // lblBedTarget
             // 
@@ -351,7 +372,7 @@ namespace Octo_Streamer
             // 
             this.labelControl8.Location = new System.Drawing.Point(176, 229);
             this.labelControl8.Name = "labelControl8";
-            this.labelControl8.Size = new System.Drawing.Size(23, 13);
+            this.labelControl8.Size = new System.Drawing.Size(22, 13);
             this.labelControl8.TabIndex = 23;
             this.labelControl8.Text = "Left:";
             // 
@@ -379,7 +400,7 @@ namespace Octo_Streamer
             // 
             this.labelControl7.Location = new System.Drawing.Point(10, 229);
             this.labelControl7.Name = "labelControl7";
-            this.labelControl7.Size = new System.Drawing.Size(41, 13);
+            this.labelControl7.Size = new System.Drawing.Size(43, 13);
             this.labelControl7.TabIndex = 21;
             this.labelControl7.Text = "Elapsed:";
             // 
@@ -395,7 +416,7 @@ namespace Octo_Streamer
             // 
             // labelControl13
             // 
-            this.labelControl13.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl13.Appearance.Font = new System.Drawing.Font("Tahoma", 9F);
             this.labelControl13.Appearance.Options.UseFont = true;
             this.labelControl13.Location = new System.Drawing.Point(215, 111);
             this.labelControl13.Name = "labelControl13";
@@ -407,7 +428,7 @@ namespace Octo_Streamer
             // 
             this.labelControl6.Location = new System.Drawing.Point(10, 56);
             this.labelControl6.Name = "labelControl6";
-            this.labelControl6.Size = new System.Drawing.Size(66, 13);
+            this.labelControl6.Size = new System.Drawing.Size(67, 13);
             this.labelControl6.TabIndex = 19;
             this.labelControl6.Text = "Date Started:";
             // 
@@ -434,7 +455,7 @@ namespace Octo_Streamer
             // 
             this.labelControl3.Location = new System.Drawing.Point(10, 210);
             this.labelControl3.Name = "labelControl3";
-            this.labelControl3.Size = new System.Drawing.Size(55, 13);
+            this.labelControl3.Size = new System.Drawing.Size(59, 13);
             this.labelControl3.TabIndex = 9;
             this.labelControl3.Text = "Completed:";
             // 
@@ -464,7 +485,7 @@ namespace Octo_Streamer
             // 
             this.labelControl2.Location = new System.Drawing.Point(10, 37);
             this.labelControl2.Name = "labelControl2";
-            this.labelControl2.Size = new System.Drawing.Size(20, 13);
+            this.labelControl2.Size = new System.Drawing.Size(21, 13);
             this.labelControl2.TabIndex = 7;
             this.labelControl2.Text = "File:";
             // 
@@ -490,7 +511,7 @@ namespace Octo_Streamer
             // 
             // labelControl5
             // 
-            this.labelControl5.Appearance.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl5.Appearance.Font = new System.Drawing.Font("Tahoma", 9.75F);
             this.labelControl5.Appearance.Options.UseFont = true;
             this.labelControl5.Location = new System.Drawing.Point(9, 7);
             this.labelControl5.Name = "labelControl5";
@@ -509,7 +530,7 @@ namespace Octo_Streamer
             // 
             // labelControl10
             // 
-            this.labelControl10.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl10.Appearance.Font = new System.Drawing.Font("Tahoma", 9F);
             this.labelControl10.Appearance.Options.UseFont = true;
             this.labelControl10.Location = new System.Drawing.Point(10, 111);
             this.labelControl10.Name = "labelControl10";
@@ -519,7 +540,7 @@ namespace Octo_Streamer
             // 
             // labelControl4
             // 
-            this.labelControl4.Appearance.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl4.Appearance.Font = new System.Drawing.Font("Tahoma", 9.75F);
             this.labelControl4.Appearance.Options.UseFont = true;
             this.labelControl4.Location = new System.Drawing.Point(9, 182);
             this.labelControl4.Name = "labelControl4";
@@ -547,7 +568,7 @@ namespace Octo_Streamer
             // 
             // labelControl9
             // 
-            this.labelControl9.Appearance.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl9.Appearance.Font = new System.Drawing.Font("Tahoma", 9.75F);
             this.labelControl9.Appearance.Options.UseFont = true;
             this.labelControl9.Location = new System.Drawing.Point(10, 80);
             this.labelControl9.Name = "labelControl9";
@@ -580,7 +601,7 @@ namespace Octo_Streamer
             // 
             // labelControl11
             // 
-            this.labelControl11.Appearance.Font = new System.Drawing.Font("Tahoma", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl11.Appearance.Font = new System.Drawing.Font("Tahoma", 21.75F);
             this.labelControl11.Appearance.Options.UseFont = true;
             this.labelControl11.Location = new System.Drawing.Point(114, 37);
             this.labelControl11.Name = "labelControl11";
@@ -588,17 +609,30 @@ namespace Octo_Streamer
             this.labelControl11.TabIndex = 13;
             this.labelControl11.Text = "Octo-Streamer";
             // 
-            // version10ToolStripMenuItem
+            // labelControl12
             // 
-            this.version10ToolStripMenuItem.Name = "version10ToolStripMenuItem";
-            this.version10ToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.version10ToolStripMenuItem.Text = "Version: 1.0";
+            this.labelControl12.AllowHtmlString = true;
+            this.labelControl12.Location = new System.Drawing.Point(8, 9);
+            this.labelControl12.Name = "labelControl12";
+            this.labelControl12.Size = new System.Drawing.Size(29, 13);
+            this.labelControl12.TabIndex = 23;
+            this.labelControl12.Text = "Layer:";
+            // 
+            // lblLayer
+            // 
+            this.lblLayer.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.lblLayer.Appearance.Options.UseFont = true;
+            this.lblLayer.Location = new System.Drawing.Point(40, 9);
+            this.lblLayer.Name = "lblLayer";
+            this.lblLayer.Size = new System.Drawing.Size(37, 13);
+            this.lblLayer.TabIndex = 24;
+            this.lblLayer.Text = "lblLayer";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(417, 450);
+            this.ClientSize = new System.Drawing.Size(417, 478);
             this.Controls.Add(this.labelControl11);
             this.Controls.Add(this.rtbPrinterStatus);
             this.Controls.Add(this.pnlMainDisplay);
@@ -612,7 +646,7 @@ namespace Octo_Streamer
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Octo-Streamer";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
@@ -622,6 +656,8 @@ namespace Octo_Streamer
             this.pnlMainDisplay.PerformLayout();
             this.pnlActivePrint.ResumeLayout(false);
             this.pnlActivePrint.PerformLayout();
+            this.pnlDisplayLayerProgress.ResumeLayout(false);
+            this.pnlDisplayLayerProgress.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl1)).EndInit();
@@ -687,6 +723,9 @@ namespace Octo_Streamer
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem version10ToolStripMenuItem;
         private DevExpress.XtraEditors.LabelControl labelControl11;
+        private System.Windows.Forms.Panel pnlDisplayLayerProgress;
+        private DevExpress.XtraEditors.LabelControl labelControl12;
+        private DevExpress.XtraEditors.LabelControl lblLayer;
     }
 }
 

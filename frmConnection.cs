@@ -178,5 +178,20 @@ namespace Octo_Streamer
             // connect to server
             beginConnectionTransaction();
         }
+
+        private void linkResetConnectionData_Click(object sender, EventArgs e)
+        {
+            // Reset all connection data
+            Properties.Settings.Default.Host = "";
+            Properties.Settings.Default.Port = "";
+            Properties.Settings.Default.ApiKey = "";
+            Properties.Settings.Default.DisplayLayerProgress = 0;
+            Properties.Settings.Default.Save();
+
+            // Reset text boxes
+            txtHost.Text = null;
+            txtPort.Text = null;
+            txtApiKey.Text = null;
+        }
     }
 }

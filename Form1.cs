@@ -66,6 +66,26 @@ namespace Octo_Streamer
                 tsConnect.Text = "Connect To Server";
                 tsConnect.ForeColor = Color.DarkGreen;
             }
+
+            // Check to see if displayLayerProgress setting is enabled
+            switch (Properties.Settings.Default.DisplayLayerProgress)
+            {
+                case 0:
+                    // Hide displayLayerProgress panel
+                    pnlDisplayLayerProgress.Visible = false;
+                    break;
+                case 1:
+                    // Show displayLayerProgress panel
+                    pnlDisplayLayerProgress.Visible = true;
+                    break;
+            }
+
+            lblLayer.Text = "<b>000</b>" + " of" + " 123";
+
+            lblLayer.AllowHtmlString = true;
+            lblLayer.Appearance.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
+            lblLayer.Appearance.Options.UseTextOptions = true;
+            lblLayer.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.Horizontal;
         }
 
         #endregion
@@ -228,13 +248,8 @@ namespace Octo_Streamer
                 // Stop the timer
                 tmrUpdateConnectionData.Stop();
 
-                // Update connection label with failure
-                toolServerStatus.ForeColor = Color.Orange;
-                toolServerStatus.Text = "Establishing connection...";
-
-                // Begin host transaction timer
-                tmrHandshake.Enabled = true;
-                tmrHandshake.Start();
+                // Enable connect to server button
+                tsConnect.Enabled = true;
             }
         }
 
@@ -608,5 +623,11 @@ namespace Octo_Streamer
             connectionWindow.Show();
         }
 
+        private void applicationSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Open application settings window
+            frmAppSettings appSettingsWindow = new frmAppSettings();
+            appSettingsWindow.Show();
+        }
     }
 }

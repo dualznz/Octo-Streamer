@@ -42,6 +42,7 @@ namespace Octo_Streamer
             this.lblConnectionStatus = new DevExpress.XtraEditors.LabelControl();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.tmrConnect = new System.Windows.Forms.Timer(this.components);
+            this.linkResetConnectionData = new DevExpress.XtraEditors.HyperlinkLabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.txtHost.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPort.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtApiKey.Properties)).BeginInit();
@@ -85,9 +86,9 @@ namespace Octo_Streamer
             // 
             // labelControl1
             // 
-            this.labelControl1.Location = new System.Drawing.Point(321, 219);
+            this.labelControl1.Location = new System.Drawing.Point(311, 218);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(85, 13);
+            this.labelControl1.Size = new System.Drawing.Size(93, 13);
             this.labelControl1.TabIndex = 4;
             this.labelControl1.Text = "* = Optional Field";
             // 
@@ -113,7 +114,7 @@ namespace Octo_Streamer
             // 
             this.linkApiKey.Location = new System.Drawing.Point(188, 136);
             this.linkApiKey.Name = "linkApiKey";
-            this.linkApiKey.Size = new System.Drawing.Size(147, 13);
+            this.linkApiKey.Size = new System.Drawing.Size(155, 13);
             this.linkApiKey.TabIndex = 7;
             this.linkApiKey.Text = "Find out how obtain API key...";
             this.linkApiKey.Click += new System.EventHandler(this.linkApiKey_Click);
@@ -144,7 +145,7 @@ namespace Octo_Streamer
             // 
             // labelControl2
             // 
-            this.labelControl2.Appearance.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl2.Appearance.Font = new System.Drawing.Font("Tahoma", 15.75F);
             this.labelControl2.Appearance.Options.UseFont = true;
             this.labelControl2.Location = new System.Drawing.Point(70, 7);
             this.labelControl2.Name = "labelControl2";
@@ -157,11 +158,25 @@ namespace Octo_Streamer
             this.tmrConnect.Interval = 2000;
             this.tmrConnect.Tick += new System.EventHandler(this.tmrConnect_Tick);
             // 
+            // linkResetConnectionData
+            // 
+            this.linkResetConnectionData.Appearance.ForeColor = System.Drawing.Color.Red;
+            this.linkResetConnectionData.Appearance.LinkColor = System.Drawing.Color.Red;
+            this.linkResetConnectionData.Appearance.Options.UseForeColor = true;
+            this.linkResetConnectionData.Appearance.Options.UseLinkColor = true;
+            this.linkResetConnectionData.Location = new System.Drawing.Point(3, 218);
+            this.linkResetConnectionData.Name = "linkResetConnectionData";
+            this.linkResetConnectionData.Size = new System.Drawing.Size(124, 13);
+            this.linkResetConnectionData.TabIndex = 11;
+            this.linkResetConnectionData.Text = "Reset connection data...";
+            this.linkResetConnectionData.Click += new System.EventHandler(this.linkResetConnectionData_Click);
+            // 
             // frmConnection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(408, 234);
+            this.Controls.Add(this.linkResetConnectionData);
             this.Controls.Add(this.labelControl2);
             this.Controls.Add(this.lblConnectionStatus);
             this.Controls.Add(this.btnConnect);
@@ -204,5 +219,6 @@ namespace Octo_Streamer
         private DevExpress.XtraEditors.LabelControl lblConnectionStatus;
         private DevExpress.XtraEditors.LabelControl labelControl2;
         private System.Windows.Forms.Timer tmrConnect;
+        private DevExpress.XtraEditors.HyperlinkLabelControl linkResetConnectionData;
     }
 }
