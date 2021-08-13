@@ -26,6 +26,9 @@ namespace Octo_Streamer
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // Check for stream files
+            checkStreamDirectory();
+
             // Reset server status label
             toolServerStatus.Text = null;
 
@@ -499,6 +502,13 @@ namespace Octo_Streamer
                 csSettings.date = Convert.ToInt32(jObject["job"]["file"]["date"].ToString());
                 csSettings.printTime = Convert.ToInt32(jObject["progress"]["printTime"].ToString());
                 csSettings.printTimeLeft = Convert.ToInt32(jObject["progress"]["printTimeLeft"].ToString());
+                
+
+
+                // test print to html file
+                System.IO.StreamWriter objWriter1 = new System.IO.StreamWriter(Application.StartupPath + "/output/test.txt");
+                objWriter1.WriteLine(csSettings.completion);
+                objWriter1.Close();
 
                 switch (csSettings.state)
                 {
@@ -707,7 +717,7 @@ namespace Octo_Streamer
 
         #endregion
 
-
+        #region Timespan Converter
         public string TimeSpanConverter(int time)
         {
             var timeSpan = TimeSpan.FromSeconds(time);
@@ -722,7 +732,9 @@ namespace Octo_Streamer
             var localDateTime = DateTimeOffset.FromUnixTimeSeconds(time).DateTime.ToLocalTime();
             return Convert.ToString(localDateTime);
         }
+        #endregion
 
+        #region Navigation
         private void connectionSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // No connection settings have been found, open new connection window
@@ -736,5 +748,39 @@ namespace Octo_Streamer
             frmAppSettings appSettingsWindow = new frmAppSettings();
             appSettingsWindow.Show();
         }
+
+        #endregion
+
+        #region Check for stream files
+        private void checkStreamDirectory()
+        {
+            // Define base location of application stream files
+            string coreLocation = Application.StartupPath;
+            string streamDirectory = "stream";
+
+            // Check to see if stream directory has been created or not
+            if (System.IO.Directory.Exists(coreLocation + "/" + streamDirectory) == false)
+            {
+                // Directory does not exsit so we will need to create it
+                System.IO.Directory.CreateDirectory(coreLocation + "/" + streamDirectory);
+
+                // Check for stream files
+                checkStreamfiles(coreLocation, streamDirectory);
+            }
+            else
+            {
+                // Directory exists so we can begin checking for files
+                checkStreamfiles(coreLocation, streamDirectory);
+            }
+
+        }
+
+        private void checkStreamfiles(string coreDirectory, string streamDirectory)
+        {
+
+        }
+
+        #endregion
+
     }
 }
