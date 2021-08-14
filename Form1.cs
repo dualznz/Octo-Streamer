@@ -506,9 +506,9 @@ namespace Octo_Streamer
 
 
                 // test print to html file
-                System.IO.StreamWriter objWriter1 = new System.IO.StreamWriter(Application.StartupPath + "/output/test.txt");
-                objWriter1.WriteLine(csSettings.completion);
-                objWriter1.Close();
+                //System.IO.StreamWriter objWriter1 = new System.IO.StreamWriter(Application.StartupPath + "/output/test.txt");
+                //objWriter1.WriteLine(csSettings.completion);
+                //objWriter1.Close();
 
                 switch (csSettings.state)
                 {
@@ -661,7 +661,7 @@ namespace Octo_Streamer
                 }
 
                 // Transmission Data (POST / GET)
-                string authServer = "http://192.168.1.153" + "/plugin/DisplayLayerProgress/values";
+                string authServer = host + portCheck + "/plugin/DisplayLayerProgress/values";
 
                 // Create request
                 HttpWebRequest request = (HttpWebRequest)
@@ -669,7 +669,7 @@ namespace Octo_Streamer
                 request.Headers.Add("Authorization", "Bearer " + apiKey);
                 request.ProtocolVersion = HttpVersion.Version10;
                 request.Method = "GET";
-                //request.Accept = "application/json";
+                request.Accept = "application/json";
 
                 // Await response from remote server
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
@@ -777,7 +777,157 @@ namespace Octo_Streamer
 
         private void checkStreamfiles(string coreDirectory, string streamDirectory)
         {
+            // Define strict location
+            string directoryRoot = coreDirectory + "/" + streamDirectory + "/";
 
+            #region Printer
+
+            // Check for folder: printer
+            if (System.IO.Directory.Exists(directoryRoot + "printer") == false)
+            {
+                // Directory does not exist, we need to create it
+                System.IO.Directory.CreateDirectory(directoryRoot + "printer");
+
+                // Check for individual files
+                printerFiles(directoryRoot, "printer");
+            } 
+            else
+            {
+                // Directory exists, check for files
+                printerFiles(directoryRoot, "printer");
+            }
+
+            #endregion
+
+            #region Temp
+
+            // Check for folder: temp
+            if (System.IO.Directory.Exists(directoryRoot + "temp") == false)
+            {
+                // Directory does not exist, we need to create it
+                System.IO.Directory.CreateDirectory(directoryRoot + "temp");
+
+                // Check for individual files
+                tempFiles(directoryRoot, "temp");
+            }
+            else
+            {
+                // Directory exists, check for files
+                tempFiles(directoryRoot, "temp");
+            }
+
+            #endregion
+
+            #region Progress
+
+            // Check for folder: progress
+            if (System.IO.Directory.Exists(directoryRoot + "progress") == false)
+            {
+                // Directory does not exist, we need to create it
+                System.IO.Directory.CreateDirectory(directoryRoot + "progress");
+
+                // Check for individual files
+                progressFiles(directoryRoot, "progress");
+            }
+            else
+            {
+                // Directory exists, check for files
+                progressFiles(directoryRoot, "progress");
+            }
+
+            #endregion
+
+            #region DisplayLayerProgress
+
+            // Check for folder: displayLayerProgress
+            if (System.IO.Directory.Exists(directoryRoot + "displayLayerProgress") == false)
+            {
+                // Directory does not exist, we need to create it
+                System.IO.Directory.CreateDirectory(directoryRoot + "displayLayerProgress");
+
+                // Check for individual files
+                displayLayerProgressFiles(directoryRoot, "displayLayerProgress");
+            }
+            else
+            {
+                // Directory exists, check for files
+                displayLayerProgressFiles(directoryRoot, "displayLayerProgress");
+            }
+
+            #endregion
+        }
+
+        private void printerFiles(string coreDirectory, string subDirectory)
+        {
+            // define base location
+            string directoryRoot = coreDirectory + subDirectory + "/";
+
+            // Check for file: printerStatus
+            if (System.IO.File.Exists(directoryRoot + "printerStatus.txt") == false)
+            {
+                // File does not exist, create it
+                System.IO.File.Create(directoryRoot + "printerStatus.txt");
+            }
+
+            // Check for file: printerFile
+            if (System.IO.File.Exists(directoryRoot + "printerFile.txt") == false)
+            {
+                // File does not exist, create it
+                System.IO.File.Create(directoryRoot + "printerFile.txt");
+            }
+        }
+
+        private void tempFiles(string coreDirectory, string subDirectory)
+        {
+            // define base location
+            string directoryRoot = coreDirectory + subDirectory + "/";
+
+            // Check for file: tempStatusHotend
+            if (System.IO.File.Exists(directoryRoot + "tempStatusHotend.txt") == false)
+            {
+                // File does not exist, create it
+                System.IO.File.Create(directoryRoot + "tempStatusHotend.txt");
+            }
+
+            // Check for file: tempStatusBed
+            if (System.IO.File.Exists(directoryRoot + "tempStatusBed.txt") == false)
+            {
+                // File does not exist, create it
+                System.IO.File.Create(directoryRoot + "tempStatusBed.txt");
+            }
+        }
+
+        private void progressFiles(string coreDirectory, string subDirectory)
+        {
+            // Define base location
+            string directoryRoot = coreDirectory + subDirectory + "/";
+
+            // Check for file: printProgressCompleted
+            if (System.IO.File.Exists(directoryRoot + "printProgressCompleted.txt") == false)
+            {
+                // File does not exist, create it
+                System.IO.File.Create(directoryRoot + "printProgressCompleted.txt");
+            }
+
+            // Check for file: printProgressElasped
+            if (System.IO.File.Exists(directoryRoot + "printProgressElasped.txt") == false)
+            {
+                // File does not exist, create it
+                System.IO.File.Create(directoryRoot + "printProgressElasped.txt");
+            }
+
+            // Check for file: printProgressLeft
+            if (System.IO.File.Exists(directoryRoot + "printProgressLeft.txt") == false)
+            {
+                // File does not exist, create it
+                System.IO.File.Create(directoryRoot + "printProgressLeft.txt");
+            }
+        }
+
+        private void displayLayerProgressFiles(string coreDirectory, string subDirectory)
+        {
+            // Define base location
+            string directoryRoot = coreDirectory + subDirectory + "/";
         }
 
         #endregion
