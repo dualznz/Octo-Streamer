@@ -439,6 +439,9 @@ namespace Octo_Streamer
             // Create connection to the api request declaration
             apiJobRequest(Properties.Settings.Default.Host, Properties.Settings.Default.Port, Properties.Settings.Default.ApiKey);
             apiPrinterRequest(Properties.Settings.Default.Host, Properties.Settings.Default.Port, Properties.Settings.Default.ApiKey);
+
+            // Stream data to files
+            streamToFiles();
         }
 
         #region Job Data
@@ -503,12 +506,6 @@ namespace Octo_Streamer
                 csSettings.printTime = Convert.ToInt32(jObject["progress"]["printTime"].ToString());
                 csSettings.printTimeLeft = Convert.ToInt32(jObject["progress"]["printTimeLeft"].ToString());
                 
-
-
-                // test print to html file
-                //System.IO.StreamWriter objWriter1 = new System.IO.StreamWriter(Application.StartupPath + "/output/test.txt");
-                //objWriter1.WriteLine(csSettings.completion);
-                //objWriter1.Close();
 
                 switch (csSettings.state)
                 {
@@ -928,6 +925,69 @@ namespace Octo_Streamer
         {
             // Define base location
             string directoryRoot = coreDirectory + subDirectory + "/";
+
+            // Check for file: layerStatus
+            if (System.IO.File.Exists(directoryRoot + "layerStatus.txt") == false)
+            {
+                // File does not exist, create it
+                System.IO.File.Create(directoryRoot + "layerStatus.txt");
+            }
+
+            // Check for file: fanSpeed
+            if (System.IO.File.Exists(directoryRoot + "fanSpeed.txt") == false)
+            {
+                // File does not exist, create it
+                System.IO.File.Create(directoryRoot + "fanSpeed.txt");
+            }
+        }
+
+        #endregion
+
+        #region Stream data to files
+
+        private void streamToFiles()
+        {
+            //System.IO.StreamWriter objWriter1 = new System.IO.StreamWriter(Application.StartupPath + "/output/test.txt");
+            //objWriter1.WriteLine(csSettings.completion);
+            //objWriter1.Close();
+
+            // Define base location for data fields
+            string defaultDirectory = Application.StartupPath + "/stream/";
+
+            #region Printer
+
+            // Check for file: printerFile
+            if (System.IO.File.Exists(defaultDirectory + "printer/printerFile.txt") == true)
+            {
+                // File exists, stream data to file
+                System.IO.StreamWriter printerFile = new System.IO.StreamWriter(defaultDirectory + "printer/printerFile.txt");
+                printerFile.Write(lblCurrentFileName.Text);
+                printerFile.Close();
+            }
+
+            // Check for file: printerStatus
+            if (System.IO.File.Exists(defaultDirectory + "printer/printerStatus.txt") == true)
+            {
+                // File exists, stream data to file
+                System.IO.StreamWriter printerStatus = new System.IO.StreamWriter(defaultDirectory + "printer/printerStatus.txt");
+                printerStatus.Write(lblPrinterStatusValue.Text);
+                printerStatus.Close();
+            }
+
+            #endregion
+
+            #region Temp
+
+            // Check for file: printerFile
+            if (System.IO.File.Exists(defaultDirectory + "temp/tempStatusHotend.txt") == true)
+            {
+                // File exists, stream data to file
+                System.IO.StreamWriter tempStatusHotend = new System.IO.StreamWriter(defaultDirectory + "temp/tempStatusHotend.txt");
+                tempStatusHotend.Write(lblToolActual.Text + lblToolTarget.Text);
+                tempStatusHotend.Close();
+            }
+
+            #endregion
         }
 
         #endregion

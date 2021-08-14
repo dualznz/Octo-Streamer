@@ -59,6 +59,10 @@ namespace Octo_Streamer
             this.pnlMainDisplay = new System.Windows.Forms.Panel();
             this.pnlActivePrint = new System.Windows.Forms.Panel();
             this.pnlDisplayLayerProgress = new System.Windows.Forms.Panel();
+            this.labelControl14 = new DevExpress.XtraEditors.LabelControl();
+            this.lblFanSpeed = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl12 = new DevExpress.XtraEditors.LabelControl();
+            this.lblLayer = new DevExpress.XtraEditors.LabelControl();
             this.lblBedTarget = new DevExpress.XtraEditors.LabelControl();
             this.labelControl8 = new DevExpress.XtraEditors.LabelControl();
             this.lblTimeLeft = new DevExpress.XtraEditors.LabelControl();
@@ -86,10 +90,6 @@ namespace Octo_Streamer
             this.rtbPrinterStatus = new System.Windows.Forms.RichTextBox();
             this.tmrApi = new System.Windows.Forms.Timer(this.components);
             this.labelControl11 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl12 = new DevExpress.XtraEditors.LabelControl();
-            this.lblLayer = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl14 = new DevExpress.XtraEditors.LabelControl();
-            this.lblFanSpeed = new DevExpress.XtraEditors.LabelControl();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.pnlMainDisplay.SuspendLayout();
@@ -196,19 +196,19 @@ namespace Octo_Streamer
             // 
             this.tsConnect.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.tsConnect.Name = "tsConnect";
-            this.tsConnect.Size = new System.Drawing.Size(180, 22);
+            this.tsConnect.Size = new System.Drawing.Size(130, 22);
             this.tsConnect.Text = "tsConnect";
             this.tsConnect.Click += new System.EventHandler(this.tsConnect_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(127, 6);
             // 
             // tsExitApplication
             // 
             this.tsExitApplication.Name = "tsExitApplication";
-            this.tsExitApplication.Size = new System.Drawing.Size(180, 22);
+            this.tsExitApplication.Size = new System.Drawing.Size(130, 22);
             this.tsExitApplication.Text = "Exit";
             this.tsExitApplication.Click += new System.EventHandler(this.tsExitApplication_Click);
             // 
@@ -362,6 +362,43 @@ namespace Octo_Streamer
             this.pnlDisplayLayerProgress.Size = new System.Drawing.Size(358, 32);
             this.pnlDisplayLayerProgress.TabIndex = 35;
             this.pnlDisplayLayerProgress.Visible = false;
+            // 
+            // labelControl14
+            // 
+            this.labelControl14.Location = new System.Drawing.Point(174, 2);
+            this.labelControl14.Name = "labelControl14";
+            this.labelControl14.Size = new System.Drawing.Size(57, 13);
+            this.labelControl14.TabIndex = 25;
+            this.labelControl14.Text = "Fan Speed:";
+            // 
+            // lblFanSpeed
+            // 
+            this.lblFanSpeed.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lblFanSpeed.Appearance.Options.UseFont = true;
+            this.lblFanSpeed.Location = new System.Drawing.Point(237, 2);
+            this.lblFanSpeed.Name = "lblFanSpeed";
+            this.lblFanSpeed.Size = new System.Drawing.Size(68, 13);
+            this.lblFanSpeed.TabIndex = 26;
+            this.lblFanSpeed.Text = "lblFanSpeed";
+            // 
+            // labelControl12
+            // 
+            this.labelControl12.AllowHtmlString = true;
+            this.labelControl12.Location = new System.Drawing.Point(8, 2);
+            this.labelControl12.Name = "labelControl12";
+            this.labelControl12.Size = new System.Drawing.Size(29, 13);
+            this.labelControl12.TabIndex = 23;
+            this.labelControl12.Text = "Layer:";
+            // 
+            // lblLayer
+            // 
+            this.lblLayer.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.lblLayer.Appearance.Options.UseFont = true;
+            this.lblLayer.Location = new System.Drawing.Point(43, 2);
+            this.lblLayer.Name = "lblLayer";
+            this.lblLayer.Size = new System.Drawing.Size(37, 13);
+            this.lblLayer.TabIndex = 24;
+            this.lblLayer.Text = "lblLayer";
             // 
             // lblBedTarget
             // 
@@ -613,43 +650,6 @@ namespace Octo_Streamer
             this.labelControl11.Size = new System.Drawing.Size(186, 35);
             this.labelControl11.TabIndex = 13;
             this.labelControl11.Text = "Octo-Streamer";
-            // 
-            // labelControl12
-            // 
-            this.labelControl12.AllowHtmlString = true;
-            this.labelControl12.Location = new System.Drawing.Point(8, 2);
-            this.labelControl12.Name = "labelControl12";
-            this.labelControl12.Size = new System.Drawing.Size(29, 13);
-            this.labelControl12.TabIndex = 23;
-            this.labelControl12.Text = "Layer:";
-            // 
-            // lblLayer
-            // 
-            this.lblLayer.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.lblLayer.Appearance.Options.UseFont = true;
-            this.lblLayer.Location = new System.Drawing.Point(43, 2);
-            this.lblLayer.Name = "lblLayer";
-            this.lblLayer.Size = new System.Drawing.Size(37, 13);
-            this.lblLayer.TabIndex = 24;
-            this.lblLayer.Text = "lblLayer";
-            // 
-            // labelControl14
-            // 
-            this.labelControl14.Location = new System.Drawing.Point(174, 2);
-            this.labelControl14.Name = "labelControl14";
-            this.labelControl14.Size = new System.Drawing.Size(57, 13);
-            this.labelControl14.TabIndex = 25;
-            this.labelControl14.Text = "Fan Speed:";
-            // 
-            // lblFanSpeed
-            // 
-            this.lblFanSpeed.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.lblFanSpeed.Appearance.Options.UseFont = true;
-            this.lblFanSpeed.Location = new System.Drawing.Point(237, 2);
-            this.lblFanSpeed.Name = "lblFanSpeed";
-            this.lblFanSpeed.Size = new System.Drawing.Size(68, 13);
-            this.lblFanSpeed.TabIndex = 26;
-            this.lblFanSpeed.Text = "lblFanSpeed";
             // 
             // Form1
             // 
