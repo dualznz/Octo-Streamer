@@ -8,6 +8,8 @@ The software pushes live updates to various text files located in the applicatio
 
 To launch this application just click on Octo-Streamer executable file ![](https://dualznz.space/static/Octo-Streamer/ostreamEXE.png)
 
+![](https://gyazo.com/6c96d6bc7621b2ba54371f547b495a18.gif)
+
 ### Connecting To OctoPrint Server
 
 When first launching the application you will be greeted with the **New Connection** window, from here you can fill in the required information in order to communicate with your server.
