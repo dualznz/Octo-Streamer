@@ -142,7 +142,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\csGitHub.cs" />
     <Compile Include="Classes\csSettings.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

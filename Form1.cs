@@ -10,7 +10,6 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Octokit;
-using Octo_Streamer.Classes;
 
 namespace Octo_Streamer
 {
@@ -1135,8 +1134,6 @@ namespace Octo_Streamer
             try
             {
                 var github = new GitHubClient(new ProductHeaderValue("Octo-Streamer"));
-                var basicAuth = new Credentials(csGitHub.token);
-                github.Credentials = basicAuth;
                 var repo = await github.Repository.Release.GetLatest("dualznz", "Octo-Streamer");
 
                 // check to see if there is a new version
@@ -1146,6 +1143,9 @@ namespace Octo_Streamer
                     linkGithubReleases.Enabled = true;
                     linkGithubReleases.Visible = true;
 
+                    // Debug
+                    Console.WriteLine(repo.TagName);
+
                     // Navigate to the github releases page
                     System.Diagnostics.Process.Start("https://github.com/dualznz/Octo-Streamer/releases");
                 }
@@ -1154,6 +1154,9 @@ namespace Octo_Streamer
                     // Application is on the latest version
                     linkGithubReleases.Enabled = false;
                     linkGithubReleases.Visible = false;
+
+                    // Debug
+                    Console.WriteLine(repo.TagName);
                 }
 
             }
