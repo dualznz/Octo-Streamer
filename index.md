@@ -1,37 +1,69 @@
-## Welcome to GitHub Pages
+![](https://dualznz.space/static/Octo-Streamer/ico.png)
 
-You can use the [editor on GitHub](https://github.com/dualznz/Octo-Streamer/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+# Octo-Streamer
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+This desktop application was created to allow you to stream your printers status from OctoPrint to various software such as OBS, SLOBS, X-Split and others.
 
-### Markdown
+The software pushes live updates to various text files located in the application /stream directory.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Download latest release over in our **Releases Tab**, which has already been built for you.
 
-```markdown
-Syntax highlighted code block
+To launch this application just click on Octo-Streamer executable file ![](https://dualznz.space/static/Octo-Streamer/ostreamEXE.png)
 
-# Header 1
-## Header 2
-### Header 3
+![](https://gyazo.com/6c96d6bc7621b2ba54371f547b495a18.gif)
 
-- Bulleted
-- List
+### Connecting To OctoPrint Server
 
-1. Numbered
-2. List
+When first launching the application you will be greeted with the **New Connection** window, from here you can fill in the required information in order to communicate with your server.
 
-**Bold** and _Italic_ and `Code` text
+- Host - the url for your printer eg *http://192.168.10.10*
+- Port - **(Optional)** The port used to connect to the server in your url eg *8080*
+- API Key - The global API key to access your server, information on getting this can be found [here...](https://docs.octoprint.org/en/master/api/general.html#authorization)
 
-[Link](url) and ![Image](src)
-```
+Then to connect to your OctoPrint server just click **Connect to Server** under File/ tool strip
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### Accessing Stream Data
 
-### Jekyll Themes
+To access the stream data to add to your stream, simply go to the **Application Folder / stream** or **Tools/Application Data** within the application, there you will find multiple folders which contain the various values that get parsed to the files in real-time within the application.
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/dualznz/Octo-Streamer/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+### Adding Stream Data To OBS
 
-### Support or Contact
+OBS (Open Broadcasting Software) has made it exceptionally easy to add new text sources to your scene, as the data files are Text files (.txt) we can use the following source **Text (GDI+)**, to add a source click on the  ![](https://dualznz.space/static/Octo-Streamer/plus.png)icon under your **Sources Area**.
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Then next we need to add the type which in our case will be **Text (GDI+)** 
+
+![](https://dualznz.space/static/Octo-Streamer/source.png)
+
+Finally we need to add the location of txt file you wish to use ![](https://dualznz.space/static/Octo-Streamer/medialink.png)
+
+Ensure you click on **Read from file** then browse to the application folder **/stream/** whichever directory / file you wish to use, you can then change the color, size, font and so forth like you would do with any other text source within OBS.
+
+### Addons
+
+The application also has values contained within the following plugin(s):
+
+- DisplayLayerProgress **(Optional)**
+
+To activate the additional values within the application head over to **Tools/Application Settings** to activate the plugins
+
+### Todo
+
+- [ ] Remove global key & change to Application Token within OctoPrint
+- [ ] Allow change from Celsius to Fahrenheit
+
+### Issues
+
+If you wish to add an issue / Request please head over to our Issues Tab
+
+License
+
+- [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.html)
+- Copyright 2021
+
+### Building Application
+
+In order to build this application in your own development environment you will need the following software / tools:
+
+- Visual Studio 2019 
+- DevExpress WinForms Component Subscription Version 20.1 (not latest), [order here...](https://www.devexpress.com/products/net/controls/winforms/)
+
