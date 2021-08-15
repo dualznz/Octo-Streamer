@@ -17,8 +17,11 @@ namespace Octo_Streamer
             InitializeComponent();
         }
 
+        #region Form Load
         private void frmAppSettings_Load(object sender, EventArgs e)
         {
+            #region Application addons
+
             // check to see if there is currently a connection active to the remote server
             if (csSettings.connectionActive == 1)
             {
@@ -36,38 +39,154 @@ namespace Octo_Streamer
             // Check if displayLayerProgress is enabled in application settings
             if (Properties.Settings.Default.DisplayLayerProgress == 1)
             {
+                // Setting is enabled, check the box
                 chkDisplayLayerProgress.Checked = true;
             }
             else
             {
+                // Setting is disabled, dont check the box
                 chkDisplayLayerProgress.Checked = false;
             }
 
-        }
+            #endregion
 
+            #region Stream Settings
+
+            // Check if toolTempTarget is enabled in application settings
+            if (Properties.Settings.Default.ToolTempTarget == 1)
+            {
+                // Setting is enabled, check the box
+                chkToolTempTarget.Checked = true;
+            }
+            else
+            {
+                // Setting is disabled, dont check the box
+                chkToolTempTarget.Checked = false;
+            }
+
+            // Check if bedTempTarget is enabled in application settings
+            if (Properties.Settings.Default.BedTempTarget == 1)
+            {
+                // Setting is enabled, check the box
+                chkBedTempTarget.Checked = true;
+            }
+            else
+            {
+                // Setting is disabled, dont check the box
+                chkBedTempTarget.Checked = false;
+            }
+
+            #endregion
+
+        }
+        #endregion
+
+        #region DisplayLayerProgress Plugin Link
         private void lblDisplayLayerProgressLink_Click(object sender, EventArgs e)
         {
             // Open octoprint plugin repository and navigate to DisplayLayerProgress plugin
             System.Diagnostics.Process.Start("https://plugins.octoprint.org/plugins/DisplayLayerProgress/");
         }
+        #endregion
 
-        private void btnUpdateDisplayLayerProgress_Click(object sender, EventArgs e)
+        #region Update Addons
+        private void btnUpdateAddons_Click(object sender, EventArgs e)
         {
+            // Check to see if displayLayerProgress checkbox has been checked
             if (chkDisplayLayerProgress.Checked == true)
             {
+                // Checkbox is checked, store setting
                 Properties.Settings.Default.DisplayLayerProgress = 1;
                 csSettings.displayLayerProgress = 1;
             }
             else
             {
+                // Checkbox is not checked, store setting
                 Properties.Settings.Default.DisplayLayerProgress = 0;
                 csSettings.displayLayerProgress = 0;
             }
 
+            // Store application settings
             Properties.Settings.Default.Save();
 
             // Update connection state
             csSettings.updateDataSignal = 2;
+
+            // Show saved tag and start delay
+            lblUpdatedAddons.Visible = true;
+            btnUpdateAddons.Enabled = false;
+            tmrSaveApplicationAddons.Enabled = true;
+            tmrSaveApplicationAddons.Start();
         }
+
+        private void tmrSaveApplicationAddons_Tick(object sender, EventArgs e)
+        {
+            // Stop the timer
+            tmrSaveApplicationAddons.Stop();
+            tmrSaveApplicationAddons.Enabled = false;
+
+            // Hide saved tag
+            lblUpdatedAddons.Visible = false;
+
+            // Enable update button
+            btnUpdateAddons.Enabled = true;
+        }
+        #endregion
+
+        #region Update Stream Settings
+        private void btnUpdateStreamSettings_Click(object sender, EventArgs e)
+        {
+            // Check to see if ToolTempTarget checkbox has been checked
+            if (chkToolTempTarget.Checked == true)
+            {
+                // Checkbox is checked, store setting
+                Properties.Settings.Default.ToolTempTarget = 1;
+                csSettings.toolTempTargetSwitch = 1;
+            }
+            else
+            {
+                // Checkbox is not checked, store setting
+                Properties.Settings.Default.ToolTempTarget = 0;
+                csSettings.toolTempTargetSwitch = 0;
+            }
+
+            // Check to see if BedTempTarget checkbox has been checked
+            if (chkBedTempTarget.Checked == true)
+            {
+                // Checkbox is checked, store setting
+                Properties.Settings.Default.BedTempTarget = 1;
+                csSettings.bedTempTargetSwitch = 1;
+            }
+            else
+            {
+                // Checkbox is not checked, store setting
+                Properties.Settings.Default.BedTempTarget = 0;
+                csSettings.bedTempTargetSwitch = 0;
+            }
+
+            // Store application settings
+            Properties.Settings.Default.Save();
+
+            // Show saved tag and start delay
+            lblUpdatedStreamSettings.Visible = true;
+            btnUpdateStreamSettings.Enabled = false;
+            tmrSaveStreamSettings.Enabled = true;
+            tmrSaveStreamSettings.Start();
+        }
+
+        private void tmrSaveStreamSettings_Tick(object sender, EventArgs e)
+        {
+            // Stop the timer
+            tmrSaveStreamSettings.Stop();
+            tmrSaveStreamSettings.Enabled = false;
+
+            // Hide saved tag
+            lblUpdatedStreamSettings.Visible = false;
+
+            // Enable update button
+            btnUpdateStreamSettings.Enabled = true;
+        }
+
+        #endregion
     }
 }

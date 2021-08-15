@@ -158,7 +158,7 @@ namespace Octo_Streamer
                 // Update connection state
                 csSettings.updateDataSignal = 1;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // Update connection label with failure
                 lblConnectionStatus.Appearance.ForeColor = Color.Red;
@@ -166,6 +166,9 @@ namespace Octo_Streamer
 
                 // Re-enable submit button
                 btnConnect.Enabled = true;
+
+                // Display error messagebox
+                MessageBox.Show(ex.ToString(), "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

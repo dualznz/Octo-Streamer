@@ -61,18 +61,6 @@ namespace Octo_Streamer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("60000")]
-        public int UpdateDelay {
-            get {
-                return ((int)(this["UpdateDelay"]));
-            }
-            set {
-                this["UpdateDelay"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int DisplayLayerProgress {
             get {
@@ -80,6 +68,30 @@ namespace Octo_Streamer.Properties {
             }
             set {
                 this["DisplayLayerProgress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int ToolTempTarget {
+            get {
+                return ((int)(this["ToolTempTarget"]));
+            }
+            set {
+                this["ToolTempTarget"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int BedTempTarget {
+            get {
+                return ((int)(this["BedTempTarget"]));
+            }
+            set {
+                this["BedTempTarget"] = value;
             }
         }
     }

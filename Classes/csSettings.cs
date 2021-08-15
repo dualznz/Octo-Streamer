@@ -12,6 +12,9 @@
         public static int displayLayerProgress { get; set; }
         public static string recievedDisplayLayerProgressData { get; set; }
 
+        public static int toolTempTargetSwitch { get; set; }
+        public static int bedTempTargetSwitch { get; set; }
+
 
         // Octoprint api
         public static string state { get; set; }

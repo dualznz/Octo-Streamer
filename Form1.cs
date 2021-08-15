@@ -499,17 +499,15 @@ namespace Octo_Streamer
                 csSettings.state = jObject["state"].ToString();
                 lblPrinterStatusValue.Text = csSettings.state;
 
-
-                // Add values to class
-                csSettings.completion = jObject["progress"]["completion"].ToString();
-                csSettings.date = Convert.ToInt32(jObject["job"]["file"]["date"].ToString());
-                csSettings.printTime = Convert.ToInt32(jObject["progress"]["printTime"].ToString());
-                csSettings.printTimeLeft = Convert.ToInt32(jObject["progress"]["printTimeLeft"].ToString());
-                
-
                 switch (csSettings.state)
                 {
                     case "Printing":
+                        // Add values to class
+                        csSettings.completion = jObject["progress"]["completion"].ToString();
+                        csSettings.date = Convert.ToInt32(jObject["job"]["file"]["date"].ToString());
+                        csSettings.printTime = Convert.ToInt32(jObject["progress"]["printTime"].ToString());
+                        csSettings.printTimeLeft = Convert.ToInt32(jObject["progress"]["printTimeLeft"].ToString());
+
                         csSettings.name = jObject["job"]["file"]["display"].ToString();
                         lblCurrentFileName.Text = csSettings.name;
 
@@ -531,6 +529,7 @@ namespace Octo_Streamer
                         lblCompletedValue.Text = "NaN";
                         lblLayer.Text = "NaN";
                         lblFanSpeed.Text = "NaN";
+                        lblLayer.Text = "NaN";
                         break;
                 }
                 
@@ -947,29 +946,31 @@ namespace Octo_Streamer
 
         private void streamToFiles()
         {
-            //System.IO.StreamWriter objWriter1 = new System.IO.StreamWriter(Application.StartupPath + "/output/test.txt");
-            //objWriter1.WriteLine(csSettings.completion);
-            //objWriter1.Close();
-
             // Define base location for data fields
             string defaultDirectory = Application.StartupPath + "/stream/";
+
+            // Define sub-directories
+            string printerDir = "printer/";
+            string tempDir = "temp/";
+            string progressDir = "progress/";
+            string displayLayerProgressDir = "displayLayerProgress/";
 
             #region Printer
 
             // Check for file: printerFile
-            if (System.IO.File.Exists(defaultDirectory + "printer/printerFile.txt") == true)
+            if (System.IO.File.Exists(defaultDirectory + printerDir + "printerFile.txt") == true)
             {
                 // File exists, stream data to file
-                System.IO.StreamWriter printerFile = new System.IO.StreamWriter(defaultDirectory + "printer/printerFile.txt");
+                System.IO.StreamWriter printerFile = new System.IO.StreamWriter(defaultDirectory + printerDir + "printerFile.txt");
                 printerFile.Write(lblCurrentFileName.Text);
                 printerFile.Close();
             }
 
             // Check for file: printerStatus
-            if (System.IO.File.Exists(defaultDirectory + "printer/printerStatus.txt") == true)
+            if (System.IO.File.Exists(defaultDirectory + printerDir + "printerStatus.txt") == true)
             {
                 // File exists, stream data to file
-                System.IO.StreamWriter printerStatus = new System.IO.StreamWriter(defaultDirectory + "printer/printerStatus.txt");
+                System.IO.StreamWriter printerStatus = new System.IO.StreamWriter(defaultDirectory + printerDir + "printerStatus.txt");
                 printerStatus.Write(lblPrinterStatusValue.Text);
                 printerStatus.Close();
             }
@@ -978,13 +979,144 @@ namespace Octo_Streamer
 
             #region Temp
 
-            // Check for file: printerFile
-            if (System.IO.File.Exists(defaultDirectory + "temp/tempStatusHotend.txt") == true)
+            // Check for file: tempStatusHotend
+            if (System.IO.File.Exists(defaultDirectory + tempDir + "tempStatusHotend.txt") == true)
             {
                 // File exists, stream data to file
-                System.IO.StreamWriter tempStatusHotend = new System.IO.StreamWriter(defaultDirectory + "temp/tempStatusHotend.txt");
-                tempStatusHotend.Write(lblToolActual.Text + lblToolTarget.Text);
+                System.IO.StreamWriter tempStatusHotend = new System.IO.StreamWriter(defaultDirectory + tempDir + "tempStatusHotend.txt");
+
+                // Convert temp to string with celcius format
+                string toolTemp = string.Format("{0} \u00B0C", csSettings.toolActual);
+                string toolTarget = string.Format(" / {0} \u00B0C", csSettings.toolTarget);
+
+                // Check if target has been enabled
+                switch (Properties.Settings.Default.ToolTempTarget)
+                {
+                    case 0:
+                        tempStatusHotend.Write(toolTemp);
+                        break;
+                    case 1:
+                        tempStatusHotend.Write(toolTemp + toolTarget);
+                        break;
+                    default:
+                        tempStatusHotend.Write(toolTemp + toolTarget);
+                        break;
+                }
+                
+                // Close connection
                 tempStatusHotend.Close();
+            }
+
+            // Check for file: tempStatusBed
+            if (System.IO.File.Exists(defaultDirectory + tempDir + "tempStatusBed.txt") == true)
+            {
+                // File exists, stream data to file
+                System.IO.StreamWriter tempStatusBed = new System.IO.StreamWriter(defaultDirectory + tempDir + "tempStatusBed.txt");
+
+                // Convert temp to string with celcius format
+                string bedTemp = string.Format("{0} \u00B0C", csSettings.bedActual);
+                string bedTarget = string.Format(" / {0} \u00B0C", csSettings.bedTarget);
+
+                // Check if target has been enabled
+                switch (Properties.Settings.Default.BedTempTarget)
+                {
+                    case 0:
+                        tempStatusBed.Write(bedTemp);
+                        break;
+                    case 1:
+                        tempStatusBed.Write(bedTemp + bedTarget);
+                        break;
+                    default:
+                        tempStatusBed.Write(bedTemp + bedTarget);
+                        break;
+                }
+
+                // Close connection
+                tempStatusBed.Close();
+            }
+
+            #endregion
+
+            #region Progress
+
+            // Check for file: printProgressCompleted
+            if (System.IO.File.Exists(defaultDirectory + progressDir + "printProgressCompleted.txt") == true)
+            {
+                // File exists, stream data to file
+                System.IO.StreamWriter printProgressCompleted = new System.IO.StreamWriter(defaultDirectory + progressDir + "printProgressCompleted.txt");
+                printProgressCompleted.Write(lblCompletedValue.Text);
+                printProgressCompleted.Close();
+            }
+
+            // Check for file: printProgressElasped
+            if (System.IO.File.Exists(defaultDirectory + progressDir + "printProgressElasped.txt") == true)
+            {
+                // File exists, stream data to file
+                System.IO.StreamWriter printProgressElasped = new System.IO.StreamWriter(defaultDirectory + progressDir + "printProgressElasped.txt");
+                printProgressElasped.Write(lblTimeElapsed.Text);
+                printProgressElasped.Close();
+            }
+
+            // Check for file: printProgressLeft
+            if (System.IO.File.Exists(defaultDirectory + progressDir + "printProgressLeft.txt") == true)
+            {
+                // File exists, stream data to file
+                System.IO.StreamWriter printProgressLeft = new System.IO.StreamWriter(defaultDirectory + progressDir + "printProgressLeft.txt");
+                printProgressLeft.Write(lblTimeLeft.Text);
+                printProgressLeft.Close();
+            }
+
+            #endregion
+
+            #region DisplayLayerProgress
+
+            // Check to see if DisplayLayerProgress is enabled in application settings before updating files
+            if (Properties.Settings.Default.DisplayLayerProgress == 1)
+            {
+                // Process information from class
+                string layerTrigger = "";
+
+                // Plugin is enabled, we can process StreamWriter events
+                // Check for file: layerStatus
+                if (System.IO.File.Exists(defaultDirectory + displayLayerProgressDir + "layerStatus.txt") == true)
+                {
+                    // File exists, stream data to file
+                    System.IO.StreamWriter layerStatus = new System.IO.StreamWriter(defaultDirectory + displayLayerProgressDir + "layerStatus.txt");
+                    
+                    if (csSettings.state == "Printing")
+                    {
+                        layerTrigger = csSettings.dlpCurrentLayer + " of " + csSettings.dlpTotalLayers + " layers";
+                    }
+                    else
+                    {
+                        layerTrigger = "NaN";
+                    }
+
+                    layerStatus.Write(layerTrigger);
+                    layerStatus.Close();
+                }
+
+                // Check for file: fanSpeed
+                if (System.IO.File.Exists(defaultDirectory + displayLayerProgressDir + "fanSpeed.txt") == true)
+                {
+                    // File exists, stream data to file
+                    System.IO.StreamWriter fanSpeed = new System.IO.StreamWriter(defaultDirectory + displayLayerProgressDir + "fanSpeed.txt");
+                    fanSpeed.Write(csSettings.dlpFanSpeed);
+                    fanSpeed.Close();
+                }
+            } else
+            {
+                // Reset values in files
+                lblLayer.Text = "NaN";
+                lblFanSpeed.Text = "NaN";
+
+                if (System.IO.File.Exists(defaultDirectory + displayLayerProgressDir + "layerStatus.txt") == true)
+                {
+                    // Stream data to layer status file
+                    System.IO.StreamWriter layerStatus = new System.IO.StreamWriter(defaultDirectory + displayLayerProgressDir + "layerStatus.txt");
+                    layerStatus.Write("NaN");
+                    layerStatus.Close();
+                }
             }
 
             #endregion
