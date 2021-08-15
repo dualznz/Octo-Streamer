@@ -54,4 +54,4 @@ If you wish to add an issue / Request please head over to our Issues Tab
 License
 
 - [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.html)
-- Copyright 20
+- Copyright 2021
