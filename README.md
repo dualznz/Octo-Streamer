@@ -6,6 +6,8 @@ This desktop application was created to allow you to stream your printers status
 
 The software pushes live updates to various text files located in the application /stream directory.
 
+Download latest release over in our **Releases Tab**, which has already been built for you.
+
 To launch this application just click on Octo-Streamer executable file ![](https://dualznz.space/static/Octo-Streamer/ostreamEXE.png)
 
 ![](https://gyazo.com/6c96d6bc7621b2ba54371f547b495a18.gif)
@@ -57,3 +59,11 @@ License
 
 - [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.html)
 - Copyright 2021
+
+### Building Application
+
+In order to build this application in your own development environment you will need the following software / tools:
+
+- Visual Studio 2019 
+- DevExpress WinForms Component Subscription Version 20.1 (not latest), [order here...](https://www.devexpress.com/products/net/controls/winforms/)
+
