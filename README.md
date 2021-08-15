@@ -26,7 +26,9 @@ To access the stream data to add to your stream, simply go to the **Application 
 
 OBS (Open Broadcasting Software) has made it exceptionally easy to add new text sources to your scene, as the data files are Text files (.txt) we can use the following source **Text (GDI+)**, to add a source click on the  ![](https://dualznz.space/static/Octo-Streamer/plus.png)icon under your **Sources Area**.
 
-Then next we need to add the type which in our case will be **Text (GDI+)** ![](https://dualznz.space/static/Octo-Streamer/source.png)
+Then next we need to add the type which in our case will be **Text (GDI+)** 
+
+![](https://dualznz.space/static/Octo-Streamer/source.png)
 
 Finally we need to add the location of txt file you wish to use ![](https://dualznz.space/static/Octo-Streamer/medialink.png)
 
@@ -52,4 +54,4 @@ If you wish to add an issue / Request please head over to our Issues Tab
 License
 
 - [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.html)
-- Copyright 2021
+- Copyright 20
