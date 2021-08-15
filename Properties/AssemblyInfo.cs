@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Octo-Streamer")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("OctoPrint data disply on streaming software")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("https://github.com/dualznz/Octo-Streamer")]
 [assembly: AssemblyProduct("Octo-Streamer")]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
+[assembly: AssemblyCopyright("Copyright © dualznz 2021 https://github.com/dualznz/Octo-Streamer")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

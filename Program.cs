@@ -8,9 +8,9 @@ namespace Octo_Streamer
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+        // Define application version
+        public static string ApplicationVersion = "v0.0.1";
+
         [STAThread]
         static void Main()
         {

@@ -30,20 +30,23 @@ namespace Octo_Streamer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAppSettings));
             this.groupApplicationAddons = new DevExpress.XtraEditors.GroupControl();
+            this.lblUpdatedAddons = new DevExpress.XtraEditors.LabelControl();
             this.btnUpdateAddons = new DevExpress.XtraEditors.SimpleButton();
             this.chkDisplayLayerProgress = new System.Windows.Forms.CheckBox();
             this.lblDisplayLayerProgressLink = new DevExpress.XtraEditors.HyperlinkLabelControl();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
+            this.lblUpdatedStreamSettings = new DevExpress.XtraEditors.LabelControl();
             this.btnUpdateStreamSettings = new DevExpress.XtraEditors.SimpleButton();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.chkBedTempTarget = new System.Windows.Forms.CheckBox();
             this.separatorControl1 = new DevExpress.XtraEditors.SeparatorControl();
             this.chkToolTempTarget = new System.Windows.Forms.CheckBox();
-            this.lblUpdatedAddons = new DevExpress.XtraEditors.LabelControl();
             this.tmrSaveApplicationAddons = new System.Windows.Forms.Timer(this.components);
             this.tmrSaveStreamSettings = new System.Windows.Forms.Timer(this.components);
-            this.lblUpdatedStreamSettings = new DevExpress.XtraEditors.LabelControl();
+            this.btnOpenStreamDirectory = new DevExpress.XtraEditors.SimpleButton();
+            this.linkStreamSetupGuide = new DevExpress.XtraEditors.HyperlinkLabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.groupApplicationAddons)).BeginInit();
             this.groupApplicationAddons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
@@ -63,8 +66,22 @@ namespace Octo_Streamer
             this.groupApplicationAddons.TabIndex = 0;
             this.groupApplicationAddons.Text = "Application Addons";
             // 
+            // lblUpdatedAddons
+            // 
+            this.lblUpdatedAddons.Appearance.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lblUpdatedAddons.Appearance.ForeColor = DevExpress.LookAndFeel.DXSkinColors.ForeColors.Information;
+            this.lblUpdatedAddons.Appearance.Options.UseFont = true;
+            this.lblUpdatedAddons.Appearance.Options.UseForeColor = true;
+            this.lblUpdatedAddons.Location = new System.Drawing.Point(294, 5);
+            this.lblUpdatedAddons.Name = "lblUpdatedAddons";
+            this.lblUpdatedAddons.Size = new System.Drawing.Size(45, 13);
+            this.lblUpdatedAddons.TabIndex = 13;
+            this.lblUpdatedAddons.Text = "Updated";
+            this.lblUpdatedAddons.Visible = false;
+            // 
             // btnUpdateAddons
             // 
+            this.btnUpdateAddons.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateAddons.ImageOptions.Image")));
             this.btnUpdateAddons.Location = new System.Drawing.Point(243, 89);
             this.btnUpdateAddons.Name = "btnUpdateAddons";
             this.btnUpdateAddons.Size = new System.Drawing.Size(100, 23);
@@ -93,6 +110,8 @@ namespace Octo_Streamer
             // 
             // groupControl2
             // 
+            this.groupControl2.Controls.Add(this.linkStreamSetupGuide);
+            this.groupControl2.Controls.Add(this.btnOpenStreamDirectory);
             this.groupControl2.Controls.Add(this.lblUpdatedStreamSettings);
             this.groupControl2.Controls.Add(this.btnUpdateStreamSettings);
             this.groupControl2.Controls.Add(this.labelControl1);
@@ -105,9 +124,23 @@ namespace Octo_Streamer
             this.groupControl2.TabIndex = 1;
             this.groupControl2.Text = "Stream Settings";
             // 
+            // lblUpdatedStreamSettings
+            // 
+            this.lblUpdatedStreamSettings.Appearance.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lblUpdatedStreamSettings.Appearance.ForeColor = DevExpress.LookAndFeel.DXSkinColors.ForeColors.Information;
+            this.lblUpdatedStreamSettings.Appearance.Options.UseFont = true;
+            this.lblUpdatedStreamSettings.Appearance.Options.UseForeColor = true;
+            this.lblUpdatedStreamSettings.Location = new System.Drawing.Point(294, 5);
+            this.lblUpdatedStreamSettings.Name = "lblUpdatedStreamSettings";
+            this.lblUpdatedStreamSettings.Size = new System.Drawing.Size(45, 13);
+            this.lblUpdatedStreamSettings.TabIndex = 14;
+            this.lblUpdatedStreamSettings.Text = "Updated";
+            this.lblUpdatedStreamSettings.Visible = false;
+            // 
             // btnUpdateStreamSettings
             // 
-            this.btnUpdateStreamSettings.Location = new System.Drawing.Point(243, 98);
+            this.btnUpdateStreamSettings.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateStreamSettings.ImageOptions.Image")));
+            this.btnUpdateStreamSettings.Location = new System.Drawing.Point(239, 86);
             this.btnUpdateStreamSettings.Name = "btnUpdateStreamSettings";
             this.btnUpdateStreamSettings.Size = new System.Drawing.Size(100, 23);
             this.btnUpdateStreamSettings.TabIndex = 11;
@@ -152,19 +185,6 @@ namespace Octo_Streamer
             this.chkToolTempTarget.Text = "Tool Temp Target";
             this.chkToolTempTarget.UseVisualStyleBackColor = true;
             // 
-            // lblUpdatedAddons
-            // 
-            this.lblUpdatedAddons.Appearance.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.lblUpdatedAddons.Appearance.ForeColor = DevExpress.LookAndFeel.DXSkinColors.ForeColors.Information;
-            this.lblUpdatedAddons.Appearance.Options.UseFont = true;
-            this.lblUpdatedAddons.Appearance.Options.UseForeColor = true;
-            this.lblUpdatedAddons.Location = new System.Drawing.Point(294, 5);
-            this.lblUpdatedAddons.Name = "lblUpdatedAddons";
-            this.lblUpdatedAddons.Size = new System.Drawing.Size(45, 13);
-            this.lblUpdatedAddons.TabIndex = 13;
-            this.lblUpdatedAddons.Text = "Updated";
-            this.lblUpdatedAddons.Visible = false;
-            // 
             // tmrSaveApplicationAddons
             // 
             this.tmrSaveApplicationAddons.Interval = 5000;
@@ -175,18 +195,24 @@ namespace Octo_Streamer
             this.tmrSaveStreamSettings.Interval = 5000;
             this.tmrSaveStreamSettings.Tick += new System.EventHandler(this.tmrSaveStreamSettings_Tick);
             // 
-            // lblUpdatedStreamSettings
+            // btnOpenStreamDirectory
             // 
-            this.lblUpdatedStreamSettings.Appearance.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.lblUpdatedStreamSettings.Appearance.ForeColor = DevExpress.LookAndFeel.DXSkinColors.ForeColors.Information;
-            this.lblUpdatedStreamSettings.Appearance.Options.UseFont = true;
-            this.lblUpdatedStreamSettings.Appearance.Options.UseForeColor = true;
-            this.lblUpdatedStreamSettings.Location = new System.Drawing.Point(294, 5);
-            this.lblUpdatedStreamSettings.Name = "lblUpdatedStreamSettings";
-            this.lblUpdatedStreamSettings.Size = new System.Drawing.Size(45, 13);
-            this.lblUpdatedStreamSettings.TabIndex = 14;
-            this.lblUpdatedStreamSettings.Text = "Updated";
-            this.lblUpdatedStreamSettings.Visible = false;
+            this.btnOpenStreamDirectory.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton1.ImageOptions.Image")));
+            this.btnOpenStreamDirectory.Location = new System.Drawing.Point(206, 49);
+            this.btnOpenStreamDirectory.Name = "btnOpenStreamDirectory";
+            this.btnOpenStreamDirectory.Size = new System.Drawing.Size(133, 23);
+            this.btnOpenStreamDirectory.TabIndex = 15;
+            this.btnOpenStreamDirectory.Text = "Open Stream Folder";
+            this.btnOpenStreamDirectory.Click += new System.EventHandler(this.btnOpenStreamDirectory_Click);
+            // 
+            // linkStreamSetupGuide
+            // 
+            this.linkStreamSetupGuide.Location = new System.Drawing.Point(40, 122);
+            this.linkStreamSetupGuide.Name = "linkStreamSetupGuide";
+            this.linkStreamSetupGuide.Size = new System.Drawing.Size(109, 13);
+            this.linkStreamSetupGuide.TabIndex = 16;
+            this.linkStreamSetupGuide.Text = "Stream setup guide...";
+            this.linkStreamSetupGuide.Click += new System.EventHandler(this.linkStreamSetupGuide_Click);
             // 
             // frmAppSettings
             // 
@@ -197,6 +223,7 @@ namespace Octo_Streamer
             this.Controls.Add(this.groupApplicationAddons);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmAppSettings";
@@ -230,5 +257,7 @@ namespace Octo_Streamer
         private System.Windows.Forms.Timer tmrSaveApplicationAddons;
         private System.Windows.Forms.Timer tmrSaveStreamSettings;
         private DevExpress.XtraEditors.LabelControl lblUpdatedStreamSettings;
+        private DevExpress.XtraEditors.SimpleButton btnOpenStreamDirectory;
+        private DevExpress.XtraEditors.HyperlinkLabelControl linkStreamSetupGuide;
     }
 }

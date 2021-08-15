@@ -38,7 +38,6 @@ namespace Octo_Streamer
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolServerStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.btnFlash = new System.Windows.Forms.Button();
             this.tmrUpdateConnectionData = new System.Windows.Forms.Timer(this.components);
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsFile = new System.Windows.Forms.ToolStripDropDownButton();
@@ -51,7 +50,6 @@ namespace Octo_Streamer
             this.tsHelp = new System.Windows.Forms.ToolStripDropDownButton();
             this.githubHomepageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.githubIssuesRequestsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.version10ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.linkDualznzGithub = new DevExpress.XtraEditors.HyperlinkLabelControl();
             this.lblPrinterStatusTitle = new DevExpress.XtraEditors.LabelControl();
@@ -90,6 +88,9 @@ namespace Octo_Streamer
             this.rtbPrinterStatus = new System.Windows.Forms.RichTextBox();
             this.tmrApi = new System.Windows.Forms.Timer(this.components);
             this.labelControl11 = new DevExpress.XtraEditors.LabelControl();
+            this.tmrCheckForUpdates = new System.Windows.Forms.Timer(this.components);
+            this.linkGithubReleases = new DevExpress.XtraEditors.HyperlinkLabelControl();
+            this.toolCurrentVersionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.pnlMainDisplay.SuspendLayout();
@@ -146,19 +147,9 @@ namespace Octo_Streamer
             this.toolServerStatus});
             this.statusStrip1.Location = new System.Drawing.Point(0, 456);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(417, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(422, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
-            // 
-            // btnFlash
-            // 
-            this.btnFlash.Location = new System.Drawing.Point(1014, 333);
-            this.btnFlash.Name = "btnFlash";
-            this.btnFlash.Size = new System.Drawing.Size(18, 21);
-            this.btnFlash.TabIndex = 1;
-            this.btnFlash.Text = "button1";
-            this.btnFlash.UseVisualStyleBackColor = true;
-            this.btnFlash.Click += new System.EventHandler(this.btnFlash_Click);
             // 
             // tmrUpdateConnectionData
             // 
@@ -174,7 +165,7 @@ namespace Octo_Streamer
             this.tsHelp});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(417, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(422, 25);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -246,7 +237,7 @@ namespace Octo_Streamer
             this.tsHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.githubHomepageToolStripMenuItem,
             this.githubIssuesRequestsToolStripMenuItem,
-            this.version10ToolStripMenuItem});
+            this.toolCurrentVersionToolStripMenuItem});
             this.tsHelp.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.tsHelp.Image = ((System.Drawing.Image)(resources.GetObject("tsHelp.Image")));
             this.tsHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -259,18 +250,14 @@ namespace Octo_Streamer
             this.githubHomepageToolStripMenuItem.Name = "githubHomepageToolStripMenuItem";
             this.githubHomepageToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.githubHomepageToolStripMenuItem.Text = "Github Homepage";
+            this.githubHomepageToolStripMenuItem.Click += new System.EventHandler(this.githubHomepageToolStripMenuItem_Click);
             // 
             // githubIssuesRequestsToolStripMenuItem
             // 
             this.githubIssuesRequestsToolStripMenuItem.Name = "githubIssuesRequestsToolStripMenuItem";
             this.githubIssuesRequestsToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.githubIssuesRequestsToolStripMenuItem.Text = "Github Issues / Requests";
-            // 
-            // version10ToolStripMenuItem
-            // 
-            this.version10ToolStripMenuItem.Name = "version10ToolStripMenuItem";
-            this.version10ToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.version10ToolStripMenuItem.Text = "Version: 1.0";
+            this.githubIssuesRequestsToolStripMenuItem.Click += new System.EventHandler(this.githubIssuesRequestsToolStripMenuItem_Click);
             // 
             // labelControl1
             // 
@@ -651,21 +638,49 @@ namespace Octo_Streamer
             this.labelControl11.TabIndex = 13;
             this.labelControl11.Text = "Octo-Streamer";
             // 
+            // tmrCheckForUpdates
+            // 
+            this.tmrCheckForUpdates.Tick += new System.EventHandler(this.tmrCheckForUpdates_Tick);
+            // 
+            // linkGithubReleases
+            // 
+            this.linkGithubReleases.Appearance.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.linkGithubReleases.Appearance.ForeColor = System.Drawing.Color.Red;
+            this.linkGithubReleases.Appearance.LinkColor = System.Drawing.Color.Red;
+            this.linkGithubReleases.Appearance.Options.UseFont = true;
+            this.linkGithubReleases.Appearance.Options.UseForeColor = true;
+            this.linkGithubReleases.Appearance.Options.UseLinkColor = true;
+            this.linkGithubReleases.Enabled = false;
+            this.linkGithubReleases.Location = new System.Drawing.Point(291, 3);
+            this.linkGithubReleases.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.Flat;
+            this.linkGithubReleases.Name = "linkGithubReleases";
+            this.linkGithubReleases.Size = new System.Drawing.Size(125, 13);
+            this.linkGithubReleases.TabIndex = 14;
+            this.linkGithubReleases.Text = "New update available!!!";
+            this.linkGithubReleases.Visible = false;
+            // 
+            // toolCurrentVersionToolStripMenuItem
+            // 
+            this.toolCurrentVersionToolStripMenuItem.Name = "toolCurrentVersionToolStripMenuItem";
+            this.toolCurrentVersionToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.toolCurrentVersionToolStripMenuItem.Text = "toolCurrentVersion";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(417, 478);
+            this.ClientSize = new System.Drawing.Size(422, 478);
+            this.Controls.Add(this.linkGithubReleases);
             this.Controls.Add(this.labelControl11);
             this.Controls.Add(this.rtbPrinterStatus);
             this.Controls.Add(this.pnlMainDisplay);
             this.Controls.Add(this.linkDualznzGithub);
             this.Controls.Add(this.labelControl1);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.btnFlash);
             this.Controls.Add(this.statusStrip1);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -699,7 +714,6 @@ namespace Octo_Streamer
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.ToolStripStatusLabel toolServerStatus;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.Button btnFlash;
         private System.Windows.Forms.Timer tmrUpdateConnectionData;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripDropDownButton tsFile;
@@ -744,13 +758,15 @@ namespace Octo_Streamer
         private DevExpress.XtraEditors.SeparatorControl separatorControl5;
         private System.Windows.Forms.ToolStripMenuItem tsConnect;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem version10ToolStripMenuItem;
         private DevExpress.XtraEditors.LabelControl labelControl11;
         private System.Windows.Forms.Panel pnlDisplayLayerProgress;
         private DevExpress.XtraEditors.LabelControl labelControl12;
         private DevExpress.XtraEditors.LabelControl lblLayer;
         private DevExpress.XtraEditors.LabelControl labelControl14;
         private DevExpress.XtraEditors.LabelControl lblFanSpeed;
+        private System.Windows.Forms.Timer tmrCheckForUpdates;
+        private DevExpress.XtraEditors.HyperlinkLabelControl linkGithubReleases;
+        private System.Windows.Forms.ToolStripMenuItem toolCurrentVersionToolStripMenuItem;
     }
 }
 

@@ -175,6 +175,7 @@ namespace Octo_Streamer
 
         #endregion
 
+        #region Connect to server
         private void tmrConnect_Tick(object sender, EventArgs e)
         {
             // stop timer and disable it
@@ -184,6 +185,9 @@ namespace Octo_Streamer
             // connect to server
             beginConnectionTransaction();
         }
+        #endregion
+
+        #region Reset all connection / application perameters
 
         private void linkResetConnectionData_Click(object sender, EventArgs e)
         {
@@ -202,5 +206,8 @@ namespace Octo_Streamer
             // uppdate connection state
             csSettings.updateDataSignal = 3;
         }
+
+        #endregion
+
     }
 }

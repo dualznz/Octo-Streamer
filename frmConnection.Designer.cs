@@ -30,6 +30,7 @@ namespace Octo_Streamer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConnection));
             this.lblHost = new DevExpress.XtraEditors.LabelControl();
             this.txtHost = new DevExpress.XtraEditors.TextEdit();
             this.txtPort = new DevExpress.XtraEditors.TextEdit();
@@ -123,11 +124,12 @@ namespace Octo_Streamer
             // 
             this.btnConnect.AllowHtmlDraw = DevExpress.Utils.DefaultBoolean.True;
             this.btnConnect.Appearance.Options.UseBorderColor = true;
+            this.btnConnect.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnConnect.ImageOptions.Image")));
             this.btnConnect.Location = new System.Drawing.Point(166, 164);
             this.btnConnect.LookAndFeel.SkinName = "The Bezier";
             this.btnConnect.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.UltraFlat;
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(75, 23);
+            this.btnConnect.Size = new System.Drawing.Size(96, 23);
             this.btnConnect.TabIndex = 8;
             this.btnConnect.Text = "Connect";
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
@@ -190,11 +192,12 @@ namespace Octo_Streamer
             this.Controls.Add(this.lblHost);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmConnection";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "frmConnection";
+            this.Text = "Connect To OctoPrint Server";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.frmConnection_Load);
             ((System.ComponentModel.ISupportInitialize)(this.txtHost.Properties)).EndInit();

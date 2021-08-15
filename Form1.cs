@@ -9,6 +9,8 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Octokit;
+using Octo_Streamer.Classes;
 
 namespace Octo_Streamer
 {
@@ -28,6 +30,9 @@ namespace Octo_Streamer
         {
             // Check for stream files
             checkStreamDirectory();
+
+            // Set current version of application in the tool menu
+            toolCurrentVersionToolStripMenuItem.Text = "Version: " + Program.ApplicationVersion;
 
             // Reset server status label
             toolServerStatus.Text = null;
@@ -50,6 +55,10 @@ namespace Octo_Streamer
 
             // start receive connection timer
             tmrUpdateConnectionData.Start();
+
+            // check for application updates
+            tmrCheckForUpdates.Enabled = true;
+            tmrCheckForUpdates.Start();
 
             if (Properties.Settings.Default.Host == "")
             {
@@ -402,24 +411,11 @@ namespace Octo_Streamer
 
         #endregion
 
-        #region DEV
-        private void btnFlash_Click(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.Host = "";
-            Properties.Settings.Default.Port = "";
-            Properties.Settings.Default.ApiKey = "";
-            Properties.Settings.Default.Save();
-
-            Application.ExitThread();
-        }
-
-        #endregion
-
         #region Application Exit
         private void tsExitApplication_Click(object sender, EventArgs e)
         {
             // Exit Application
-            Application.ExitThread();
+            System.Windows.Forms.Application.Exit();
         }
         #endregion
 
@@ -432,7 +428,6 @@ namespace Octo_Streamer
         #endregion
 
         #region Main API Interaction
-
 
         private void tmrApi_Tick(object sender, EventArgs e)
         {
@@ -751,7 +746,7 @@ namespace Octo_Streamer
         private void checkStreamDirectory()
         {
             // Define base location of application stream files
-            string coreLocation = Application.StartupPath;
+            string coreLocation = System.Windows.Forms.Application.StartupPath;
             string streamDirectory = "stream";
 
             // Check to see if stream directory has been created or not
@@ -947,7 +942,7 @@ namespace Octo_Streamer
         private void streamToFiles()
         {
             // Define base location for data fields
-            string defaultDirectory = Application.StartupPath + "/stream/";
+            string defaultDirectory = System.Windows.Forms.Application.StartupPath + "/stream/";
 
             // Define sub-directories
             string printerDir = "printer/";
@@ -1122,6 +1117,69 @@ namespace Octo_Streamer
             #endregion
         }
 
+        #endregion
+
+        #region Application Update Check
+
+        private void tmrCheckForUpdates_Tick(object sender, EventArgs e)
+        {
+            // Stop the timer
+            tmrCheckForUpdates.Stop();
+            tmrCheckForUpdates.Enabled = false;
+
+            // Check for updates
+            UpdateCheck();
+        }
+        private async void UpdateCheck()
+        {
+            try
+            {
+                var github = new GitHubClient(new ProductHeaderValue("Octo-Streamer"));
+                var basicAuth = new Credentials(csGitHub.token);
+                github.Credentials = basicAuth;
+                var repo = await github.Repository.Release.GetLatest("dualznz", "Octo-Streamer");
+
+                // check to see if there is a new version
+                if (Program.ApplicationVersion != repo.TagName)
+                {
+                    // New application release is available, enable and show update event
+                    linkGithubReleases.Enabled = true;
+                    linkGithubReleases.Visible = true;
+
+                    // Navigate to the github releases page
+                    System.Diagnostics.Process.Start("https://github.com/dualznz/Octo-Streamer/releases");
+                }
+                else
+                {
+                    // Application is on the latest version
+                    linkGithubReleases.Enabled = false;
+                    linkGithubReleases.Visible = false;
+                }
+
+            }
+            catch (Exception)
+            {
+                // No tags have been found or error connecting to GitHub
+                Console.WriteLine("Unable to connect to Octo-Streamer Repo and check for new releases");
+            }
+        }
+        #endregion
+
+        #region Github Homepage
+        private void githubHomepageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Navigate to project homepage
+            System.Diagnostics.Process.Start("https://github.com/dualznz/Octo-Streamer");
+        }
+
+        #endregion
+
+        #region Github Issues
+        private void githubIssuesRequestsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Navigate to project issue / features page
+            System.Diagnostics.Process.Start("https://github.com/dualznz/Octo-Streamer/issues");
+        }
         #endregion
 
     }

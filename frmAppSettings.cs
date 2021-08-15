@@ -188,5 +188,25 @@ namespace Octo_Streamer
         }
 
         #endregion
+
+        #region Open Stream Directory
+
+        private void btnOpenStreamDirectory_Click(object sender, EventArgs e)
+        {
+            // Open stream directory
+            System.Diagnostics.Process.Start(Application.StartupPath + "/stream");
+        }
+
+        #endregion
+
+        #region Stream Setup Guide
+
+        private void linkStreamSetupGuide_Click(object sender, EventArgs e)
+        {
+            // Navigate to github wiki for setting up stream
+            System.Diagnostics.Process.Start("");
+        }
+
+        #endregion
     }
 }
