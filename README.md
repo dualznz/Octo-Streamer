@@ -6,11 +6,13 @@ This desktop application was created to allow you to stream your printers status
 
 The software pushes live updates to various text files located in the application /stream directory.
 
-Download latest release over in our **Releases Tab**, which has already been built for you.
-
 To launch this application just click on Octo-Streamer executable file ![](https://dualznz.space/static/Octo-Streamer/ostreamEXE.png)
 
 ![](https://gyazo.com/6c96d6bc7621b2ba54371f547b495a18.gif)
+
+### Download Release
+
+To download the latest release of Octo-Stream just head over to our [Releases Tab](https://github.com/dualznz/Octo-Streamer/releases) which has already been compiled for you.
 
 ### Connecting To OctoPrint Server
 
