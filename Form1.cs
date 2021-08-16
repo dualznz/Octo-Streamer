@@ -55,6 +55,10 @@ namespace Octo_Streamer
             // start receive connection timer
             tmrUpdateConnectionData.Start();
 
+            // Reset stream file data / populate with NaN values
+            dumpStreamDefaults();
+
+            // ## Diable in dev ##
             // check for application updates
             tmrCheckForUpdates.Enabled = true;
             tmrCheckForUpdates.Start();
@@ -160,6 +164,9 @@ namespace Octo_Streamer
 
                     // Reset value labels
                     resetValueLabels();
+
+                    // Reset stream values
+                    //dumpStreamDefaults();
                     break;
                 default:
                     // No connection has been made to the remote server
@@ -1118,6 +1125,119 @@ namespace Octo_Streamer
 
         #endregion
 
+        #region Reset stream files data
+
+        private void dumpStreamDefaults()
+        {
+            // Define base location for data fields
+            string defaultDirectory = System.Windows.Forms.Application.StartupPath + "/stream/";
+
+            // Define sub-directories
+            string printerDir = "printer/";
+            string tempDir = "temp/";
+            string progressDir = "progress/";
+            string displayLayerProgressDir = "displayLayerProgress/";
+
+            #region Printer
+
+            // Check for file: printerStatus
+            if (System.IO.File.Exists(defaultDirectory + printerDir + "printerStatus.txt") == true)
+            {
+                // File exists, stream data to file
+                System.IO.StreamWriter printerStatus = new System.IO.StreamWriter(defaultDirectory + printerDir + "printerStatus.txt");
+                printerStatus.Write("Not connected");
+                printerStatus.Close();
+            }
+
+            // Check for file: printerFile
+            if (System.IO.File.Exists(defaultDirectory + printerDir + "printerFile.txt") == true)
+            {
+                // File exists, stream data to file
+                System.IO.StreamWriter printerFile = new System.IO.StreamWriter(defaultDirectory + printerDir + "printerFile.txt");
+                printerFile.Write("NaN");
+                printerFile.Close();
+            }
+
+            #endregion
+
+            #region Temp
+
+            // Check for file: tempStatusHotend
+            if (System.IO.File.Exists(defaultDirectory + tempDir + "tempStatusHotend.txt") == true)
+            {
+                // File exists, stream data to file
+                System.IO.StreamWriter tempStatusHotend = new System.IO.StreamWriter(defaultDirectory + tempDir + "tempStatusHotend.txt");
+                tempStatusHotend.Write("NaN");
+                tempStatusHotend.Close();
+            }
+
+            // Check for file: tempStatusBed
+            if (System.IO.File.Exists(defaultDirectory + tempDir + "tempStatusBed.txt") == true)
+            {
+                // File exists, stream data to file
+                System.IO.StreamWriter tempStatusBed = new System.IO.StreamWriter(defaultDirectory + tempDir + "tempStatusBed.txt");
+                tempStatusBed.Write("NaN");
+                tempStatusBed.Close();
+            }
+
+            #endregion
+
+            #region Progress
+
+            // Check for file: printProgressCompleted
+            if (System.IO.File.Exists(defaultDirectory + progressDir + "printProgressCompleted.txt") == true)
+            {
+                // File exists, stream data to file
+                System.IO.StreamWriter printProgressCompleted = new System.IO.StreamWriter(defaultDirectory + progressDir + "printProgressCompleted.txt");
+                printProgressCompleted.Write("NaN");
+                printProgressCompleted.Close();
+            }
+
+            // Check for file: printProgressElasped
+            if (System.IO.File.Exists(defaultDirectory + progressDir + "printProgressElasped.txt") == true)
+            {
+                // File exists, stream data to file
+                System.IO.StreamWriter printProgressElasped = new System.IO.StreamWriter(defaultDirectory + progressDir + "printProgressElasped.txt");
+                printProgressElasped.Write("NaN");
+                printProgressElasped.Close();
+            }
+
+            // Check for file: printProgressLeft
+            if (System.IO.File.Exists(defaultDirectory + progressDir + "printProgressLeft.txt") == true)
+            {
+                // File exists, stream data to file
+                System.IO.StreamWriter printProgressLeft = new System.IO.StreamWriter(defaultDirectory + progressDir + "printProgressLeft.txt");
+                printProgressLeft.Write("NaN");
+                printProgressLeft.Close();
+            }
+
+            #endregion
+
+            #region DisplayLayerProgress
+
+            // Check for file: layerStatus
+            if (System.IO.File.Exists(defaultDirectory + displayLayerProgressDir + "layerStatus.txt") == true)
+            {
+                // File exists, stream data to file
+                System.IO.StreamWriter layerStatus = new System.IO.StreamWriter(defaultDirectory + displayLayerProgressDir + "layerStatus.txt");
+                layerStatus.Write("NaN");
+                layerStatus.Close();
+            }
+
+            // Check for file: fanSpeed
+            if (System.IO.File.Exists(defaultDirectory + displayLayerProgressDir + "fanSpeed.txt") == true)
+            {
+                // File exists, stream data to file
+                System.IO.StreamWriter fanSpeed = new System.IO.StreamWriter(defaultDirectory + displayLayerProgressDir + "fanSpeed.txt");
+                fanSpeed.Write("NaN");
+                fanSpeed.Close();
+            }
+
+            #endregion
+        }
+
+        #endregion
+
         #region Application Update Check
 
         private void tmrCheckForUpdates_Tick(object sender, EventArgs e)
@@ -1185,5 +1305,14 @@ namespace Octo_Streamer
         }
         #endregion
 
+        #region Form Closing
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Reset all stream values before closing the application
+            dumpStreamDefaults();
+        }
+
+        #endregion
     }
 }

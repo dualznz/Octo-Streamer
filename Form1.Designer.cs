@@ -50,6 +50,7 @@ namespace Octo_Streamer
             this.tsHelp = new System.Windows.Forms.ToolStripDropDownButton();
             this.githubHomepageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.githubIssuesRequestsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolCurrentVersionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.linkDualznzGithub = new DevExpress.XtraEditors.HyperlinkLabelControl();
             this.lblPrinterStatusTitle = new DevExpress.XtraEditors.LabelControl();
@@ -90,7 +91,6 @@ namespace Octo_Streamer
             this.labelControl11 = new DevExpress.XtraEditors.LabelControl();
             this.tmrCheckForUpdates = new System.Windows.Forms.Timer(this.components);
             this.linkGithubReleases = new DevExpress.XtraEditors.HyperlinkLabelControl();
-            this.toolCurrentVersionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.pnlMainDisplay.SuspendLayout();
@@ -258,6 +258,12 @@ namespace Octo_Streamer
             this.githubIssuesRequestsToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.githubIssuesRequestsToolStripMenuItem.Text = "Github Issues / Requests";
             this.githubIssuesRequestsToolStripMenuItem.Click += new System.EventHandler(this.githubIssuesRequestsToolStripMenuItem_Click);
+            // 
+            // toolCurrentVersionToolStripMenuItem
+            // 
+            this.toolCurrentVersionToolStripMenuItem.Name = "toolCurrentVersionToolStripMenuItem";
+            this.toolCurrentVersionToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.toolCurrentVersionToolStripMenuItem.Text = "toolCurrentVersion";
             // 
             // labelControl1
             // 
@@ -659,12 +665,6 @@ namespace Octo_Streamer
             this.linkGithubReleases.Text = "New update available!!!";
             this.linkGithubReleases.Visible = false;
             // 
-            // toolCurrentVersionToolStripMenuItem
-            // 
-            this.toolCurrentVersionToolStripMenuItem.Name = "toolCurrentVersionToolStripMenuItem";
-            this.toolCurrentVersionToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.toolCurrentVersionToolStripMenuItem.Text = "toolCurrentVersion";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -685,6 +685,7 @@ namespace Octo_Streamer
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Octo-Streamer";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
