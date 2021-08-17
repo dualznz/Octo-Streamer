@@ -58,10 +58,14 @@ namespace Octo_Streamer
             // Reset stream file data / populate with NaN values
             dumpStreamDefaults();
 
-            // ## Diable in dev ##
+
             // check for application updates
-            tmrCheckForUpdates.Enabled = true;
-            tmrCheckForUpdates.Start();
+            if (Program.devMode == false)
+            {
+                // Developer mode has been disabled, we can run the update version check
+                tmrCheckForUpdates.Enabled = true;
+                tmrCheckForUpdates.Start();
+            }
 
             if (Properties.Settings.Default.Host == "")
             {

@@ -11,6 +11,10 @@ namespace Octo_Streamer
         // Define application version
         public static string ApplicationVersion = "v0.0.2";
 
+        // Dev mode
+        // Disable update check features on git repo
+        public static bool devMode = true;
+
         [STAThread]
         static void Main()
         {
