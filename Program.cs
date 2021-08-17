@@ -9,7 +9,7 @@ namespace Octo_Streamer
     static class Program
     {
         // Define application version
-        public static string ApplicationVersion = "v0.0.2";
+        public static string ApplicationVersion = "v0.0.3";
 
         // Dev mode
         // Disable update check features on git repo
