@@ -9,6 +9,7 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace Octo_Streamer
 {
@@ -24,23 +25,21 @@ namespace Octo_Streamer
         private void frmConnection_Load(object sender, EventArgs e)
         {
             // Check to see if there is any data in the application settings, if so populate fields
-            string host = Properties.Settings.Default.Host;
-            string port = Properties.Settings.Default.Port;
-            string apiKey = Properties.Settings.Default.ApiKey;
+            // Define host registry folder
 
-            if (host != null)
+            if (csSettings.connectionAddress != null)
             {
-                txtHost.Text = host;
+                txtHost.Text = csSettings.connectionAddress;
             }
 
-            if (port != null)
+            if (csSettings.connectionPort != null)
             {
-                txtPort.Text = port;
+                txtPort.Text = csSettings.connectionPort;
             }
 
-            if (apiKey != null)
+            if (csSettings.connectionAuthToken != null)
             {
-                txtApiKey.Text = apiKey;
+                txtApiKey.Text = csSettings.connectionAuthToken;
             }
 
             // check to see if there is currently a connection active to the remote server
@@ -85,11 +84,11 @@ namespace Octo_Streamer
             if (txtPort.Text != null || txtPort.Text == "")
             {
                 // Push string output to class
-                csSettings.ConnectionPort = txtPort.Text.ToString();
+                csSettings.connectionPort = txtPort.Text.ToString();
             }
             else
             {
-                csSettings.ConnectionPort = "";
+                csSettings.connectionPort = "";
             }
 
             // Apply addtional data to class
@@ -114,9 +113,9 @@ namespace Octo_Streamer
             try
             {
                 string portCheck = null;
-                if (csSettings.ConnectionPort != null)
+                if (csSettings.connectionPort != null)
                 {
-                    portCheck = ":" + csSettings.ConnectionPort;
+                    portCheck = ":" + csSettings.connectionPort;
                 }
                 else
                 {
@@ -149,14 +148,11 @@ namespace Octo_Streamer
                 // Re-enable submit button
                 btnConnect.Enabled = true;
 
-                // Save connection information into application settings
-                Properties.Settings.Default.Host = csSettings.connectionAddress;
-                Properties.Settings.Default.Port = csSettings.ConnectionPort;
-                Properties.Settings.Default.ApiKey = csSettings.connectionAuthToken;
-                Properties.Settings.Default.Save();
-
                 // Update connection state
                 csSettings.updateDataSignal = 1;
+
+                // Store connection in the registry
+                registryDep();
             }
             catch (Exception ex)
             {
@@ -192,11 +188,20 @@ namespace Octo_Streamer
         private void linkResetConnectionData_Click(object sender, EventArgs e)
         {
             // Reset all connection data
-            Properties.Settings.Default.Host = "";
-            Properties.Settings.Default.Port = "";
-            Properties.Settings.Default.ApiKey = "";
-            Properties.Settings.Default.DisplayLayerProgress = 0;
-            Properties.Settings.Default.Save();
+            // Define host registry folder
+            var key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Octo-Streamer", true);
+
+            // Check to see if the host regisrtry folder exists, if not create it
+            if (key == null)
+            {
+                RegistryKey newKey = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Octo-Streamer");
+                newKey.SetValue("host", "");
+                newKey.SetValue("port", "");
+                newKey.SetValue("apiKey", "");
+                newKey.SetValue("displayLayerProgress", 0);
+                newKey.Close();
+            }
+
 
             // Reset text boxes
             txtHost.Text = null;
@@ -207,6 +212,26 @@ namespace Octo_Streamer
             csSettings.updateDataSignal = 3;
         }
 
+        #endregion
+
+        #region Registry Dependencies
+
+        public static void registryDep()
+        {
+            // Define host registry folder
+            var key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Octo-Streamer", true);
+
+            // Check to see if the host regisrtry folder exists, if not create it
+            if (key == null)
+            {
+                RegistryKey newKey = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Octo-Streamer");
+                newKey.SetValue("host", csSettings.connectionAddress);
+                newKey.SetValue("port", csSettings.connectionPort);
+                newKey.SetValue("apiKey", csSettings.connectionAuthToken);
+                newKey.SetValue("displayLayerProgress", "0");
+                newKey.Close();
+            }
+        }
         #endregion
 
     }
