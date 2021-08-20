@@ -28,6 +28,8 @@ namespace Octo_Streamer
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            Console.WriteLine(csSettings.connectionAddress);
+
             // Pull registry values
             registryDep();
 
@@ -71,7 +73,7 @@ namespace Octo_Streamer
                 tmrCheckForUpdates.Start();
             }
 
-            if (csSettings.connectionAddress == "")
+            if (csSettings.connectionAddress == null)
             {
                 // Change state for the connection to the server button event
                 tsConnect.Enabled = false;
@@ -125,6 +127,8 @@ namespace Octo_Streamer
                 csSettings.connectionPort = key.GetValue("port").ToString();
                 csSettings.connectionAuthToken = key.GetValue("apiKey").ToString();
                 csSettings.displayLayerProgress = Convert.ToInt16(key.GetValue("displayLayerProgress"));
+                csSettings.toolTempTargetSwitch = Convert.ToInt16(key.GetValue("toolTempTarget"));
+                csSettings.bedTempTargetSwitch = Convert.ToInt16(key.GetValue("bedTempTarget"));
                 key.Close();
             }
         }
@@ -309,7 +313,7 @@ namespace Octo_Streamer
             else if (csSettings.updateDataSignal == 2)
             {
                 // Check to see if displayLayerProgress setting is enabled
-                switch (Properties.Settings.Default.DisplayLayerProgress)
+                switch (csSettings.displayLayerProgress)
                 {
                     case 0:
                         // Hide displayLayerProgress panel
@@ -672,6 +676,8 @@ namespace Octo_Streamer
         }
         #endregion
 
+        #region DisplayLayerProgress Data
+
         private void displayLayerProgress(string host, string port, string apiKey)
         {
             try
@@ -737,9 +743,11 @@ namespace Octo_Streamer
             catch (Exception)
             {
 
-                
+
             }
         }
+
+        #endregion
 
         #endregion
 

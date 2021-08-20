@@ -192,16 +192,17 @@ namespace Octo_Streamer
             var key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Octo-Streamer", true);
 
             // Check to see if the host regisrtry folder exists, if not create it
-            if (key == null)
+            if (key != null)
             {
                 RegistryKey newKey = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Octo-Streamer");
                 newKey.SetValue("host", "");
                 newKey.SetValue("port", "");
                 newKey.SetValue("apiKey", "");
-                newKey.SetValue("displayLayerProgress", 0);
+                newKey.SetValue("displayLayerProgress", "0");
+                newKey.SetValue("toolTempTarget", "0");
+                newKey.SetValue("bedTempTarget", "0");
                 newKey.Close();
             }
-
 
             // Reset text boxes
             txtHost.Text = null;
@@ -229,6 +230,8 @@ namespace Octo_Streamer
                 newKey.SetValue("port", csSettings.connectionPort);
                 newKey.SetValue("apiKey", csSettings.connectionAuthToken);
                 newKey.SetValue("displayLayerProgress", "0");
+                newKey.SetValue("toolTempTarget", "0");
+                newKey.SetValue("bedTempTarget", "0");
                 newKey.Close();
             }
         }

@@ -13,7 +13,7 @@ namespace Octo_Streamer
 
         // Dev mode
         // Disable update check features on git repo
-        public static bool devMode = true;
+        public static bool devMode = false;
 
         [STAThread]
         static void Main()

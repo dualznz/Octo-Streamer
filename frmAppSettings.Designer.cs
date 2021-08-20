@@ -37,6 +37,8 @@ namespace Octo_Streamer
             this.chkDisplayLayerProgress = new System.Windows.Forms.CheckBox();
             this.lblDisplayLayerProgressLink = new DevExpress.XtraEditors.HyperlinkLabelControl();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
+            this.linkStreamSetupGuide = new DevExpress.XtraEditors.HyperlinkLabelControl();
+            this.btnOpenStreamDirectory = new DevExpress.XtraEditors.SimpleButton();
             this.lblUpdatedStreamSettings = new DevExpress.XtraEditors.LabelControl();
             this.btnUpdateStreamSettings = new DevExpress.XtraEditors.SimpleButton();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
@@ -45,8 +47,7 @@ namespace Octo_Streamer
             this.chkToolTempTarget = new System.Windows.Forms.CheckBox();
             this.tmrSaveApplicationAddons = new System.Windows.Forms.Timer(this.components);
             this.tmrSaveStreamSettings = new System.Windows.Forms.Timer(this.components);
-            this.btnOpenStreamDirectory = new DevExpress.XtraEditors.SimpleButton();
-            this.linkStreamSetupGuide = new DevExpress.XtraEditors.HyperlinkLabelControl();
+            this.btnCameraStream = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.groupApplicationAddons)).BeginInit();
             this.groupApplicationAddons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
@@ -110,6 +111,7 @@ namespace Octo_Streamer
             // 
             // groupControl2
             // 
+            this.groupControl2.Controls.Add(this.btnCameraStream);
             this.groupControl2.Controls.Add(this.linkStreamSetupGuide);
             this.groupControl2.Controls.Add(this.btnOpenStreamDirectory);
             this.groupControl2.Controls.Add(this.lblUpdatedStreamSettings);
@@ -123,6 +125,25 @@ namespace Octo_Streamer
             this.groupControl2.Size = new System.Drawing.Size(348, 141);
             this.groupControl2.TabIndex = 1;
             this.groupControl2.Text = "Stream Settings";
+            // 
+            // linkStreamSetupGuide
+            // 
+            this.linkStreamSetupGuide.Location = new System.Drawing.Point(40, 122);
+            this.linkStreamSetupGuide.Name = "linkStreamSetupGuide";
+            this.linkStreamSetupGuide.Size = new System.Drawing.Size(109, 13);
+            this.linkStreamSetupGuide.TabIndex = 16;
+            this.linkStreamSetupGuide.Text = "Stream setup guide...";
+            this.linkStreamSetupGuide.Click += new System.EventHandler(this.linkStreamSetupGuide_Click);
+            // 
+            // btnOpenStreamDirectory
+            // 
+            this.btnOpenStreamDirectory.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenStreamDirectory.ImageOptions.Image")));
+            this.btnOpenStreamDirectory.Location = new System.Drawing.Point(206, 35);
+            this.btnOpenStreamDirectory.Name = "btnOpenStreamDirectory";
+            this.btnOpenStreamDirectory.Size = new System.Drawing.Size(133, 23);
+            this.btnOpenStreamDirectory.TabIndex = 15;
+            this.btnOpenStreamDirectory.Text = "Open Stream Folder";
+            this.btnOpenStreamDirectory.Click += new System.EventHandler(this.btnOpenStreamDirectory_Click);
             // 
             // lblUpdatedStreamSettings
             // 
@@ -140,7 +161,7 @@ namespace Octo_Streamer
             // btnUpdateStreamSettings
             // 
             this.btnUpdateStreamSettings.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateStreamSettings.ImageOptions.Image")));
-            this.btnUpdateStreamSettings.Location = new System.Drawing.Point(239, 86);
+            this.btnUpdateStreamSettings.Location = new System.Drawing.Point(239, 99);
             this.btnUpdateStreamSettings.Name = "btnUpdateStreamSettings";
             this.btnUpdateStreamSettings.Size = new System.Drawing.Size(100, 23);
             this.btnUpdateStreamSettings.TabIndex = 11;
@@ -195,24 +216,15 @@ namespace Octo_Streamer
             this.tmrSaveStreamSettings.Interval = 5000;
             this.tmrSaveStreamSettings.Tick += new System.EventHandler(this.tmrSaveStreamSettings_Tick);
             // 
-            // btnOpenStreamDirectory
+            // btnCameraStream
             // 
-            this.btnOpenStreamDirectory.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton1.ImageOptions.Image")));
-            this.btnOpenStreamDirectory.Location = new System.Drawing.Point(206, 49);
-            this.btnOpenStreamDirectory.Name = "btnOpenStreamDirectory";
-            this.btnOpenStreamDirectory.Size = new System.Drawing.Size(133, 23);
-            this.btnOpenStreamDirectory.TabIndex = 15;
-            this.btnOpenStreamDirectory.Text = "Open Stream Folder";
-            this.btnOpenStreamDirectory.Click += new System.EventHandler(this.btnOpenStreamDirectory_Click);
-            // 
-            // linkStreamSetupGuide
-            // 
-            this.linkStreamSetupGuide.Location = new System.Drawing.Point(40, 122);
-            this.linkStreamSetupGuide.Name = "linkStreamSetupGuide";
-            this.linkStreamSetupGuide.Size = new System.Drawing.Size(109, 13);
-            this.linkStreamSetupGuide.TabIndex = 16;
-            this.linkStreamSetupGuide.Text = "Stream setup guide...";
-            this.linkStreamSetupGuide.Click += new System.EventHandler(this.linkStreamSetupGuide_Click);
+            this.btnCameraStream.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton1.ImageOptions.Image")));
+            this.btnCameraStream.Location = new System.Drawing.Point(206, 65);
+            this.btnCameraStream.Name = "btnCameraStream";
+            this.btnCameraStream.Size = new System.Drawing.Size(133, 23);
+            this.btnCameraStream.TabIndex = 17;
+            this.btnCameraStream.Text = "Open Camera Stream";
+            this.btnCameraStream.Click += new System.EventHandler(this.btnCameraStream_Click);
             // 
             // frmAppSettings
             // 
@@ -259,5 +271,6 @@ namespace Octo_Streamer
         private DevExpress.XtraEditors.LabelControl lblUpdatedStreamSettings;
         private DevExpress.XtraEditors.SimpleButton btnOpenStreamDirectory;
         private DevExpress.XtraEditors.HyperlinkLabelControl linkStreamSetupGuide;
+        private DevExpress.XtraEditors.SimpleButton btnCameraStream;
     }
 }

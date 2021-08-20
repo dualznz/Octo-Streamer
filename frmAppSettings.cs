@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -37,7 +38,7 @@ namespace Octo_Streamer
             }
 
             // Check if displayLayerProgress is enabled in application settings
-            if (Properties.Settings.Default.DisplayLayerProgress == 1)
+            if (csSettings.displayLayerProgress == 1)
             {
                 // Setting is enabled, check the box
                 chkDisplayLayerProgress.Checked = true;
@@ -53,7 +54,7 @@ namespace Octo_Streamer
             #region Stream Settings
 
             // Check if toolTempTarget is enabled in application settings
-            if (Properties.Settings.Default.ToolTempTarget == 1)
+            if (csSettings.toolTempTargetSwitch == 1)
             {
                 // Setting is enabled, check the box
                 chkToolTempTarget.Checked = true;
@@ -65,7 +66,7 @@ namespace Octo_Streamer
             }
 
             // Check if bedTempTarget is enabled in application settings
-            if (Properties.Settings.Default.BedTempTarget == 1)
+            if (csSettings.bedTempTargetSwitch == 1)
             {
                 // Setting is enabled, check the box
                 chkBedTempTarget.Checked = true;
@@ -92,22 +93,30 @@ namespace Octo_Streamer
         #region Update Addons
         private void btnUpdateAddons_Click(object sender, EventArgs e)
         {
-            // Check to see if displayLayerProgress checkbox has been checked
-            if (chkDisplayLayerProgress.Checked == true)
-            {
-                // Checkbox is checked, store setting
-                Properties.Settings.Default.DisplayLayerProgress = 1;
-                csSettings.displayLayerProgress = 1;
-            }
-            else
-            {
-                // Checkbox is not checked, store setting
-                Properties.Settings.Default.DisplayLayerProgress = 0;
-                csSettings.displayLayerProgress = 0;
-            }
+            // Define registry scope
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Octo-Streamer", true);
 
-            // Store application settings
-            Properties.Settings.Default.Save();
+            // Check to see if registry folder exists in the context
+            if (key != null)
+            {
+                // Check to see if displayLayerProgress checkbox has been checked
+                if (chkDisplayLayerProgress.Checked == true)
+                {
+                    // Checkbox is checked, store setting
+                    csSettings.displayLayerProgress = 1;
+                    key.SetValue("displayLayerProgress", "1");
+                }
+                else
+                {
+                    // Checkbox is not checked, store setting
+                    csSettings.displayLayerProgress = 0;
+                    key.SetValue("displayLayerProgress", "0");
+                }
+
+                // Close key
+                key.Close();
+                
+            }
 
             // Update connection state
             csSettings.updateDataSignal = 2;
@@ -136,36 +145,43 @@ namespace Octo_Streamer
         #region Update Stream Settings
         private void btnUpdateStreamSettings_Click(object sender, EventArgs e)
         {
-            // Check to see if ToolTempTarget checkbox has been checked
-            if (chkToolTempTarget.Checked == true)
-            {
-                // Checkbox is checked, store setting
-                Properties.Settings.Default.ToolTempTarget = 1;
-                csSettings.toolTempTargetSwitch = 1;
-            }
-            else
-            {
-                // Checkbox is not checked, store setting
-                Properties.Settings.Default.ToolTempTarget = 0;
-                csSettings.toolTempTargetSwitch = 0;
-            }
+            // Define registry scope
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Octo-Streamer", true);
 
-            // Check to see if BedTempTarget checkbox has been checked
-            if (chkBedTempTarget.Checked == true)
+            // Check to see if registry folder exists in the context
+            if (key != null)
             {
-                // Checkbox is checked, store setting
-                Properties.Settings.Default.BedTempTarget = 1;
-                csSettings.bedTempTargetSwitch = 1;
-            }
-            else
-            {
-                // Checkbox is not checked, store setting
-                Properties.Settings.Default.BedTempTarget = 0;
-                csSettings.bedTempTargetSwitch = 0;
-            }
+                // Check to see if ToolTempTarget checkbox has been checked
+                if (chkToolTempTarget.Checked == true)
+                {
+                    // Checkbox is checked, store setting
+                    csSettings.toolTempTargetSwitch = 1;
+                    key.SetValue("toolTempTarget", "1");
+                }
+                else
+                {
+                    // Checkbox is not checked, store setting
+                    csSettings.toolTempTargetSwitch = 0;
+                    key.SetValue("toolTempTarget", "0");
+                }
 
-            // Store application settings
-            Properties.Settings.Default.Save();
+                // Check to see if BedTempTarget checkbox has been checked
+                if (chkBedTempTarget.Checked == true)
+                {
+                    // Checkbox is checked, store setting
+                    csSettings.bedTempTargetSwitch = 1;
+                    key.SetValue("bedTempTarget", "1");
+                }
+                else
+                {
+                    // Checkbox is not checked, store setting
+                    csSettings.bedTempTargetSwitch = 0;
+                    key.SetValue("bedTempTarget", "0");
+                }
+
+                // Close key
+                key.Close();
+            }
 
             // Show saved tag and start delay
             lblUpdatedStreamSettings.Visible = true;
@@ -204,9 +220,31 @@ namespace Octo_Streamer
         private void linkStreamSetupGuide_Click(object sender, EventArgs e)
         {
             // Navigate to github wiki for setting up stream
-            System.Diagnostics.Process.Start("");
+            System.Diagnostics.Process.Start("https://github.com/dualznz/Octo-Streamer");
         }
 
         #endregion
+
+        #region Camera Feed
+
+        private void btnCameraStream_Click(object sender, EventArgs e)
+        {
+            string portCheck = null;
+            if (csSettings.connectionPort != null)
+            {
+                portCheck = ":" + csSettings.connectionPort;
+            }
+            else
+            {
+                portCheck = null;
+            }
+
+            // Open camera stream (OctoPrint)
+            System.Diagnostics.Process.Start(csSettings.connectionAddress + portCheck + "/webcam/?action=stream");
+
+        }
+
+        #endregion
+
     }
 }
