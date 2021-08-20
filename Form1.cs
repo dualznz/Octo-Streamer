@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Octokit;
+using Microsoft.Win32;
 
 namespace Octo_Streamer
 {
@@ -27,6 +28,11 @@ namespace Octo_Streamer
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            Console.WriteLine(csSettings.connectionAddress);
+
+            // Pull registry values
+            registryDep();
+
             // Check for stream files
             checkStreamDirectory();
 
@@ -58,12 +64,16 @@ namespace Octo_Streamer
             // Reset stream file data / populate with NaN values
             dumpStreamDefaults();
 
-            // ## Diable in dev ##
-            // check for application updates
-            tmrCheckForUpdates.Enabled = true;
-            tmrCheckForUpdates.Start();
 
-            if (Properties.Settings.Default.Host == "")
+            // check for application updates
+            if (Program.devMode == false)
+            {
+                // Developer mode has been disabled, we can run the update version check
+                tmrCheckForUpdates.Enabled = true;
+                tmrCheckForUpdates.Start();
+            }
+
+            if (csSettings.connectionAddress == null)
             {
                 // Change state for the connection to the server button event
                 tsConnect.Enabled = false;
@@ -97,6 +107,29 @@ namespace Octo_Streamer
                     lblLayer.Text = "NaN";
                     lblFanSpeed.Text = "NaN";
                     break;
+            }
+        }
+
+        #endregion
+
+        #region Registry Dependencies
+
+        private void registryDep()
+        {
+            // Define host registry folder
+            var key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Octo-Streamer", false);
+
+            // Check to see if the host regisrtry folder exists, if not create it
+            if (key != null)
+            {
+                // Get registry values and store them in our class
+                csSettings.connectionAddress = key.GetValue("host").ToString();
+                csSettings.connectionPort = key.GetValue("port").ToString();
+                csSettings.connectionAuthToken = key.GetValue("apiKey").ToString();
+                csSettings.displayLayerProgress = Convert.ToInt16(key.GetValue("displayLayerProgress"));
+                csSettings.toolTempTargetSwitch = Convert.ToInt16(key.GetValue("toolTempTarget"));
+                csSettings.bedTempTargetSwitch = Convert.ToInt16(key.GetValue("bedTempTarget"));
+                key.Close();
             }
         }
 
@@ -258,7 +291,7 @@ namespace Octo_Streamer
         {
             if (csSettings.updateDataSignal == 1)
             {
-                if (Properties.Settings.Default.Host != "")
+                if (csSettings.connectionAddress != "")
                 {
                     // Connection settings have been updated and an initial connection has been made to the remote server
                     // Enable connect to server button
@@ -280,7 +313,7 @@ namespace Octo_Streamer
             else if (csSettings.updateDataSignal == 2)
             {
                 // Check to see if displayLayerProgress setting is enabled
-                switch (Properties.Settings.Default.DisplayLayerProgress)
+                switch (csSettings.displayLayerProgress)
                 {
                     case 0:
                         // Hide displayLayerProgress panel
@@ -321,14 +354,14 @@ namespace Octo_Streamer
             //pnlMainDisplay.Visible = true;
 
             // Access remote host process
-            remoteServerHandshake(Properties.Settings.Default.Host, Properties.Settings.Default.Port, Properties.Settings.Default.ApiKey);
+            remoteServerHandshake(csSettings.connectionAddress, csSettings.connectionPort, csSettings.connectionAuthToken);
 
         }
 
         private void tmrLifeline_Tick(object sender, EventArgs e)
         {
             // Access remote host process
-            remoteServerHandshake(Properties.Settings.Default.Host, Properties.Settings.Default.Port, Properties.Settings.Default.ApiKey);
+            remoteServerHandshake(csSettings.connectionAddress, csSettings.connectionPort, csSettings.connectionAuthToken);
         }
 
         private void remoteServerHandshake(string host, string port, string apiKey)
@@ -438,8 +471,8 @@ namespace Octo_Streamer
         private void tmrApi_Tick(object sender, EventArgs e)
         {
             // Create connection to the api request declaration
-            apiJobRequest(Properties.Settings.Default.Host, Properties.Settings.Default.Port, Properties.Settings.Default.ApiKey);
-            apiPrinterRequest(Properties.Settings.Default.Host, Properties.Settings.Default.Port, Properties.Settings.Default.ApiKey);
+            apiJobRequest(csSettings.connectionAddress, csSettings.connectionPort, csSettings.connectionAuthToken);
+            apiPrinterRequest(csSettings.connectionAddress, csSettings.connectionPort, csSettings.connectionAuthToken);
 
             // Stream data to files
             streamToFiles();
@@ -643,6 +676,8 @@ namespace Octo_Streamer
         }
         #endregion
 
+        #region DisplayLayerProgress Data
+
         private void displayLayerProgress(string host, string port, string apiKey)
         {
             try
@@ -708,9 +743,11 @@ namespace Octo_Streamer
             catch (Exception)
             {
 
-                
+
             }
         }
+
+        #endregion
 
         #endregion
 

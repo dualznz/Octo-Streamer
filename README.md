@@ -52,6 +52,7 @@ To activate the additional values within the application head over to **Tools/Ap
 
 - [ ] Remove global key & change to Application Token within OctoPrint
 - [ ] Allow change from Celsius to Fahrenheit
+- [ ] Store application settings in registry, instead of app.settings (this will allow for updates to not reset data)
 
 ### Issues
 

@@ -3,7 +3,7 @@
     class csSettings
     {
         public static string connectionAddress { get; set; }
-        public static string ConnectionPort { get; set; }
+        public static string connectionPort { get; set; }
         public static string connectionAuthToken { get; set; }
         public static string recievedData { get; set; }
         public static string recievedPrinterData { get; set; }
