@@ -1,3 +1,7 @@
+> Blockquote
+> This project is now archived, i will be redesigning this application in a new project soon.
+
+
 ![](https://dualznz.space/static/Octo-Streamer/ico.png)
 
 # Octo-Streamer
